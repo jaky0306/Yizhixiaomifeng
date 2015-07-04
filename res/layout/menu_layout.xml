@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:background="@color/background_1">
+        
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center"
+            android:background="@color/background_1"
+            >
+            
+            	<!-- 
+            	<ImageView 
+                android:id="@+id/menu_item_logon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logon"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="5dp"
+                />
+            	-->
+            	<TextView
+            	    android:id="@+id/menu_item_logon" 
+            	    android:layout_width="wrap_content"
+            	    android:layout_height="wrap_content"
+                	android:layout_marginLeft="5dp"
+                	android:text="一只小蜜蜂"
+                	android:textSize="20dp"
+                	android:layout_centerVertical="true"
+                	android:textColor="#fff"
+                	/>
+            	
+            	<TextView 
+            	    android:layout_width="wrap_content"
+            	    android:layout_height="wrap_content"
+                	android:layout_marginLeft="100dp"
+                	android:layout_below="@id/menu_item_logon"
+                	android:text="--****!"
+                	android:textSize="12dp"
+                	android:textColor="#fff"/>
+            	<!-- 
+            	<ImageView
+         		    android:id="@+id/menu_item_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+					android:layout_alignParentRight="true" 
+					android:layout_centerVertical="true"                   
+                    android:src="@drawable/login"/>
+                <ImageView 
+         		    android:id="@+id/menu_item_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/menu_item_login"
+                    android:src="@drawable/register"/>
+         		-->
+            
+        </RelativeLayout>
+        
+        <ListView 
+            android:id="@+id/menu_item_showMenuItems"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawSelectorOnTop="false"
+            android:cacheColorHint="#00000000"
+            android:background="@color/background_1"
+            >
+            
+        </ListView>
+        
+        <TextView
+            android:layout_marginBottom="15dp" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="* Powered by YZXMF"/>
+        
+        
+    </LinearLayout>
