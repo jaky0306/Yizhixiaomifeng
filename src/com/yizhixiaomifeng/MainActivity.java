@@ -1,21 +1,28 @@
 package com.yizhixiaomifeng;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Timer;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVOSCloud;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.LogUtil.log;
+import com.yizhixiaomifeng.adapter.MenuListViewAdapter;
+import com.yizhixiaomifeng.config.ParameterConfig;
 import com.yizhixiaomifeng.tools.ActivityCloser;
+import com.yizhixiaomifeng.tools.AvosTool;
+import com.yizhixiaomifeng.tools.HeadLoader;
 import com.yizhixiaomifeng.tools.HeadTool;
+import com.yizhixiaomifeng.tools.InfoLoader;
+import com.yizhixiaomifeng.tools.LocalStorage;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,19 +40,27 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnTouchListener {
 	
-	private ImageView head ;
-	private ImageView show_menu_layout;
-	private TextView showTime;
-	private TextView showDate;
-	private String timeString;
-	private String dateString;
-	private Button signin;
+	private ImageView head ;  //用户头像
+	private ImageView show_menu_layout;  //点击可用来切换menu
+	private ImageView menu_head;
+	private TextView menu_show_user_name; //侧滑中的名字显示
+	private TextView main_show_staff_name; //主页面中的名字显示
+	private TextView main_show_staff_department; //主页面中的员工部门信息
+	private TextView main_show_staff_job;	//主页面中的员工职位信息
+	private LinearLayout show_loadinfo_tip;
+	private TextView showTime; //显示时间
+	private TextView showDate;  //显示日期
+	private String timeString;  //用来合成时间信息
+	private String dateString; 	//用来合成日期信息
+	private Button signin;		//登录按钮
+	private String user;		//当前用户名
+	private String type;		//用户类型
+	private List<String> menuitems=new ArrayList<String>();	//menu 显示的数据
 	private Handler handler=new Handler(){
 		public void handleMessage(Message msg) {
 			if(msg.what==0x111){
@@ -60,14 +75,77 @@ public class MainActivity extends Activity implements OnTouchListener {
 	 * 控制侧滑内容
 	 */
 	
-	private ListView showMenuItems ;
+	private ListView showMenuItems ;		//menu显示item的listview
 	private int exit=0;  //	用来记录click 的次数
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		/**
+		 * 初始化leancloud
+		 */
+		String appid="l06kinvak9zixn4u1paent0an7nfsb662swhrk1qvfc998w0";
+		String key="b7tlw6hcvzsu3t875abdf9htcygrbaypnftgnmo90mwnk7ie";
+		AVOSCloud.initialize(this, appid, key);
 		
 		ActivityCloser.activities.add(this);
+		
+		signin=(Button)findViewById(R.id.singin);
+		
+		LocalStorage ls = new LocalStorage(this);
+		user = ls.getString("username", "");
+		type = ls.getString("type", "");
+		if(user.equals("")){
+			
+			/**
+			 * 改变登录按钮状态
+			 */
+			signin.setText("登录");
+			signin.setEnabled(true);
+			
+			/*********************初始化MenuLayout************************/
+			
+			
+			
+		}else 
+		{
+			/**
+			 * 改变登录按钮状态
+			 */
+			signin.setText("已登录");
+			signin.setEnabled(false);
+			
+			loadUserInfo(); //加载用户信息
+			
+			if(type.equals("员工"))
+			{
+				menuitems.clear();
+				menuitems.add("个人中心");
+				showMenuItems=(ListView)findViewById(R.id.showMenuItems_listview);
+				showMenuItems.setAdapter(new MenuListViewAdapter(MainActivity.this, menuitems));
+				showMenuItems.setOnItemClickListener(new OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> adapterView, View view, int position,
+							long id) {
+						switch (position) {
+						case 0:
+							Intent intent1 = new Intent(MainActivity.this, SettingCenter.class);
+							startActivity(intent1);
+							break;
+						default:
+							break;
+						}
+					}
+				});
+			}else if(type.equals("管理员"))
+			{
+				
+			}
+		}
+		
+		
+		
 		
 		/**
 		 * 切换菜单
@@ -87,37 +165,116 @@ public class MainActivity extends Activity implements OnTouchListener {
 			}
 		});
 		
-		/**
-		 * 初始化头像
-		 */
-		head = (ImageView)findViewById(R.id.staff_head);
-		Bitmap bm = null;
-		if ((bm = HeadTool.haveHead()) != null) {
-			//head.setImageBitmap(bm);
-			//Bitmap bitmap=BitmapFactory.decodeResource(getResources(), R.drawable.bt);
-		      Bitmap output=HeadTool.toRoundBitmap(bm);
-		      head.setImageBitmap(output);
-		}
 		
+		/**
+		 * 初始化侧滑
+		 */
 		initValues();
 		content.setOnTouchListener(this);
 		
 		/**
 		 * 登录事件
 		 */
-		signin=(Button)findViewById(R.id.singin);
+		
 		signin.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this,Login.class);
-				startActivity(intent);
+				if(user.equals("")){
+					Intent intent = new Intent(MainActivity.this,Login.class);
+					startActivity(intent);
+				}else {
+					Toast.makeText(getApplicationContext(), "你已经登录...", Toast.LENGTH_LONG).show();
+					return;
+				}
+				
 			}
 		});
 		
 		/**
-		 * 显示时间
+		 * 显示时间日期信息
 		 */
+		showTimeAndDate();
+		
+	}
+
+//	public List<Map<String,Object>> getMenuData()
+//	{
+//		List<Map<String, Object>> menuItemData=new ArrayList<Map<String,Object>>();
+//		String[] initdata={"个人主页"};
+//		for(int i=0;i<initdata.length;i++)
+//		{
+//			Map<String,Object> map = new HashMap<String,Object>();
+//			map.put("title", initdata[i]);
+//			menuItemData.add(map);
+//		}
+//		return menuItemData;
+//	}
+	/**
+	 * 初始化没有用户信息时，界面的显示
+	 */
+	public void initWithoutUser(){
+		menuitems.clear();
+		menuitems.add("个人中心");
+		showMenuItems=(ListView)findViewById(R.id.showMenuItems_listview);
+		showMenuItems.setAdapter(new MenuListViewAdapter(MainActivity.this, menuitems));
+		showMenuItems.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view, int position,
+					long id) {
+				switch (position) {
+				case 0:
+					Intent intent1 = new Intent(MainActivity.this, SettingCenter.class);
+					startActivity(intent1);
+					break;
+				default:
+					break;
+				}
+			}
+		});
+	}
+	/**
+	 * 初始化有用户信息时。用户信息的加载
+	 */
+	public void loadUserInfo()
+	{
+		/**
+		 * 初始化头像
+		 */
+		show_loadinfo_tip=(LinearLayout)findViewById(R.id.show_loadinfo_tip_LinearLayout);
+		head = (ImageView)findViewById(R.id.staff_head);
+		menu_head=(ImageView)findViewById(R.id.menu_head);
+		ImageView [] heads=new ImageView[]{head,menu_head};
+		if(ParameterConfig.headChange||ParameterConfig.firstUse){ //如果头像改变了,或第一次使用，立刻更新头像
+			new HeadLoader(heads,show_loadinfo_tip).execute(user);     //获取最新头像信息
+			ParameterConfig.headChange=false; //头像更新完毕了，把标记设为false
+		}
+		/**
+		 * 初始化信息
+		 */
+		menu_show_user_name=(TextView)findViewById(R.id.menu_show_user_name);
+		main_show_staff_name=(TextView)findViewById(R.id.staff_name);
+		main_show_staff_department=(TextView)findViewById(R.id.staff_info_department);
+		main_show_staff_job=(TextView)findViewById(R.id.staff_info_job);
+		
+		if(ParameterConfig.infoChange||ParameterConfig.firstUse){
+			List<TextView> textViews = new ArrayList<TextView>();
+			textViews.add(menu_show_user_name);
+			textViews.add(main_show_staff_department);
+			textViews.add(main_show_staff_department);
+			textViews.add(main_show_staff_job);
+			new InfoLoader(textViews,show_loadinfo_tip).execute(user);  //获取最新用户信息
+			ParameterConfig.infoChange=false; //信息更新完毕了，把标记设为false
+			
+		}
+		ParameterConfig.firstUse=false; //用户信息加载完毕了，说明已经使用过了
+	}
+	/**
+	 * 显示时间
+	 */
+	public void showTimeAndDate(){
+		
 		showTime=(TextView)findViewById(R.id.show_time);
 		showDate=(TextView)findViewById(R.id.show_date);
 		final String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
@@ -153,59 +310,6 @@ public class MainActivity extends Activity implements OnTouchListener {
 				}
 			}
 		}).start();
-		
-		
-		/*********************初始化MenuLayout************************/
-		
-		
-		showMenuItems=(ListView)findViewById(R.id.menu_item_showMenuItems);
-		SimpleAdapter adapter = new SimpleAdapter(this,getMenuData(),R.layout.menuitems,
-				new String[]{"title"},
-				new int[]{R.id.menuitems_title});
-		showMenuItems.setAdapter(adapter);
-		showMenuItems.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int position,
-					long id) {
-				switch (position) {
-				case 0:
-					
-					break;
-
-				case 1:
-					
-					break;
-				case 2:
-					
-					break;
-				case 3:
-					
-					break;
-				case 4:
-					Intent intent = new Intent(MainActivity.this, SettingCenter.class);
-					startActivity(intent);
-					break;
-				default:
-					break;
-				}
-				Toast.makeText(getApplicationContext(),""+position, Toast.LENGTH_LONG).show();
-			}
-		});
-	}
-
-	public List<Map<String,Object>> getMenuData()
-	{
-		List<Map<String, Object>> menuItemData=new ArrayList<Map<String,Object>>();
-		
-		String[] data={"部门信息","部门信息","部门信息","部门信息","个人主页"};
-		for(int i=0;i<data.length;i++)
-		{
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("title", data[i]);
-			menuItemData.add(map);
-		}
-		return menuItemData;
 	}
 	
 	

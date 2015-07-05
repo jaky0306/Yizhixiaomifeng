@@ -1,7 +1,11 @@
 package com.yizhixiaomifeng;
+import com.avos.avoscloud.LogUtil.log;
 import com.yizhixiaomifeng.tools.ActivityCloser;
 import com.yizhixiaomifeng.tools.ConnectWeb;
+import com.yizhixiaomifeng.tools.LocalStorage;
+
 import android.app.Activity;
+import android.app.backup.SharedPreferencesBackupHelper;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,6 +15,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -30,7 +35,9 @@ public class Login extends Activity
     private Button Login;
     private EditText username;
     private EditText password;
-    private String lt;  //记录登录类型
+    private String user;
+    private String pass;
+    private String type;  //记录登录类型
     private String result;
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -67,14 +74,14 @@ public class Login extends Activity
             @Override
             public void onClick(View v)
             {
-                final String user=username.getText().toString();
-                final String pass=password.getText().toString();
+                user=username.getText().toString();
+                pass=password.getText().toString();
                 for(int i=0;i<login_type.getChildCount();i++)
 				{
 					RadioButton rb = (RadioButton)login_type.getChildAt(i);
 					if(rb.isChecked())
 					{
-						lt = rb.getText().toString().trim();
+						type = rb.getText().toString().trim();
 						break;
 					}
 				}
@@ -90,16 +97,17 @@ public class Login extends Activity
                 else {
                 	
                 	
-//                    new Thread(new Runnable() {
-//                        
+//                    new Thread(new Runnable() {                       
 //                        public void run()
 //                        {
-//                            result=new ConnectWeb().checkUser(user, pass);
-//                            Message m = handler.obtainMessage();
-//                            handler.sendMessage(m); 
+//                            result=new ConnectWeb().checkUser(user, pass,lt);
+//                            Log.e("aaaaaaaaaaaa", "aa"+result);
+////                            Message m = handler.obtainMessage();
+////                            handler.sendMessage(m); 
 //                        }
 //                    }).start();
-                	new DataLoader().execute(user,pass,lt);
+                	//把用户名，密码， 登录类型发给后台
+                	new DataLoader().execute(user,pass,type);
                 }
                 
 //                handler = new Handler(){
@@ -184,9 +192,8 @@ public class Login extends Activity
     class DataLoader extends AsyncTask<String, Integer, String>{
     	@Override
     	protected String doInBackground(String... params) {
-    		
     		result=new ConnectWeb().checkUser(params[0], params[1], params[2]);
-    		
+    		//Log.e("result", "aa"+result);
     		return result;
     	}
 
@@ -197,15 +204,23 @@ public class Login extends Activity
 
     	@Override
     	protected void onPostExecute(String result) {
-    		
+    		//Log.e("result", "aa"+result);
     		if(result.trim().equals("ok")){
+    			
+    			/**
+    			 * 登录成功后把登录信息保存到SharedPreferences
+    			 */
+    			LocalStorage ls = new LocalStorage(Login.this);
+    			ls.putString("username", user);
+    			ls.putString("type", type);
+    			ls.commitEditor();
+    			//登录成功后进行Activity跳转
     			Intent intent=new Intent();
-                intent.putExtra("username", username.getText().toString().trim());
                 intent.setClass(Login.this, MainActivity.class);     
                 startActivity(intent);
                 Login.this.finish();
     		}else{
-    			Toast.makeText(getApplicationContext(), "登录信息有误!",Toast.LENGTH_LONG).show();
+    			Toast.makeText(getApplicationContext(), "登录信息有误!"+result,Toast.LENGTH_LONG).show();
                 Login.setText("登录");
                 Login.setEnabled(true);
     		}

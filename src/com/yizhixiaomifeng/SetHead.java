@@ -3,31 +3,31 @@ package com.yizhixiaomifeng;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import com.yizhixiaomifeng.config.ParameterConfig;
 import com.yizhixiaomifeng.tools.ActivityCloser;
+import com.yizhixiaomifeng.tools.AvosTool;
+import com.yizhixiaomifeng.tools.ConnectWeb;
 import com.yizhixiaomifeng.tools.HeadTool;
+import com.yizhixiaomifeng.tools.LocalStorage;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.RectF;
-import android.graphics.Bitmap.Config;
-import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class SetHead extends Activity {
@@ -37,13 +37,24 @@ public class SetHead extends Activity {
 	private static final int CAMERA_REQUEST_CODE = 1;
 	private static final int RESULT_REQUEST_CODE = 2;
 	ImageView head ;
+	LinearLayout uphead_tip;
+	private Handler handler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			if(msg.what==0x111){
+				uphead_tip.setVisibility(View.VISIBLE);
+			}
+			if(msg.what==0x112){
+				uphead_tip.setVisibility(View.INVISIBLE);
+			}
+		};
+	};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.set_head);
 		
 		ActivityCloser.activities.add(this);
-		
+		uphead_tip=(LinearLayout)findViewById(R.id.show_uphead_tip);
 		head = (ImageView) findViewById(R.id.staff_head);
 		Bitmap bm = null;
 		if ((bm = HeadTool.haveHead()) != null) {
@@ -174,6 +185,7 @@ public class SetHead extends Activity {
 	//保存头像，在根目录想的head.jpg
 
 	public void saveHead(Bitmap bitmap) {
+		
 		FileOutputStream fos = null;
 		try {
 			fos = openFileOutput("head.jpg", 0);
@@ -190,6 +202,14 @@ public class SetHead extends Activity {
 			}
 
 		}
+		
+		String username = new LocalStorage(this).getString("username", "");
+		if(new ConnectWeb().isConnect(this)){
+			new HeadUper().execute(username);
+		}
+		
+		
+		
 	}
 
 	/**
@@ -206,6 +226,49 @@ public class SetHead extends Activity {
 		}
 	}
 	
-	
+	class HeadUper extends AsyncTask<String, Integer, Void>{
+		@Override
+		protected Void doInBackground(String... params) {
+			/**
+			 * 让滚动条显示
+			 */
+			Message msg = new Message();
+			msg.what=0x111;
+			handler.sendMessage(msg);
+			new AvosTool().saveHead(params[0]);  //把头像保存到LeanCloud
+			return null;
+		}
+
+		@Override
+		protected void onCancelled() {
+			super.onCancelled();
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			/**
+			 * 让滚动条隐藏
+			 */
+			Message msg = new Message();
+			msg.what=0x112;
+			handler.sendMessage(msg);
+			ParameterConfig.headChange=true; //头像更新了，告诉MainActivity
+			Intent intent = new Intent(SetHead.this,MainActivity.class);
+			startActivity(intent);
+			SetHead.this.finish();
+			super.onPostExecute(result);
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+		}
+
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			super.onProgressUpdate(values);
+		}
+		
+	}
 	
 }

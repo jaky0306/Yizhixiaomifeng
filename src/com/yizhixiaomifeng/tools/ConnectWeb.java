@@ -59,10 +59,36 @@ public class ConnectWeb {
             
         }catch(Exception e)
         {
-        	
+        	Log.e("checkUser: error", e.toString());
             return "error";
         }
     }
+    
+    public String getUserInfoByPhone(String phone){
+    	try {
+			String target = "";
+			HttpClient httpClient = new DefaultHttpClient();
+			httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 6000);
+			httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 6000);
+			HttpPost httpRequest = new HttpPost(target);
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("phone",phone));
+			httpRequest.setEntity(new UrlEncodedFormEntity(params,"utf-8"));
+    	    HttpResponse httpResponse = httpClient.execute(httpRequest);
+    	    if(httpResponse.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
+    	    	String result = EntityUtils.toString(httpResponse.getEntity());
+    	    	return result;
+    	    }else {
+				return "error";
+			}
+    	} catch (Exception e) {
+    		
+    		Log.e("getUserInfoByPhone: error", e.toString());
+            return "error";
+		}
+    }
+    
+    
     
     
     /**

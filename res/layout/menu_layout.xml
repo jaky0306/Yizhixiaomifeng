@@ -9,7 +9,7 @@
         
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center"
             android:background="@color/background_1"
@@ -25,25 +25,14 @@
                 android:layout_marginLeft="5dp"
                 />
             	-->
-            	<TextView
-            	    android:id="@+id/menu_item_logon" 
-            	    android:layout_width="wrap_content"
-            	    android:layout_height="wrap_content"
+            	<ImageView
+            	    android:id="@+id/menu_head" 
+            	    android:layout_width="80dip"
+            	    android:layout_height="80dip"
                 	android:layout_marginLeft="5dp"
-                	android:text="一只小蜜蜂"
-                	android:textSize="20dp"
                 	android:layout_centerVertical="true"
-                	android:textColor="#fff"
+                	android:src="@drawable/guest"
                 	/>
-            	
-            	<TextView 
-            	    android:layout_width="wrap_content"
-            	    android:layout_height="wrap_content"
-                	android:layout_marginLeft="100dp"
-                	android:layout_below="@id/menu_item_logon"
-                	android:text="--****!"
-                	android:textSize="12dp"
-                	android:textColor="#fff"/>
             	<!-- 
             	<ImageView
          		    android:id="@+id/menu_item_login"
@@ -61,11 +50,21 @@
                     android:layout_toLeftOf="@id/menu_item_login"
                     android:src="@drawable/register"/>
          		-->
+
+            	<TextView
+            	    android:id="@+id/menu_show_user_name"
+            	    android:layout_width="wrap_content"
+            	    android:layout_height="wrap_content"
+            	    android:layout_centerVertical="true"
+            	    android:layout_marginLeft="100dip"
+            	    android:text="未登录..."
+            	    android:textColor="#fff"
+            	    android:textSize="20dp" />
             
         </RelativeLayout>
         
         <ListView 
-            android:id="@+id/menu_item_showMenuItems"
+            android:id="@+id/showMenuItems_listview"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

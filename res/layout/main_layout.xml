@@ -41,95 +41,114 @@
     
     
     <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="100dip"
-    android:layout_marginTop="5dip"
-    android:background="@color/background_3"
-    android:descendantFocusability="blocksDescendants">    
-    <ImageView 
-        android:id="@+id/staff_head"
-        android:layout_width="100dip"
-        android:layout_height="100dip"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="5dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerInParent="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/guest"/>
-    <TextView 
-        android:id="@+id/staff_name"
-        android:layout_height="wrap_content"
-        android:layout_width="150dp"
-        android:text="一直小蜜蜂"
-        android:layout_marginLeft="3dp"
-        android:textSize="23dp"
-        android:singleLine="true"
-        android:layout_toRightOf="@+id/staff_head"
-        android:textColor="@color/white"/>
-    
-    <LinearLayout 
-        android:id="@+id/staff_info"
-        android:layout_height="wrap_content"
-        android:layout_width="150dp"
-        android:layout_marginLeft="3dp"
-        android:textSize="14dp"
-        android:layout_toRightOf="@+id/staff_head"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical">
-        
-        <LinearLayout 
-            android:layout_width="150dip"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            
-            <TextView 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="部门: "
-                android:textColor="@color/white"/>
-            <TextView 
-                android:id="@+id/staff_info_department"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="软件工程师"
-                android:textColor="@color/white"/>
-            
-        </LinearLayout>
-        <LinearLayout 
-            android:layout_width="150dip"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            
-            <TextView 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="职位: "
-                android:textColor="@color/white"/>
-            <TextView 
-                android:id="@+id/staff_info_job"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="软件工程师"
-                android:textColor="@color/white"/>
-            
-        </LinearLayout>
-        
-    </LinearLayout>
-
-    
-    <ImageButton 
-        android:id="@+id/item_add_button"
-        android:layout_alignParentRight="true"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/right_icon_small"
-        android:layout_centerInParent="true"
-        />
+	    android:layout_width="match_parent"
+	    android:layout_height="100dip"
+	    android:layout_marginTop="5dip"
+	    android:background="@color/background_3"
+	    android:descendantFocusability="blocksDescendants">  
+	    <LinearLayout 
+	        android:id="@+id/show_loadinfo_tip_LinearLayout"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:layout_centerInParent="true">
+	        <ProgressBar 
+		        android:layout_width="wrap_content" 
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="25dip"
+		        />  
+		    <TextView 
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center"
+		        android:textColor="@color/white"
+		        android:text="正在加载数据..."/>
+	    </LinearLayout> 
+	    
+	    <ImageView 
+	        android:id="@+id/staff_head"
+	        android:layout_width="100dip"
+	        android:layout_height="100dip"
+	        android:layout_marginLeft="3dp"
+	        android:layout_marginTop="5dp"
+	        android:layout_alignParentLeft="true"
+	        android:layout_centerInParent="true"
+	        android:scaleType="fitXY"
+	        android:src="@drawable/guest"/>
+	    <TextView 
+	        android:id="@+id/staff_name"
+	        android:layout_height="wrap_content"
+	        android:layout_width="150dp"
+	        android:text="****"
+	        android:layout_marginLeft="3dp"
+	        android:textSize="23dp"
+	        android:singleLine="true"
+	        android:layout_toRightOf="@+id/staff_head"
+	        android:textColor="@color/white"/>
+	    
+	    <LinearLayout 
+	        android:id="@+id/staff_info"
+	        android:layout_height="wrap_content"
+	        android:layout_width="150dp"
+	        android:layout_marginLeft="3dp"
+	        android:textSize="14dp"
+	        android:layout_toRightOf="@+id/staff_head"
+	        android:layout_alignParentBottom="true"
+	        android:orientation="vertical">
+	        
+	        <LinearLayout 
+	            android:layout_width="150dip"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal">
+	            
+	            <TextView 
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="部门: "
+	                android:textColor="@color/white"/>
+	            <TextView 
+	                android:id="@+id/staff_info_department"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="****"
+	                android:textColor="@color/white"/>
+	            
+	        </LinearLayout>
+	        <LinearLayout 
+	            android:layout_width="150dip"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal">
+	            
+	            <TextView 
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="职位: "
+	                android:textColor="@color/white"/>
+	            <TextView 
+	                android:id="@+id/staff_info_job"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="****"
+	                android:textColor="@color/white"/>
+	            
+	        </LinearLayout>
+	        
+	    </LinearLayout>
+	
+	    
+	    <ImageButton 
+	        android:id="@+id/show_staff_info"
+	        android:layout_alignParentRight="true"
+	        android:layout_width="30dp"
+	        android:layout_height="30dp"
+	        android:background="@drawable/right_icon_small"
+	        android:layout_centerInParent="true"
+	        />
     
     
 
 	</RelativeLayout>
-	
+
 	<LinearLayout 
 	    android:layout_width="fill_parent"
 	    android:layout_height="100dip"
@@ -142,14 +161,14 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="70dip"
 	        android:layout_marginTop="5dip"
-	        android:text="aaaaaaaaaa"
+	        android:text="03:06"
 	        android:gravity="center"
 	        android:textSize="40sp"/>
 	    <TextView 
 	        android:id="@+id/show_date"
 	        android:layout_width="fill_parent"
 	        android:layout_height="30dip"
-	        android:text="bbbbbbbbbb"
+	        android:text="03:06"
 	        android:gravity="center"
 	        android:textSize="20sp"/>
 	</LinearLayout>
@@ -178,7 +197,6 @@
             android:textSize="20sp"/>
     
 	</LinearLayout>
-    
     
     
 </LinearLayout>

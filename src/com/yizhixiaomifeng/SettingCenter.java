@@ -1,6 +1,7 @@
 package com.yizhixiaomifeng;
 
 import com.yizhixiaomifeng.tools.ActivityCloser;
+import com.yizhixiaomifeng.tools.LocalStorage;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class SettingCenter extends Activity{
 	private Button setHeadButton;
@@ -29,6 +31,33 @@ public class SettingCenter extends Activity{
 			public void onClick(View v) {
 				Intent intent = new Intent(SettingCenter.this,SetHead.class);
 				startActivity(intent);
+			}
+		});
+		signInButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(new LocalStorage(SettingCenter.this).getString("username", "").equals("")){
+					Toast.makeText(SettingCenter.this, "你已经登录...", Toast.LENGTH_LONG).show();
+					return;
+				}
+				Intent intent = new Intent(SettingCenter.this,Login.class);
+				startActivity(intent);
+				SettingCenter.this.finish();
+			}
+		});
+		signOutButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				LocalStorage ls = new LocalStorage(SettingCenter.this);
+				ls.putString("username", "");
+				ls.putString("type", "");
+				ls.commitEditor();
+				Toast.makeText(getApplicationContext(), "已退出登录...", Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(SettingCenter.this,MainActivity.class);
+				startActivity(intent);
+				SettingCenter.this.finish();
 			}
 		});
 	}

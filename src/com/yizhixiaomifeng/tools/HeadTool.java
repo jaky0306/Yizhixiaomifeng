@@ -1,5 +1,8 @@
 package com.yizhixiaomifeng.tools;
 
+import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.LogUtil.log;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -16,6 +19,19 @@ public class HeadTool {
 				.decodeFile("data/data/com.yizhixiaomifeng/files/head.jpg");
 		return bitmap;
 	}
+	
+	public static void saveHead(String username){
+		try{
+			AVFile file = AVFile.withAbsoluteLocalPath(username, "data/data/com.yizhixiaomifeng/files/head.jpg");
+			file.addMetaData("type", "head");
+			file.saveInBackground();
+		}catch(Exception  e){
+			log.e("avfile error",e.toString());
+		}
+		//{"_checksum":"beeca77717bdaae48f77b7ddb27f0e78","_name":"head.jpg","owner":"","phone":"13265025645","size":80510,"type":"head"}
+		
+	}
+	
 	
 	/**
 	 * ·µ»ØÔ²ÐÎµÄbitmap

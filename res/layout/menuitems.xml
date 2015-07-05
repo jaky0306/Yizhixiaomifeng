@@ -2,15 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="horizontal"
 	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:gravity="center">
-
+	android:layout_height="fill_parent">
+		<ImageView 
+		    android:id="@+id/menuitemes_icon"
+		    android:layout_width="20dip"
+		    android:layout_height="20dip"
+		    android:layout_gravity="center"
+		    android:layout_marginLeft="20dip"
+		    android:src="@drawable/right_icon_small"/>
 		<TextView android:id="@+id/menuitems_title" 
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" 
 			android:textColor="#808080"
 			android:textSize="32px"
+			android:text="aaaaaaaaaa"
+			android:layout_marginLeft="50dip"
 			android:padding="10dp"
+			android:layout_gravity="center"
 			/>
 
 </LinearLayout>

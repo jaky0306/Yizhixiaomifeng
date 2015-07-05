@@ -4,6 +4,27 @@
     android:layout_height="match_parent"
     android:background="@color/background_3"
     android:orientation="vertical" >
+    <RelativeLayout 
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+        
+        <ImageView
+	        android:layout_centerInParent="true"
+	        android:layout_alignParentLeft="true"
+	        android:layout_width="45px"
+	        android:layout_height="45px"
+	        android:id="@+id/back"
+	        android:src="@drawable/left_icon_small"/>
+       <TextView
+	        android:layout_centerInParent="true"
+	        android:layout_toRightOf="@id/back"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"
+	        android:text="设置头像"/>
+
+	</RelativeLayout>
     
     <ImageView 
         android:id="@+id/staff_head"
@@ -23,6 +44,26 @@
         android:layout_marginTop="10dip"
         android:gravity="center_horizontal"
         android:textColor="@color/white"
-        android:text="点击头像进行设置"/>
+        android:text="点击进行头像设置"/>
+    
+  	<LinearLayout 
+  	    android:id="@+id/show_uphead_tip"
+  	    android:layout_width="fill_parent"
+  	    android:layout_height="wrap_content"
+  	    android:gravity="center"
+  	    android:orientation="vertical"
+  	    android:visibility="invisible" >
+  	    <ProgressBar 
+	        android:layout_width="wrap_content" 
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        /> 
+	    <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:text="正在上传头像..."/>
+  	</LinearLayout>
+    
     
 </LinearLayout>
