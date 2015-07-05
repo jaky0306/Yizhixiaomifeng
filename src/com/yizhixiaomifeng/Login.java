@@ -1,7 +1,9 @@
 package com.yizhixiaomifeng;
+import com.yizhixiaomifeng.tools.ActivityCloser;
 import com.yizhixiaomifeng.tools.ConnectWeb;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,15 +24,22 @@ import android.widget.Toast;
 public class Login extends Activity
 {
     Handler handler;
-    boolean result=true;
     private ImageView backImageView;
     private RadioGroup login_type;
+    private TextView textView;
+    private Button Login;
+    private EditText username;
+    private EditText password;
     private String lt;  //记录登录类型
+    private String result;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        
+        ActivityCloser.activities.add(this);
+        
         backImageView=(ImageView)findViewById(R.id.back);
         backImageView.setOnClickListener(new OnClickListener() {
 			
@@ -46,10 +55,11 @@ public class Login extends Activity
          * 处理登录事件
          */
         
-        TextView textView=(TextView)findViewById(R.id.register);
-        final Button Login=(Button)findViewById(R.id.loginIn);
-        final EditText username=(EditText)findViewById(R.id.username);
-        final EditText password=(EditText)findViewById(R.id.password);
+        textView=(TextView)findViewById(R.id.register);
+        Login=(Button)findViewById(R.id.loginIn);
+        username=(EditText)findViewById(R.id.username);
+        password=(EditText)findViewById(R.id.password);
+        
         login_type=(RadioGroup)findViewById(R.id.login_type);
         Login.setOnClickListener(new OnClickListener()
         {
@@ -89,37 +99,38 @@ public class Login extends Activity
 //                            handler.sendMessage(m); 
 //                        }
 //                    }).start();
+                	new DataLoader().execute(user,pass,lt);
                 }
                 
-                handler = new Handler(){
-                    public void handleMessage(Message msg) {
-                        // 提示登录中                        
-                        Login.setText("登录中...");
-                        Login.setEnabled(false);
-                    
-                        if(result){
-                            
-                            Intent intent=new Intent();
-                            intent.putExtra("username", user);
-                            intent.putExtra("password", pass);
-                            intent.setClass(Login.this, MainActivity.class);     
-                            startActivity(intent);
-                            
-                            //Intent intent=new Intent(Login.this, MainUI.class);  //登录成功就跳转
-                            
-                           // startActivity(intent);
-                            Login.this.finish();
-                            
-                        }else{
-                            Toast.makeText(getApplicationContext(), "登录信息有误!",Toast.LENGTH_LONG).show();
-                            Login.setText("登录");
-                            Login.setEnabled(true);
-                            
-                        }
-                        
-                        super.handleMessage(msg);
-                    }
-                };
+//                handler = new Handler(){
+//                    public void handleMessage(Message msg) {
+//                        // 提示登录中                        
+//                        Login.setText("登录中...");
+//                        Login.setEnabled(false);
+//                    
+//                        if(result){
+//                            
+//                            Intent intent=new Intent();
+//                            intent.putExtra("username", user);
+//                            intent.putExtra("password", pass);
+//                            intent.setClass(Login.this, MainActivity.class);     
+//                            startActivity(intent);
+//                            
+//                            //Intent intent=new Intent(Login.this, MainUI.class);  //登录成功就跳转
+//                            
+//                           // startActivity(intent);
+//                            Login.this.finish();
+//                            
+//                        }else{
+//                            Toast.makeText(getApplicationContext(), "登录信息有误!",Toast.LENGTH_LONG).show();
+//                            Login.setText("登录");
+//                            Login.setEnabled(true);
+//                            
+//                        }
+//                        
+//                        super.handleMessage(msg);
+//                    }
+//                };
                 
             }
         });
@@ -165,5 +176,54 @@ public class Login extends Activity
         }  
     }  
 
+    /**
+     * 用来访问后台获取数据
+     * @author Jaky
+     *
+     */
+    class DataLoader extends AsyncTask<String, Integer, String>{
+    	@Override
+    	protected String doInBackground(String... params) {
+    		
+    		result=new ConnectWeb().checkUser(params[0], params[1], params[2]);
+    		
+    		return result;
+    	}
+
+    	@Override
+    	protected void onCancelled() {
+    		super.onCancelled();
+    	}
+
+    	@Override
+    	protected void onPostExecute(String result) {
+    		
+    		if(result.trim().equals("ok")){
+    			Intent intent=new Intent();
+                intent.putExtra("username", username.getText().toString().trim());
+                intent.setClass(Login.this, MainActivity.class);     
+                startActivity(intent);
+                Login.this.finish();
+    		}else{
+    			Toast.makeText(getApplicationContext(), "登录信息有误!",Toast.LENGTH_LONG).show();
+                Login.setText("登录");
+                Login.setEnabled(true);
+    		}
+    		super.onPostExecute(result);
+    	}
+
+    	@Override
+    	protected void onPreExecute() {
+    		Login.setText("登录中...");
+            Login.setEnabled(false);
+    		super.onPreExecute();
+    	}
+
+    	@Override
+    	protected void onProgressUpdate(Integer... values) {
+    		super.onProgressUpdate(values);
+    	}
+    	
+    }
 
 }

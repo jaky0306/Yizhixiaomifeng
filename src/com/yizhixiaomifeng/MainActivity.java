@@ -1,9 +1,17 @@
 package com.yizhixiaomifeng;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+
+import com.yizhixiaomifeng.tools.ActivityCloser;
+import com.yizhixiaomifeng.tools.HeadTool;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +19,7 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -25,15 +34,28 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnTouchListener {
 	
 	private ImageView head ;
 	private ImageView show_menu_layout;
+	private TextView showTime;
+	private TextView showDate;
+	private String timeString;
+	private String dateString;
 	private Button signin;
-	private boolean scrollToMenu=true;
-	
+	private Handler handler=new Handler(){
+		public void handleMessage(Message msg) {
+			if(msg.what==0x111){
+				showTime.setText(msg.obj.toString());
+			}
+			if(msg.what==0x112){
+				showDate.setText(msg.obj.toString());
+			}
+		};
+	};
 	/**
 	 * 控制侧滑内容
 	 */
@@ -44,6 +66,9 @@ public class MainActivity extends Activity implements OnTouchListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		ActivityCloser.activities.add(this);
+		
 		/**
 		 * 切换菜单
 		 */
@@ -52,13 +77,12 @@ public class MainActivity extends Activity implements OnTouchListener {
 			
 			@Override
 			public void onClick(View v) {
-				if(scrollToMenu){
-					scrollToMenu();
-					scrollToMenu=false;
-				}else
-				{
-					scrollToContent();
-					scrollToMenu=true;
+				if(isMenuVisible)
+	        	{
+	        		scrollToContent();
+	        	}
+	        	else {
+	        		scrollToMenu();
 				}
 			}
 		});
@@ -68,10 +92,10 @@ public class MainActivity extends Activity implements OnTouchListener {
 		 */
 		head = (ImageView)findViewById(R.id.staff_head);
 		Bitmap bm = null;
-		if ((bm = SetHead.haveHead()) != null) {
+		if ((bm = HeadTool.haveHead()) != null) {
 			//head.setImageBitmap(bm);
 			//Bitmap bitmap=BitmapFactory.decodeResource(getResources(), R.drawable.bt);
-		      Bitmap output=SetHead.toRoundBitmap(bm);
+		      Bitmap output=HeadTool.toRoundBitmap(bm);
 		      head.setImageBitmap(output);
 		}
 		
@@ -90,6 +114,46 @@ public class MainActivity extends Activity implements OnTouchListener {
 				startActivity(intent);
 			}
 		});
+		
+		/**
+		 * 显示时间
+		 */
+		showTime=(TextView)findViewById(R.id.show_time);
+		showDate=(TextView)findViewById(R.id.show_date);
+		final String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				while(true){
+					Calendar c = Calendar.getInstance();//可以对每个时间域单独修改
+					int week=c.get(Calendar.DAY_OF_WEEK)-1;
+					if(week<0) week=0;
+					int year = c.get(Calendar.YEAR); 
+					int month = c.get(Calendar.MONTH)+1; 
+					int date = c.get(Calendar.DATE); 
+					int hour = c.get(Calendar.HOUR_OF_DAY); 
+					int minute = c.get(Calendar.MINUTE);
+					timeString=(hour<10?"0"+hour:""+hour)+":"+(minute<10?"0"+minute:""+minute);
+					dateString=year+"-"+month+"-"+date+"  "+weekDays[week];
+					Message ts = new Message();
+					ts.what=0x111;
+					ts.obj=timeString;
+					handler.sendMessage(ts);
+					Message ds = new Message();
+					ds.what=0x112;
+					ds.obj=dateString;
+					handler.sendMessage(ds);
+	                try {
+						Thread.sleep(10000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
+		
 		
 		/*********************初始化MenuLayout************************/
 		
@@ -153,7 +217,7 @@ public class MainActivity extends Activity implements OnTouchListener {
             if(exit==2)
             {
                 exit = 0 ;
-                this.finish();
+                ActivityCloser.exitAllActivities(this);
               
             }
             else
@@ -181,8 +245,6 @@ public class MainActivity extends Activity implements OnTouchListener {
         }
         return super.onKeyDown(keyCode, event);
     }
-	
-	
 	
 		
 	

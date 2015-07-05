@@ -1,4 +1,5 @@
 package com.yizhixiaomifeng;
+import com.yizhixiaomifeng.tools.ActivityCloser;
 import com.yizhixiaomifeng.tools.ConnectWeb;
 
 import android.app.Activity;
@@ -28,6 +29,9 @@ public class Register extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
+        
+        ActivityCloser.activities.add(this);
+        
         backImageView=(ImageView)findViewById(R.id.back);
         backImageView.setOnClickListener(new OnClickListener() {
 			

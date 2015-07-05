@@ -128,13 +128,36 @@
     
     
 
-</RelativeLayout>
-    
+	</RelativeLayout>
+	
+	<LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="100dip"
+	    android:background="@color/background_3"
+	    android:layout_marginTop="5dip"
+	    android:orientation="vertical">
+	    
+	    <TextView 
+	        android:id="@+id/show_time"
+	        android:layout_width="fill_parent"
+	        android:layout_height="70dip"
+	        android:layout_marginTop="5dip"
+	        android:text="aaaaaaaaaa"
+	        android:gravity="center"
+	        android:textSize="40sp"/>
+	    <TextView 
+	        android:id="@+id/show_date"
+	        android:layout_width="fill_parent"
+	        android:layout_height="30dip"
+	        android:text="bbbbbbbbbb"
+	        android:gravity="center"
+	        android:textSize="20sp"/>
+	</LinearLayout>
+	
     <LinearLayout
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
 	    android:gravity="center"
-	    android:layout_marginTop="5dip"
 	    android:background="@color/background_3"
 	    android:orientation="horizontal">
         

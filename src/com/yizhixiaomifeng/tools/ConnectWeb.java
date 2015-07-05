@@ -28,7 +28,7 @@ public class ConnectWeb {
 	 * @param password
 	 * @return 成功返回 "ok"  失败返回 "error"
 	 */
-    public String checkUser(String phone,String password)
+    public String checkUser(String phone,String password,String type)
     {
     	try
         {
@@ -44,6 +44,7 @@ public class ConnectWeb {
            // params.add(new BasicNameValuePair("method", "checkUser"));  //调用spring中的checkUser方法
             params.add(new BasicNameValuePair("phone",phone));      //USERID
             params.add(new BasicNameValuePair("password",password));	//password
+            params.add(new BasicNameValuePair("type", type));
             httpRequest.setEntity(new UrlEncodedFormEntity(params, "utf-8")); //参数字符编码
             HttpResponse httpResponse=httpClient.execute(httpRequest);     //链接
             if(httpResponse.getStatusLine().getStatusCode()==HttpStatus.SC_OK)  //成功

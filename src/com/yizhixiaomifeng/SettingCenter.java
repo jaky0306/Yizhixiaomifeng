@@ -1,5 +1,7 @@
 package com.yizhixiaomifeng;
 
+import com.yizhixiaomifeng.tools.ActivityCloser;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +17,9 @@ public class SettingCenter extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.setting_center);
+		
+		ActivityCloser.activities.add(this);
+		
 		setHeadButton=(Button)findViewById(R.id.setting_center_header);
 		signInButton=(Button)findViewById(R.id.setting_center_signin);
 		signOutButton=(Button)findViewById(R.id.setting_center_signout);
