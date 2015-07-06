@@ -37,7 +37,7 @@ public class SettingCenter extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				if(new LocalStorage(SettingCenter.this).getString("username", "").equals("")){
+				if(!new LocalStorage(SettingCenter.this).getString("username", "").equals("")){
 					Toast.makeText(SettingCenter.this, "你已经登录...", Toast.LENGTH_LONG).show();
 					return;
 				}
@@ -52,7 +52,10 @@ public class SettingCenter extends Activity{
 			public void onClick(View v) {
 				LocalStorage ls = new LocalStorage(SettingCenter.this);
 				ls.putString("username", "");
-				ls.putString("type", "");
+    			ls.putString("type", "");
+    			ls.putString("name", "****");
+    			ls.putString("duty", "****");
+    			ls.putString("department", "****");
 				ls.commitEditor();
 				Toast.makeText(getApplicationContext(), "已退出登录...", Toast.LENGTH_LONG).show();
 				Intent intent = new Intent(SettingCenter.this,MainActivity.class);

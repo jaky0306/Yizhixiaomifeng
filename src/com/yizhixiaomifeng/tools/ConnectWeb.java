@@ -90,31 +90,4 @@ public class ConnectWeb {
     
     
     
-    
-    /**
-     * 判断网络是否能连接
-     * @param Context context
-     * @return
-     */
-    public boolean isConnect(Context context)
-    {
-        try{
-            ConnectivityManager cm=(ConnectivityManager)context.getSystemService(context.CONNECTIVITY_SERVICE);
-            if(cm!=null)
-            {
-                NetworkInfo info=cm.getActiveNetworkInfo();
-                if(info!=null&&info.isConnected())
-                {
-                    if(info.getState()==NetworkInfo.State.CONNECTED)
-                    {
-                        return true;
-                    }
-                }
-            }
-        }catch(Exception e)
-        {
-            return false;
-        }
-        return false;
-    }
 }

@@ -1,4 +1,5 @@
 package com.yizhixiaomifeng;
+import com.yizhixiaomifeng.config.YzxmfConfig;
 import com.yizhixiaomifeng.tools.ActivityCloser;
 import com.yizhixiaomifeng.tools.ConnectWeb;
 
@@ -54,7 +55,7 @@ public class Register extends Activity
                 final String user=username.getText().toString();
                 final String pass=password.getText().toString();
                 final String confirmPass=confirmPassword.getText().toString();
-                if(new ConnectWeb().isConnect(Register.this)==false)
+                if(YzxmfConfig.isConnect(Register.this)==false)
                 {
                     Toast.makeText(Register.this, "网络连接失败，请确认网络连接...",Toast.LENGTH_LONG).show();
                     return ;

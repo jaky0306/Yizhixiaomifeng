@@ -1,16 +1,19 @@
 package com.yizhixiaomifeng;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.avos.avoscloud.LogUtil.log;
+import com.baidu.platform.comapi.map.j;
+import com.yizhixiaomifeng.config.YzxmfConfig;
 import com.yizhixiaomifeng.tools.ActivityCloser;
 import com.yizhixiaomifeng.tools.ConnectWeb;
 import com.yizhixiaomifeng.tools.LocalStorage;
 
 import android.app.Activity;
-import android.app.backup.SharedPreferencesBackupHelper;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
@@ -85,7 +88,7 @@ public class Login extends Activity
 						break;
 					}
 				}
-                if(new ConnectWeb().isConnect(Login.this)==false)
+                if(YzxmfConfig.isConnect(Login.this)==false)
                 {
                     Toast.makeText(Login.this, "网络连接失败，请确认网络连接...",Toast.LENGTH_LONG).show();
                     return ;
@@ -95,50 +98,8 @@ public class Login extends Activity
                     
                 }
                 else {
-                	
-                	
-//                    new Thread(new Runnable() {                       
-//                        public void run()
-//                        {
-//                            result=new ConnectWeb().checkUser(user, pass,lt);
-//                            Log.e("aaaaaaaaaaaa", "aa"+result);
-////                            Message m = handler.obtainMessage();
-////                            handler.sendMessage(m); 
-//                        }
-//                    }).start();
-                	//把用户名，密码， 登录类型发给后台
                 	new DataLoader().execute(user,pass,type);
                 }
-                
-//                handler = new Handler(){
-//                    public void handleMessage(Message msg) {
-//                        // 提示登录中                        
-//                        Login.setText("登录中...");
-//                        Login.setEnabled(false);
-//                    
-//                        if(result){
-//                            
-//                            Intent intent=new Intent();
-//                            intent.putExtra("username", user);
-//                            intent.putExtra("password", pass);
-//                            intent.setClass(Login.this, MainActivity.class);     
-//                            startActivity(intent);
-//                            
-//                            //Intent intent=new Intent(Login.this, MainUI.class);  //登录成功就跳转
-//                            
-//                           // startActivity(intent);
-//                            Login.this.finish();
-//                            
-//                        }else{
-//                            Toast.makeText(getApplicationContext(), "登录信息有误!",Toast.LENGTH_LONG).show();
-//                            Login.setText("登录");
-//                            Login.setEnabled(true);
-//                            
-//                        }
-//                        
-//                        super.handleMessage(msg);
-//                    }
-//                };
                 
             }
         });
@@ -203,24 +164,46 @@ public class Login extends Activity
     	}
 
     	@Override
-    	protected void onPostExecute(String result) {
+    	protected void onPostExecute(String result){
     		//Log.e("result", "aa"+result);
-    		if(result.trim().equals("ok")){
+    		if(!result.trim().equals("error")){
     			
-    			/**
-    			 * 登录成功后把登录信息保存到SharedPreferences
-    			 */
-    			LocalStorage ls = new LocalStorage(Login.this);
-    			ls.putString("username", user);
-    			ls.putString("type", type);
-    			ls.commitEditor();
-    			//登录成功后进行Activity跳转
-    			Intent intent=new Intent();
-                intent.setClass(Login.this, MainActivity.class);     
-                startActivity(intent);
-                Login.this.finish();
+    			
+    			try {
+    				if(type.equals("员工")){
+    					String userInfo = result.trim();
+    					log.e("userInfo",""+userInfo);
+    					//解析json格式的数据
+    					JSONObject jsonObject = new JSONObject(userInfo);
+    					String name=jsonObject.getString("name");
+    					String duty = jsonObject.getString("duty");
+    					String department = jsonObject.getString("department");
+    					/**
+    	    			 * 登录成功后把用户基本信息保存到SharedPreferences
+    	    			 */
+    	    			LocalStorage ls = new LocalStorage(Login.this);
+    	    			ls.putString("username", user);
+    	    			ls.putString("type", type);
+    	    			ls.putString("name", name);
+    	    			ls.putString("duty", duty);
+    	    			ls.putString("department", department);
+    	    			ls.commitEditor();
+    	    			//登录成功后进行Activity跳转
+    	    			Intent intent=new Intent();
+    	                intent.setClass(Login.this, MainActivity.class);     
+    	                startActivity(intent);
+    	                Login.this.finish();
+    				}else if(type.equals("管理员"))
+    				{
+    					
+    				}
+					
+    			} catch (Exception e) {
+					e.printStackTrace();
+				}
+    			
     		}else{
-    			Toast.makeText(getApplicationContext(), "登录信息有误!"+result,Toast.LENGTH_LONG).show();
+    			Toast.makeText(getApplicationContext(), "登录失败!",Toast.LENGTH_LONG).show();
                 Login.setText("登录");
                 Login.setEnabled(true);
     		}

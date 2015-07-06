@@ -32,6 +32,8 @@
     	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
     	<activity android:name="com.yizhixiaomifeng.Register"
     	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
+    	<activity android:name="com.yizhixiaomifeng.CheckIn"
+    	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
