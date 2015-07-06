@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_5"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/background_4" >
+
+        <TextView
+        	android:id="@+id/admin_worker_dp_title"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/background_4"
+            android:gravity="center"
+            android:text="部门名称"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+        	android:id="@+id/admin_worker_dp_back"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:padding="8dp"
+            android:src="@drawable/back_icon" />
+
+        <Button
+        	android:id="@+id/admin_worker_dp_add"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5dp"
+            android:background="@color/background_2"
+            android:text="新增" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/admin_worker_dp_workers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
+</LinearLayout>
