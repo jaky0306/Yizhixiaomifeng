@@ -9,6 +9,7 @@ import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.LogUtil.log;
+import com.baidu.mapapi.SDKInitializer;
 import com.yizhixiaomifeng.adapter.MenuListViewAdapter;
 import com.yizhixiaomifeng.config.ParameterConfig;
 import com.yizhixiaomifeng.tools.ActivityCloser;
@@ -90,6 +91,9 @@ public class MainActivity extends Activity implements OnTouchListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		SDKInitializer.initialize(getApplicationContext());//初始化百度地图
+		
 		setContentView(R.layout.activity_main);
 		/**
 		 * 初始化leancloud

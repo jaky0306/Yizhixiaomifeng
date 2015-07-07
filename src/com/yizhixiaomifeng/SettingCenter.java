@@ -1,5 +1,6 @@
 package com.yizhixiaomifeng;
 
+import com.yizhixiaomifeng.config.ParameterConfig;
 import com.yizhixiaomifeng.tools.ActivityCloser;
 import com.yizhixiaomifeng.tools.LocalStorage;
 
@@ -57,6 +58,7 @@ public class SettingCenter extends Activity{
     			ls.putString("duty", "****");
     			ls.putString("department", "****");
 				ls.commitEditor();
+				ParameterConfig.firstUse=true; //退出了，说明下次登录时第一次使用
 				Toast.makeText(getApplicationContext(), "已退出登录...", Toast.LENGTH_LONG).show();
 				Intent intent = new Intent(SettingCenter.this,MainActivity.class);
 				startActivity(intent);

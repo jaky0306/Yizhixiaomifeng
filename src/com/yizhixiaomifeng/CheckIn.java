@@ -45,6 +45,8 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -66,7 +68,7 @@ public class CheckIn extends Activity
 	private TextView check_in_position_tip;
 	private Spinner spinner;
 	private ImageView check_in_scene;
-	private String check_in_scene_name="checkinScene";
+	private String check_in_scene_name="checkinScene.jpg";
 	private EditText check_in_leave_word;
 	private List<String>data_list;
 	
@@ -104,6 +106,10 @@ public class CheckIn extends Activity
     		}
     		if(msg.what==0x114){//更新时间
     			check_in_time.setText(msg.obj.toString());
+    		}
+    		if(msg.what==0x115){  //用来显示基本信息
+    			LocalStorage ls = new LocalStorage(CheckIn.this);
+    			check_in_name.setText(ls.getString("name", "****"));
     		}
     	};
     };
@@ -156,12 +162,9 @@ public class CheckIn extends Activity
 				mylLatLng=new LatLng(location.getLatitude(), location.getLongitude());
 				StringBuffer sb = new StringBuffer();
 				if (location.getLocType() == BDLocation.TypeGpsLocation){
-					sb.append("\nspeed : ");
 					sb.append(location.getSpeed());
-					sb.append("\nsatellite : ");
 					sb.append(location.getSatelliteNumber());
 				} else if (location.getLocType() == BDLocation.TypeNetWorkLocation){
-					sb.append("\naddr : ");
 					sb.append(location.getAddrStr());
 				} 
 				/**
@@ -231,6 +234,7 @@ public class CheckIn extends Activity
          * 初始化Spinner的数据
          */
         data_list = new ArrayList<String>();
+        data_list.add("请选择客户");
         data_list.add("中国移动南方基地");
         data_list.add("bbb");
         data_list.add("ccc");
@@ -242,6 +246,32 @@ public class CheckIn extends Activity
         arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //加载适配器
         spinner.setAdapter(arr_adapter);
+        
+        spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> adapter, View view,
+					int position, long id) {
+				if(position!=0)
+					Toast.makeText(getApplicationContext(), data_list.get(position), Toast.LENGTH_LONG).show();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				
+			}
+		});
+        
+        
+        
+        
+        /**
+         * 初始化基本信息
+         */
+        Message msg =new Message();
+        msg.what=0x115;
+        handler.sendMessage(msg);
+        
         
         /**
          * 加载完数据后立刻获取当前位置，并定时更新时间
@@ -256,7 +286,7 @@ public class CheckIn extends Activity
 					}
 				}, 
 				1, 
-				10, 
+				1, 
 				TimeUnit.SECONDS);
         
         
@@ -343,10 +373,10 @@ public class CheckIn extends Activity
 		if (extras != null) {
 			Bitmap photo = extras.getParcelable("data");
 			//转成圆形
-			Bitmap roundBitmap = HeadTool.toRoundBitmap(photo);
+			//Bitmap roundBitmap = HeadTool.toRoundBitmap(photo);
 			@SuppressWarnings("deprecation")
-			Drawable drawable = new BitmapDrawable(roundBitmap);
-			saveScene(roundBitmap);
+			Drawable drawable = new BitmapDrawable(photo);
+			saveScene(photo);
 			check_in_scene.setImageDrawable(drawable);
 
 		}
