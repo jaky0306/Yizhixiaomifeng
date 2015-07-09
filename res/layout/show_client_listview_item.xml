@@ -1,0 +1,95 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rectangle_bg_1"
+    android:layout_margin="5dip">
+    	<com.yizhixiaomifeng.layout.SwipeLayout 
+    	    android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:focusable="false"
+        android:clickable="false">
+    	    
+        <RelativeLayout 
+            android:id="@+id/client_item_info"
+            android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:background="@drawable/rectangle_bg_2">
+            <TextView 
+            android:id="@+id/name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dip"
+            android:layout_marginTop="3dip"
+            android:textSize="20sp"
+            android:text="中国移动南方基地"/>
+	        <TextView 
+	            android:id="@+id/project_info"
+	            android:layout_width="wrap_content"
+	            android:layout_height="20dip"
+	            android:layout_below="@id/name"
+	            android:layout_marginTop="5dip"
+	            android:textSize="15sp"
+	            android:drawableLeft="@drawable/project_icon"
+	            android:text="合作项目"
+	            />
+	        <TextView 
+	            android:id="@+id/project_name"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@id/project_info"
+	            android:layout_marginTop="2dip"
+	            android:text="三期语音项目，中国移动MM项目，移动4G计费项目"
+	            android:layout_marginLeft="8dip"
+	            />
+	        <TextView 
+	            android:id="@+id/address_info"
+	            android:layout_width="wrap_content"
+	            android:layout_height="20dip"
+	            android:layout_below="@id/project_name"
+	            android:layout_marginTop="5dip"
+	            android:textSize="15sp"
+	            android:drawableLeft="@drawable/address_icon"
+	            android:text="公司地址"
+	            />
+	        <TextView 
+	            android:id="@+id/address"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@id/address_info"
+	            android:layout_marginTop="2dip"
+	            android:text="广从大道13号"
+	            android:layout_marginLeft="8dip"
+	            />
+	        </RelativeLayout>
+
+	        <LinearLayout
+	            android:id="@+id/edit_delete_layout"
+	            android:layout_width="120dip"
+	            android:layout_height="wrap_content"
+	            android:background="@color/white"
+	            android:gravity="center"
+	            android:orientation="horizontal" >
+	
+	            <Button
+	                android:id="@+id/edit_item_button"
+	                android:background="@drawable/rectangle_bg_1"
+	                android:layout_width="60dip"
+	                android:layout_height="100dip"
+	                android:drawableTop="@drawable/edit_icon"
+	                android:text="编辑" />
+	            <Button
+	                android:id="@+id/delete_item_button"
+	                android:background="@drawable/rectangle_bg_1"
+	                android:layout_width="60dip"
+	                android:layout_height="100dip"
+	                android:drawableTop="@drawable/delete_icon"
+	                android:text="删除" />
+	
+	            
+	
+	        </LinearLayout>
+	        
+    	</com.yizhixiaomifeng.layout.SwipeLayout>
+
+    	
+</RelativeLayout>

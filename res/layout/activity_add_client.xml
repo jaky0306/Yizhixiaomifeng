@@ -26,6 +26,16 @@
             android:layout_height="45dp"
             android:padding="8dp"
             android:src="@drawable/back_icon" />
+        
+        
+        <Button
+            android:id="@+id/commit_add_client"
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5dp"
+            android:background="@drawable/rectangle_bg_2"
+            android:text="新增" />
     </RelativeLayout>
 
     <ScrollView
@@ -68,8 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/edittext_bg"
-                android:hint="请输入合作项目"
-                android:inputType="phone" />
+                android:hint="请输入合作项目" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -91,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/edittext_bg"
-                    android:inputType="phone" />
+                    android:singleLine="false"/>
 
                 <Button
                     android:id="@+id/add_client_search"
@@ -119,8 +128,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/edittext_bg"
+                android:focusable="false"
                 android:drawableRight="@drawable/date_icon"/>
-            
             
             <TextView
                 android:layout_width="wrap_content"
@@ -134,17 +143,23 @@
                 android:id="@+id/add_client_end_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="false"
                 android:background="@drawable/edittext_bg"
                 android:drawableRight="@drawable/date_icon"/>
 
-            <Button
-                android:id="@+id/add_worker_save"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/rectangle_bg_4"
-                android:text="保存" />
+            
+            <com.baidu.mapapi.map.MapView
+		        android:id="@+id/bmapView"
+		        android:layout_width="fill_parent"
+		        android:layout_height="300dip"
+		        android:layout_marginTop="5dip"
+		        android:clickable="true" />
+            
         </LinearLayout>
+        
+        
+        
+        
     </ScrollView>
 
 </LinearLayout>

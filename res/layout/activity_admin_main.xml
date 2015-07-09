@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_5"
+    android:background="@color/background_4"
     android:orientation="vertical" >
 
     <TextView
@@ -27,8 +27,29 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
+                android:background="@drawable/rectangle_bg_2"
                 android:padding="15dp" >
 
+                <LinearLayout 
+			        android:id="@+id/show_loadinfo_tip_LinearLayout"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:orientation="horizontal"
+			        android:visibility="invisible"
+			        android:layout_centerInParent="true">
+			        <ProgressBar 
+				        android:layout_width="wrap_content" 
+				        android:layout_height="wrap_content"
+				        android:layout_marginLeft="25dip"
+				        />  
+				    <TextView 
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:layout_gravity="center"
+				        android:textColor="@color/white"
+				        android:text="正在加载数据..."/>
+			    </LinearLayout> 
+                
                 <ImageView
                     android:id="@+id/admin_main_head_img"
                     android:layout_width="80dp"
@@ -42,8 +63,9 @@
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/admin_main_head_img"
                     android:paddingTop="5dp"
+                    android:textSize="22sp"
                     android:text="管理员姓名"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/admin_main_duty"
@@ -63,9 +85,10 @@
                 android:background="@color/gray" />
 
             <RelativeLayout
-                android:id="@+id/admin_main_item1"
+                android:id="@+id/admin_main_manage_attendance"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/rectangle_bg_5"
                 android:padding="10dp"
                 android:orientation="horizontal" >
 
@@ -101,9 +124,10 @@
                 android:background="@color/gray" />
 
             <RelativeLayout
-                android:id="@+id/admin_main_item2"
+                android:id="@+id/admin_main_manage_news"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/rectangle_bg_5"
                 android:padding="10dp"
                 android:orientation="horizontal" >
 
@@ -139,9 +163,10 @@
                 android:background="@color/gray" />
 
             <RelativeLayout
-                android:id="@+id/admin_main_item3"
+                android:id="@+id/admin_main_manage_staff"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/rectangle_bg_5"
                 android:padding="10dp"
                 android:orientation="horizontal" >
 
@@ -177,9 +202,10 @@
                 android:background="@color/gray" />
 
             <RelativeLayout
-                android:id="@+id/admin_main_item4"
+                android:id="@+id/admin_main_manage_client"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/rectangle_bg_5"
                 android:padding="10dp"
                 android:orientation="horizontal" >
 
@@ -215,9 +241,10 @@
                 android:background="@color/gray" />
 
             <RelativeLayout
-                android:id="@+id/admin_main_item5"
+                android:id="@+id/admin_main_setting"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/rectangle_bg_5"
                 android:padding="10dp"
                 android:orientation="horizontal" >
 

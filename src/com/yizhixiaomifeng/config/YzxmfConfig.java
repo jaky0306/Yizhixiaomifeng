@@ -6,6 +6,9 @@ import android.net.NetworkInfo;
 import android.os.Environment;
 
 public class YzxmfConfig {
+	
+	public static String voicesrc="/sdcard/voice.amr";
+	
 	/**
 	 * ºÏ≤È «∑Ò¥Ê‘⁄SDCard
 	 * 

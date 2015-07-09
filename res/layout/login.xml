@@ -54,6 +54,7 @@
             android:layout_below="@id/usernameInfo"
             android:singleLine="true"
             android:inputType="text"
+            android:background="@drawable/edittext_bg"
             android:text="1"
             />
         <!--密码 -->
@@ -77,6 +78,7 @@
             android:layout_marginRight="5dip"
             android:singleLine="true"
             android:inputType="textPassword"
+            android:background="@drawable/edittext_bg"
             android:text="1"
             />
         

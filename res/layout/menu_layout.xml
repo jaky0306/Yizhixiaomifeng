@@ -11,20 +11,10 @@
             android:layout_width="fill_parent"
             android:layout_height="80dp"
             android:layout_marginBottom="20dp"
+            android:layout_marginTop="5dip"
             android:layout_gravity="center"
-            android:background="@color/background_1"
-            >
-            
-            	<!-- 
-            	<ImageView 
-                android:id="@+id/menu_item_logon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/logon"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="5dp"
-                />
-            	-->
+            android:background="@color/background_1">
+
             	<ImageView
             	    android:id="@+id/menu_head" 
             	    android:layout_width="80dip"
@@ -33,23 +23,7 @@
                 	android:layout_centerVertical="true"
                 	android:src="@drawable/guest"
                 	/>
-            	<!-- 
-            	<ImageView
-         		    android:id="@+id/menu_item_login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-					android:layout_alignParentRight="true" 
-					android:layout_centerVertical="true"                   
-                    android:src="@drawable/login"/>
-                <ImageView 
-         		    android:id="@+id/menu_item_register"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="3dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@id/menu_item_login"
-                    android:src="@drawable/register"/>
-         		-->
+
 
             	<TextView
             	    android:id="@+id/menu_show_user_name"
