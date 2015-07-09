@@ -21,12 +21,13 @@
             android:textStyle="bold" />
 
         <ImageView
-        	android:id="@+id/admin_worker_back"
+            android:id="@+id/admin_worker_back"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:padding="8dp"
             android:onClick="back"
+            android:padding="8dp"
             android:src="@drawable/back_icon" />
+
     </RelativeLayout>
 
     <EditText
@@ -36,9 +37,9 @@
         android:layout_margin="10dp"
         android:background="@drawable/edittext_bg"
         android:drawableLeft="@drawable/search_icon"
+        android:enabled="false"
         android:hint="请输入姓名进行查找"
-        android:onClick="search"
-        android:enabled="false" />
+        android:onClick="search" />
 
     <ListView
         android:id="@+id/admin_worker_departments"

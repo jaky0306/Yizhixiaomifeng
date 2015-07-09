@@ -9,6 +9,7 @@ import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.LogUtil.log;
+import com.baidu.mapapi.SDKInitializer;
 import com.yizhixiaomifeng.adapter.MenuListViewAdapter;
 import com.yizhixiaomifeng.config.ParameterConfig;
 import com.yizhixiaomifeng.tools.ActivityCloser;
@@ -27,6 +28,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -61,6 +63,14 @@ public class MainActivity extends Activity implements OnTouchListener {
 	private String user;		//当前用户名
 	private String type;		//用户类型
 	private List<String> menuitems=new ArrayList<String>();	//menu 显示的数据
+	
+	private Button checkin ;
+	private Button checkout;
+	
+	
+	private ListView showMenuItems ;		//menu显示item的listview
+	private int exit=0;  //	用来记录click 的次数
+	
 	private Handler handler=new Handler(){
 		public void handleMessage(Message msg) {
 			if(msg.what==0x111){
@@ -69,17 +79,21 @@ public class MainActivity extends Activity implements OnTouchListener {
 			if(msg.what==0x112){
 				showDate.setText(msg.obj.toString());
 			}
+			if(msg.what==0x113){
+				LocalStorage ls = new LocalStorage(MainActivity.this);
+				menu_show_user_name.setText(ls.getString("name","****"));
+				main_show_staff_name.setText(ls.getString("name", "****"));
+				main_show_staff_job.setText(ls.getString("duty", "****"));
+				main_show_staff_department.setText(ls.getString("department", "****"));
+			}
 		};
 	};
-	/**
-	 * 控制侧滑内容
-	 */
-	
-	private ListView showMenuItems ;		//menu显示item的listview
-	private int exit=0;  //	用来记录click 的次数
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		SDKInitializer.initialize(getApplicationContext());//初始化百度地图
+		
 		setContentView(R.layout.activity_main);
 		/**
 		 * 初始化leancloud
@@ -91,58 +105,15 @@ public class MainActivity extends Activity implements OnTouchListener {
 		ActivityCloser.activities.add(this);
 		
 		signin=(Button)findViewById(R.id.singin);
+		checkin=(Button)findViewById(R.id.check_in);
+		checkout=(Button)findViewById(R.id.check_out);
 		
 		LocalStorage ls = new LocalStorage(this);
 		user = ls.getString("username", "");
 		type = ls.getString("type", "");
-		if(user.equals("")){
-			
-			/**
-			 * 改变登录按钮状态
-			 */
-			signin.setText("登录");
-			signin.setEnabled(true);
-			
-			/*********************初始化MenuLayout************************/
-			
-			
-			
-		}else 
-		{
-			/**
-			 * 改变登录按钮状态
-			 */
-			signin.setText("已登录");
-			signin.setEnabled(false);
-			
-			loadUserInfo(); //加载用户信息
-			
-			if(type.equals("员工"))
-			{
-				menuitems.clear();
-				menuitems.add("个人中心");
-				showMenuItems=(ListView)findViewById(R.id.showMenuItems_listview);
-				showMenuItems.setAdapter(new MenuListViewAdapter(MainActivity.this, menuitems));
-				showMenuItems.setOnItemClickListener(new OnItemClickListener() {
-
-					@Override
-					public void onItemClick(AdapterView<?> adapterView, View view, int position,
-							long id) {
-						switch (position) {
-						case 0:
-							Intent intent1 = new Intent(MainActivity.this, SettingCenter.class);
-							startActivity(intent1);
-							break;
-						default:
-							break;
-						}
-					}
-				});
-			}else if(type.equals("管理员"))
-			{
-				
-			}
-		}
+		
+		
+		initByUser();
 		
 		
 		
@@ -196,20 +167,75 @@ public class MainActivity extends Activity implements OnTouchListener {
 		 */
 		showTimeAndDate();
 		
+		
+		/**
+		 * 签到签退事件
+		 */
+		checkin.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(user.equals("")){
+					Toast.makeText(getApplicationContext(), "请先登录...", Toast.LENGTH_LONG).show();
+					return;
+				}else {
+					Intent intent = new Intent(MainActivity.this,CheckIn.class);
+					startActivity(intent);
+				}
+			}
+		});
+		
 	}
 
-//	public List<Map<String,Object>> getMenuData()
-//	{
-//		List<Map<String, Object>> menuItemData=new ArrayList<Map<String,Object>>();
-//		String[] initdata={"个人主页"};
-//		for(int i=0;i<initdata.length;i++)
-//		{
-//			Map<String,Object> map = new HashMap<String,Object>();
-//			map.put("title", initdata[i]);
-//			menuItemData.add(map);
-//		}
-//		return menuItemData;
-//	}
+	public void initByUser()
+	{
+		if(user.equals("")){
+			
+			/**
+			 * 改变登录按钮状态
+			 */
+			signin.setText("登录");
+			signin.setEnabled(true);
+			initWithoutUser();
+			/*********************初始化MenuLayout************************/
+			
+		}else 
+		{
+			/**
+			 * 改变登录按钮状态
+			 */
+			signin.setText("已登录");
+			signin.setEnabled(false);
+			loadUserInfo(); //加载用户信息
+			
+			if(type.equals("员工"))
+			{
+				menuitems.clear();
+				menuitems.add("个人中心");
+				showMenuItems=(ListView)findViewById(R.id.showMenuItems_listview);
+				showMenuItems.setAdapter(new MenuListViewAdapter(MainActivity.this, menuitems));
+				showMenuItems.setOnItemClickListener(new OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> adapterView, View view, int position,
+							long id) {
+						switch (position) {
+						case 0:
+							Intent intent1 = new Intent(MainActivity.this, SettingCenter.class);
+							startActivity(intent1);
+							break;
+						default:
+							break;
+						}
+					}
+				});
+			}else if(type.equals("管理员"))
+			{
+				
+			}
+		}
+	}
+	
 	/**
 	 * 初始化没有用户信息时，界面的显示
 	 */
@@ -246,6 +272,7 @@ public class MainActivity extends Activity implements OnTouchListener {
 		head = (ImageView)findViewById(R.id.staff_head);
 		menu_head=(ImageView)findViewById(R.id.menu_head);
 		ImageView [] heads=new ImageView[]{head,menu_head};
+		
 		if(ParameterConfig.headChange||ParameterConfig.firstUse){ //如果头像改变了,或第一次使用，立刻更新头像
 			new HeadLoader(heads,show_loadinfo_tip).execute(user);     //获取最新头像信息
 			ParameterConfig.headChange=false; //头像更新完毕了，把标记设为false
@@ -258,16 +285,20 @@ public class MainActivity extends Activity implements OnTouchListener {
 		main_show_staff_department=(TextView)findViewById(R.id.staff_info_department);
 		main_show_staff_job=(TextView)findViewById(R.id.staff_info_job);
 		
-		if(ParameterConfig.infoChange||ParameterConfig.firstUse){
-			List<TextView> textViews = new ArrayList<TextView>();
-			textViews.add(menu_show_user_name);
-			textViews.add(main_show_staff_department);
-			textViews.add(main_show_staff_department);
-			textViews.add(main_show_staff_job);
-			new InfoLoader(textViews,show_loadinfo_tip).execute(user);  //获取最新用户信息
-			ParameterConfig.infoChange=false; //信息更新完毕了，把标记设为false
-			
-		}
+//		if(ParameterConfig.infoChange||ParameterConfig.firstUse){
+//			List<TextView> textViews = new ArrayList<TextView>();
+//			textViews.add(menu_show_user_name);
+//			textViews.add(main_show_staff_department);
+//			textViews.add(main_show_staff_department);
+//			textViews.add(main_show_staff_job);
+//			new InfoLoader(textViews,show_loadinfo_tip).execute(user);  //获取最新用户信息
+//			ParameterConfig.infoChange=false; //信息更新完毕了，把标记设为false
+//			
+//		}
+		Message msg = new Message();
+		msg.what=0x113;
+		handler.sendMessage(msg);
+		
 		ParameterConfig.firstUse=false; //用户信息加载完毕了，说明已经使用过了
 	}
 	/**
@@ -350,7 +381,17 @@ public class MainActivity extends Activity implements OnTouchListener {
         return super.onKeyDown(keyCode, event);
     }
 	
+	
+	@Override
+	protected void onResume() {
 		
+		LocalStorage ls = new LocalStorage(this);
+		user = ls.getString("username", "");
+		type = ls.getString("type", "");
+		initByUser();
+		super.onResume();
+	}
+	
 	
 	/*************************处理侧滑事件*****************************/
 	

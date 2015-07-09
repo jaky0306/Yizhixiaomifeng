@@ -5,9 +5,14 @@
  */
 package com.yizhixiaomifeng.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class DepartmenttEntity {
+public class DepartmenttEntity implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer number; 
 	private BusinessTypeEntity businessTypeEntity; 
 	private String name; 

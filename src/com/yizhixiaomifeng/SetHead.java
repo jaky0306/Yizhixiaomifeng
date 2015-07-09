@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import com.yizhixiaomifeng.config.ParameterConfig;
+import com.yizhixiaomifeng.config.YzxmfConfig;
 import com.yizhixiaomifeng.tools.ActivityCloser;
 import com.yizhixiaomifeng.tools.AvosTool;
 import com.yizhixiaomifeng.tools.ConnectWeb;
@@ -91,7 +92,7 @@ public class SetHead extends Activity {
 						case 1:
 							Intent intentFromCapture = new Intent(
 									MediaStore.ACTION_IMAGE_CAPTURE); // 相机资源
-							if (hasSdcard()) {
+							if (YzxmfConfig.hasSdcard()) {
 								intentFromCapture.putExtra(
 										MediaStore.EXTRA_OUTPUT,
 										Uri.fromFile(new File(Environment
@@ -123,7 +124,7 @@ public class SetHead extends Activity {
 				startPhotoZoom(data.getData());
 				break;
 			case CAMERA_REQUEST_CODE:
-				if (hasSdcard()) {
+				if (YzxmfConfig.hasSdcard()) {
 					File tempFile = new File(
 							Environment.getExternalStorageDirectory(),
 							IMAGE_FILE_NAME);
@@ -202,9 +203,11 @@ public class SetHead extends Activity {
 			}
 
 		}
-		
+		/**
+		 * 图片截取后立刻保存到云
+		 */
 		String username = new LocalStorage(this).getString("username", "");
-		if(new ConnectWeb().isConnect(this)){
+		if(YzxmfConfig.isConnect(this)){
 			new HeadUper().execute(username);
 		}
 		
@@ -212,19 +215,7 @@ public class SetHead extends Activity {
 		
 	}
 
-	/**
-	 * 检查是否存在SDCard
-	 * 
-	 * @return
-	 */
-	public boolean hasSdcard() {
-		String state = Environment.getExternalStorageState();
-		if (state.equals(Environment.MEDIA_MOUNTED)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+	
 	
 	class HeadUper extends AsyncTask<String, Integer, Void>{
 		@Override

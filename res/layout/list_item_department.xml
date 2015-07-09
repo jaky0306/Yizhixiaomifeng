@@ -1,38 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="65dp"
-    android:padding="10dp" >
+    android:layout_height="65dp" >
 
-    <TextView
-        android:id="@+id/department_name"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:gravity="center_vertical"
-        android:text="考勤管理"
-        android:textColor="@color/black"
-        android:textSize="18sp" />
+    <com.yizhixiaomifeng.hss.widget.SwipeFadeOutLayout
+        android:id="@+id/department_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" >
 
-    <TextView
-        android:id="@+id/department_member"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"
-        android:layout_toLeftOf="@+id/department_go"
-        android:gravity="center_vertical|right"
-        android:text="8人"
-        android:textColor="@color/black"
-        android:textSize="18sp" />
+        <TextView
+            android:id="@+id/department_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:text="考勤管理"
+            android:textColor="#000000"
+            android:textSize="18sp" />
 
-    <ImageView
-        android:id="@+id/department_go"
-        android:layout_width="18dp"
-        android:layout_height="10dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/right_icon_small" />
+        <RelativeLayout
+            android:id="@+id/department_go_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/department_member"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_toLeftOf="@+id/department_go"
+                android:gravity="center_vertical|right"
+                android:text="8人"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/department_go"
+                android:layout_width="18dp"
+                android:layout_height="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/right_icon_small" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/department_edit_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" >
+
+            <ImageView
+                android:id="@+id/department_edit"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@+id/department_delete"
+                android:background="@drawable/circle_bg"
+                android:padding="5dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/edit_icon" />
+
+            <ImageView
+                android:id="@+id/department_delete"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/circle_bg"
+                android:padding="5dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/delete_icon" />
+        </RelativeLayout>
+    </com.yizhixiaomifeng.hss.widget.SwipeFadeOutLayout>
 
 </RelativeLayout>

@@ -5,13 +5,14 @@
  */
 package com.yizhixiaomifeng.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DutyTypeEntity {
 	private Integer dutyId; 
 	private String name; 
     private BusinessTypeEntity businessTypeEntity; 
-	private List<WorkerEntity> workerEntities;  
+	private List<WorkerEntity> workerEntities=new ArrayList<WorkerEntity>();  
 	public Integer getDutyId() {
 		return dutyId;
 	}

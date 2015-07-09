@@ -26,6 +26,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:padding="8dp"
+            android:onClick="back"
             android:src="@drawable/back_icon" />
 
         <Button
@@ -35,6 +36,7 @@
             android:layout_alignParentRight="true"
             android:layout_margin="5dp"
             android:background="@color/background_2"
+            android:onClick="addWorker"
             android:text="新增" />
     </RelativeLayout>
 

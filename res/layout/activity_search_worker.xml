@@ -25,6 +25,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:padding="8dp"
+            android:onClick="back"
             android:src="@drawable/back_icon" />
     </RelativeLayout>
 
@@ -49,7 +50,24 @@
             android:layout_alignParentRight="true"
             android:layout_margin="5dp"
             android:background="@drawable/rectangle_bg_4"
+            android:onClick="search"
             android:text="查询" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/search_worker_not_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:drawableTop="@drawable/not_data_icon"
+            android:gravity="center"
+            android:text="查询无记录"
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <ListView

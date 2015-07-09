@@ -12,7 +12,11 @@ import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.DeleteCallback;
 import com.avos.avoscloud.LogUtil.log;
-
+/**
+ * 用来与LeanCloud进行交换
+ * @author Jaky
+ *
+ */
 public class AvosTool {
 	/**
 	 * 保存username的头像到LeanCloud
@@ -62,7 +66,32 @@ public class AvosTool {
 			return data;
 		}
 	}
-	
-//	public void saveStaff
-	
+	/**
+	 * 根据用户名和日期保存用户签到时的情景
+	 * @param username
+	 * @param date
+	 */
+	public void saveCheckInScene(String username,String date){
+		try{
+			AVFile file;
+			file = AVFile.withAbsoluteLocalPath(username+date+"_checkin", "data/data/com.yizhixiaomifeng/files/checkinScene.jpg");
+			file.save();
+		}catch(Exception  e){
+			log.e("saveCheckInScene error",""+e.toString());
+		}
+	}
+	/**
+	 * 根据用户名和日期保存用户签退时的情景
+	 * @param username
+	 * @param date
+	 */
+	public void saveCheckOutScene(String username,String date){
+		try{
+			AVFile file;
+			file = AVFile.withAbsoluteLocalPath(username+date+"_checkout", "data/data/com.yizhixiaomifeng/files/checkoutScene.jpg");
+			file.save();
+		}catch(Exception  e){
+			log.e("saveCheckOutScene error",""+e.toString());
+		}
+	}
 }
