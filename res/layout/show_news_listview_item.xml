@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dip">
+    
+        <RelativeLayout 
+            android:id="@+id/client_item_info"
+            android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:background="@drawable/rectangle_bg_5">
+            <TextView 
+            android:id="@+id/news_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dip"
+            android:layout_marginTop="3dip"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:text="标题标题标题"/>
+	        <TextView 
+	            android:id="@+id/news_content"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@id/news_title"
+	            android:layout_marginTop="5dip"
+	            android:textSize="15sp"
+	            android:textColor="@color/white"
+	            android:drawableLeft="@drawable/project_icon"
+	            android:text="中新网7月8日电 今日零时起，国内汽柴油价迎来每吨95元、90元的小幅下调。而中新网能源频道从多家机构获悉，此次下调或仅仅是一个小前奏，在当前的国际油价形势下，国内油价在一轮调整中有望迎来大幅下调"
+	            />
+	        <TextView 
+	            android:id="@+id/news_time"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@id/news_content"
+	            android:layout_marginTop="5dip"
+	            android:textSize="12sp"
+	            android:textColor="@color/white"
+	            android:drawableLeft="@drawable/time_icon"
+	            android:text="2015-07-08 11:23"
+	            android:gravity="center_vertical"
+	            />
+
+	        </RelativeLayout>
+
+</RelativeLayout>

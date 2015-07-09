@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_3"
+    android:orientation="vertical" >
+    <RelativeLayout 
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+        
+        <ImageView
+	        android:layout_centerInParent="true"
+	        android:layout_alignParentLeft="true"
+	        android:layout_width="45px"
+	        android:layout_height="45px"
+	        android:id="@+id/back"
+	        android:src="@drawable/left_icon_small"/>
+       <TextView
+	        android:layout_centerInParent="true"
+	        android:layout_toRightOf="@id/back"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"
+	        android:text="管理消息"/>
+
+	</RelativeLayout>
+    
+    <ScrollView 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbars="none">
+        
+    	<LinearLayout 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical">
+        
+			<LinearLayout 
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="5dip"
+			    android:layout_marginTop="10dip"
+			    android:layout_gravity="fill_vertical"
+			    android:orientation="vertical">
+			    
+			    <TextView 
+			        android:layout_width="50dip"
+			        android:layout_height="wrap_content"
+			        android:textSize="15sp"
+			        android:text="标题"/>
+			    <EditText 
+			        android:id="@+id/edit_news_title"
+			        android:layout_width="fill_parent"
+			        android:layout_height="50dip"
+			        android:singleLine="false"
+			        android:layout_marginRight="10dip"
+			        android:hint="输入标题"/>
+			</LinearLayout>
+			<LinearLayout 
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="5dip"
+			    android:layout_marginTop="10dip"
+			    android:layout_gravity="fill_vertical"
+			    android:orientation="vertical">
+			    
+			    <TextView 
+			        android:layout_width="50dip"
+			        android:layout_height="wrap_content"
+			        android:textSize="15sp"
+			        android:text="正文"/>
+			    <EditText 
+			        android:id="@+id/edit_news_content"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:singleLine="false"
+			        android:layout_marginRight="10dip"
+			        android:maxLines="4"
+			        android:hint="输入消息正文"/>
+
+			</LinearLayout>
+			<LinearLayout 
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="5dip"
+			    android:layout_marginRight="5dip"
+			    android:layout_marginTop="10dip"
+			    android:layout_gravity="fill_vertical"
+			    android:orientation="horizontal">
+			    
+			    <Button 
+			        android:id="@+id/save_edit_news_button"
+			        android:layout_width="fill_parent"
+			        android:layout_height="50dip"
+			        android:layout_weight="1"
+			        android:background="@drawable/rectangle_bg_4"
+			        android:text="保存"/>
+			    <Button 
+			        android:id="@+id/public_edit_news_button"
+			        android:layout_width="fill_parent"
+			        android:layout_height="50dip"
+			        android:layout_weight="1"
+			        android:background="@drawable/rectangle_bg_3"
+			        android:layout_marginLeft="5dip"
+			        android:text="发布"/>
+
+			</LinearLayout>
+    	</LinearLayout>
+    
+	</ScrollView>
+    
+    
+</LinearLayout>

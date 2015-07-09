@@ -1,24 +1,29 @@
 package com.yizhixiaomifeng.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class WorkerEntity {
-	private Integer jobNum; // //员工编号、主键
-	private String name; // 员工姓名
-	private String nativePlace; // 籍贯
-	private String gender; // 性别
-	private String educationBackground; // 学历
-	private Integer age; // 年龄
-	private String major; // 专业
-	private DutyTypeEntity dutyTypeEntity;  //职务   一对多
-	private Long entryDate; // 入职时间
-	private Integer workerYear; // 年资
-	private Integer basePay; // 基本工资
-	private DepartmenttEntity departmenttEntity; // 所属部门   多对一
-	private String cellPhone;   //手机号码
-	private String password;    //外勤系统的登录密码
-	private String headPortraitUrl; // 头像URL
-    private List<MissionAllotEntity> missionAllotEntities;  //任务列表   一对多
+public class WorkerEntity implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Integer jobNum; 
+	private String name; 
+	private String nativePlace; 
+	private String gender; 
+	private String educationBackground; 
+	private Integer age; 
+	private String major; 
+	private DutyTypeEntity dutyTypeEntity; 
+	private Long entryDate; 
+	private Integer workerYear;
+	private Integer basePay; 
+	private DepartmenttEntity departmenttEntity;
+	private String cellPhone; 
+	private String password; 
+	private String headPortraitUrl; 
+    private List<MissionAllotEntity> missionAllotEntities; 
 	public Integer getJobNum() {
 		return jobNum;
 	}

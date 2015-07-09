@@ -54,6 +54,7 @@
             android:inputType="text"
             android:layout_marginLeft="5dip"
             android:layout_marginRight="5dip"
+            android:background="@drawable/edittext_bg"
             />
         <!--密码 -->
         <TextView 
@@ -76,6 +77,7 @@
             android:layout_marginLeft="5dip"
             android:layout_marginRight="5dip"
             android:inputType="textPassword"
+            android:background="@drawable/edittext_bg"
             />
         <TextView 
             android:id="@+id/register_confirmPasswordInfo"
@@ -96,6 +98,7 @@
             android:singleLine="true"
             android:layout_marginLeft="5dip"
             android:layout_marginRight="5dip"
+            android:background="@drawable/edittext_bg"
             android:inputType="textPassword"
             />
         <Button

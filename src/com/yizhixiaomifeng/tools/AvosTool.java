@@ -22,14 +22,14 @@ public class AvosTool {
 	 * 保存username的头像到LeanCloud
 	 * @param username
 	 */
-	public void saveHead(final String username){
+	public void saveHead(final String username,String type){
 		try{
 			AVQuery<AVObject> query = new AVQuery<AVObject>("_File");
-			query.whereEqualTo("name", username+"_head");
+			query.whereEqualTo("name", type+"_"+username+"_head");
 			query.deleteAll();
 			AVFile file;
 			try {
-				file = AVFile.withAbsoluteLocalPath(username+"_head", "data/data/com.yizhixiaomifeng/files/head.jpg");
+				file = AVFile.withAbsoluteLocalPath(type+"_"+username+"_head", "data/data/com.yizhixiaomifeng/files/head.jpg");
 				file.save();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -45,10 +45,10 @@ public class AvosTool {
 	 * @param username
 	 * @return
 	 */
-	public  byte[]  getHead(String username){
+	public  byte[]  getHead(String username,String type){
 		byte []data = null;
 		AVQuery<AVObject> query = new AVQuery<AVObject>("_File");
-		query.whereEqualTo("name", username+"_head");
+		query.whereEqualTo("name", type+"_"+username+"_head");
 		try {
 			
 			List<AVObject> avObjects=query.find();
@@ -71,10 +71,10 @@ public class AvosTool {
 	 * @param username
 	 * @param date
 	 */
-	public void saveCheckInScene(String username,String date){
+	public void saveCheckInScene(String username,String type,String date){
 		try{
 			AVFile file;
-			file = AVFile.withAbsoluteLocalPath(username+date+"_checkin", "data/data/com.yizhixiaomifeng/files/checkinScene.jpg");
+			file = AVFile.withAbsoluteLocalPath(type+"_"+username+"_"+date+"_checkin", "data/data/com.yizhixiaomifeng/files/checkinScene.jpg");
 			file.save();
 		}catch(Exception  e){
 			log.e("saveCheckInScene error",""+e.toString());
@@ -85,10 +85,10 @@ public class AvosTool {
 	 * @param username
 	 * @param date
 	 */
-	public void saveCheckOutScene(String username,String date){
+	public void saveCheckOutScene(String username,String type,String date){
 		try{
 			AVFile file;
-			file = AVFile.withAbsoluteLocalPath(username+date+"_checkout", "data/data/com.yizhixiaomifeng/files/checkoutScene.jpg");
+			file = AVFile.withAbsoluteLocalPath(type+"_"+username+"_"+date+"_checkout", "data/data/com.yizhixiaomifeng/files/checkoutScene.jpg");
 			file.save();
 		}catch(Exception  e){
 			log.e("saveCheckOutScene error",""+e.toString());

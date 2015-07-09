@@ -1,56 +1,173 @@
 package com.yizhixiaomifeng.hss.admin;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yizhixiaomifeng.R;
 import com.yizhixiaomifeng.domain.DepartmenttEntity;
+import com.yizhixiaomifeng.hss.admin.adapter.DepartmentAdapter;
+import com.yizhixiaomifeng.hss.admin.bean.AdminOperate;
+import com.yizhixiaomifeng.hss.admin.bean.impl.AdminOperateImpl;
 import com.yizhixiaomifeng.hss.util.ThreadManager;
+import com.yizhixiaomifeng.hss.widget.SwipeFadeOutLayout;
+import com.yizhixiaomifeng.hss.widget.SwipeFadeOutLayout.SwipeStatus;
 
 public class WorkerAdminActivity extends Activity{
 	
+	public final static int REQUEST_CODE_ADD_DEPARMENT=10001;
+	public final static int REQUEST_CODE_EDIT_DEPARMENT=10002;
+	
 	private ListView departmentView=null;
+	private DepartmentAdapter adapter=null;
+	private AdminOperate adminOperate=null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_admin_worker);
 		
+		adminOperate=new AdminOperateImpl();
 		departmentView=(ListView) this.findViewById(R.id.admin_worker_departments);
-		departmentView.setAdapter(new DepartmentAdapter(this));
-		departmentView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View item, int position,
-					long id) {
-				Toast.makeText(WorkerAdminActivity.this, "跳转到部门管理界面", Toast.LENGTH_SHORT).show();
-			}
-		});
+		adapter=new DepartmentAdapter(getApplicationContext());
+		initListener();
+		departmentView.setAdapter(adapter);
 		initContent();
 	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode==REQUEST_CODE_ADD_DEPARMENT){
+			if(resultCode==RESULT_OK){
+				adapter.getData().add((DepartmenttEntity) data.getSerializableExtra("department"));
+				adapter.notifyDataSetChanged();
+			}
+		}else if(requestCode==REQUEST_CODE_EDIT_DEPARMENT){
+			if(resultCode==RESULT_OK){
+				DepartmenttEntity department=(DepartmenttEntity) data.getSerializableExtra("department");
+				for(int i=0;i<adapter.getData().size();i++){
+					if(adapter.getData().get(i).getNumber()==department.getNumber()){
+						adapter.getData().get(i).setBusinessTypeEntity(department.getBusinessTypeEntity());
+						adapter.getData().get(i).setName(department.getName());
+						adapter.getData().get(i).setPhone(department.getPhone());
+						break;
+					}
+				}
+				adapter.notifyDataSetChanged();
+			}
+		}
+	}
 	
+	private void initListener(){
+		adapter.setOnAddListner(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(WorkerAdminActivity.this, AddOrEditDeparmentActivity.class);
+				startActivityForResult(intent,REQUEST_CODE_ADD_DEPARMENT);
+			}
+		});
+		adapter.setOnDeleteListner(new OnClickListener() {
+			int position;
+			@Override
+			public void onClick(View v) {
+				position=(Integer) v.getTag();
+				ThreadManager.getInstance().clearALL();
+				ThreadManager.getInstance().submit(new Runnable() {
+					boolean rs;
+					@Override
+					public void run() {
+
+						rs = adminOperate.deleteDepartment(adapter.getData().get(position));
+						runOnUiThread(new Runnable() {
+							
+							@Override
+							public void run() {
+								if(rs){
+									adapter.getData().remove(position);
+									//关闭所有打开的swipeView
+									adapter.getOpenSwipeLayout().close();
+									adapter.notifyDataSetChanged();
+								}else{
+									Toast.makeText(WorkerAdminActivity.this, "操作失败：网络不给力", Toast.LENGTH_SHORT).show();
+								}
+							}
+						});
+					}
+				}, ThreadManager.DEFALSE_REQUEST_POOL);
+			}
+		});
+		adapter.setOnEditListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				/**
+				 * 跳转到部门编辑界面
+				 */
+				int position=(Integer) v.getTag();
+				DepartmenttEntity department=adapter.getData().get(position);
+				Intent intent=new Intent(WorkerAdminActivity.this,AddOrEditDeparmentActivity.class);
+				intent.putExtra("department", department);
+				startActivityForResult(intent,REQUEST_CODE_EDIT_DEPARMENT);
+			}
+		});
+		adapter.setOnItemClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				SwipeFadeOutLayout swipeView=(SwipeFadeOutLayout) v;
+				if(swipeView.getStatus()!=SwipeStatus.ClOSE){
+					/**
+					 * 跳转到部门人员列表界面
+					 */
+					int position=(Integer) v.getTag();
+					DepartmenttEntity department=adapter.getData().get(position);
+					Intent intent=new Intent(WorkerAdminActivity.this,WorkerAdminDPActivity.class);
+					intent.putExtra("department", department);
+					startActivity(intent);
+				}
+			}
+		});
+	}
 	
 	private void initContent() {
+		
+		/**
+		 * 没有做数据缓存，所以每次都要重新加载网络数据
+		 */
 		ThreadManager.getInstance().clearALL();
 		ThreadManager.getInstance().submit(new Runnable() {
 			
+			boolean rs=false;
 			@Override
 			public void run() {
-				
+				List<DepartmenttEntity> data=adminOperate.loadDepartments();
+				if(data!=null){
+					adapter.setData(data);
+					rs=true;
+				}else{
+					rs=false;
+				}
+				runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						/**
+						 * 加载成功则更新视图
+						 * 失败则提示失败
+						 */
+						if(rs){
+							adapter.notifyDataSetChanged();
+						}else{
+							Toast.makeText(WorkerAdminActivity.this, "信息加载失败：网络不给力", Toast.LENGTH_SHORT).show();
+						}
+					}
+				});
 			}
 		}, ThreadManager.DEFALSE_REQUEST_POOL);
 	}
@@ -78,113 +195,7 @@ public class WorkerAdminActivity extends Activity{
 	 * @param v
 	 */
 	public void search(View v){
-		Toast.makeText(getApplicationContext(), "跳转到员工查找界面", Toast.LENGTH_SHORT).show();
-	}
-	
-	
-	protected class DepartmentAdapter extends BaseAdapter{
-		
-		private Context context=null;
-		private List<DepartmenttEntity> data=new ArrayList<DepartmenttEntity>();
-		
-		public DepartmentAdapter(Context context){
-			this.context=context;
-		}
-
-		public List<DepartmenttEntity> getData() {
-			return data;
-		}
-
-		public void setData(List<DepartmenttEntity> data) {
-			this.data = data;
-		}
-		
-		@Override
-		public int getCount() {
-			return getData().size()+1;
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return position;
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		private ViewHolder holder=null;
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			/**
-			 * 获取item视图
-			 */
-			convertView = getView(position, convertView);
-			
-			/**
-			 * 如果不是最后一个item则填充数据
-			 */
-			if(position!=getData().size()){
-				/**
-				 * 获取视图内容拥有者
-				 */
-				holder = getHolder(convertView);
-				holder.name.setText(getData().get(position).getName());
-				holder.member.setText(getData().get(position).getNumber()+"人");
-			}
-			return convertView;
-		}
-		
-		private View buttonItem=null;
-		private View getView(int position,View convertView){
-			/**
-			 * 如果是最后一个item，则添加按钮视图
-			 */
-			if(position==getData().size()){
-				if(buttonItem==null){
-					convertView = View.inflate(context, R.layout.hss_button, null);
-					convertView.setOnClickListener(new OnClickListener() {
-						
-						@Override
-						public void onClick(View arg0) {
-							Toast.makeText(context, "跳转到添加部门界面", Toast.LENGTH_SHORT).show();
-						}
-					});
-				}else{
-					convertView=buttonItem;
-				}
-				Button btn=(Button) convertView.findViewById(R.id.hss_btn);
-				btn.setText("新增部门");
-				return convertView;
-			}
-			/**
-			 * 不是最后一个item时返回部门视图
-			 */
-			if(convertView==null){
-				convertView = View.inflate(context, R.layout.list_item_department, null);
-			}
-			return convertView;
-		}
-		
-		private ViewHolder getHolder(View convertView){
-			ViewHolder holder=(ViewHolder) convertView.getTag();
-			if(holder==null){
-				holder=new ViewHolder(convertView);
-			}
-			return holder;
-		}
-		
-
-		private class ViewHolder{
-			public TextView name;
-			public TextView member;
-			
-			public ViewHolder(View convertView){
-				name=(TextView) convertView.findViewById(R.id.department_name);
-				member=(TextView) convertView.findViewById(R.id.department_member);
-			}
-		}
-		
+		Intent intent=new Intent(WorkerAdminActivity.this,SearchWorkerActivity.class);
+		startActivity(intent);
 	}
 }

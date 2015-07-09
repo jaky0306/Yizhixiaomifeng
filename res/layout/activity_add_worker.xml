@@ -26,6 +26,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:padding="8dp"
+            android:onClick="back"
             android:src="@drawable/back_icon" />
     </RelativeLayout>
 
@@ -43,22 +44,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="工号"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/add_worker_jobnum"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/edittext_bg"
-                android:hint="请输入工号" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:text="姓名"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -68,6 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:padding="5dp"
                 android:background="@drawable/edittext_bg"
                 android:hint="请输入姓名" />
 
@@ -82,12 +68,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp" >
 
                 <Spinner
-                    android:id="@+id/add_worker_business_type"
+                    android:id="@+id/add_worker_department"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_bg"
                     android:layout_weight="1" />
 
                 <Button
@@ -97,9 +85,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="3"
+                    android:onClick="addDepartment"
                     android:background="@drawable/rectangle_bg_4"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
                     android:text="新增" />
             </LinearLayout>
 
@@ -114,7 +101,9 @@
             <Spinner
                 android:id="@+id/add_worker_duty_type"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_bg" 
+                android:layout_marginBottom="10dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -131,6 +120,23 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/edittext_bg"
                 android:drawableRight="@drawable/date_icon"/>
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="基本工资"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/add_worker_basepay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:inputType="numberDecimal"
+                android:background="@drawable/edittext_bg"
+                android:hint="请输入基本工资" />
 
             <Button
                 android:id="@+id/add_worker_save"
@@ -140,6 +146,7 @@
                 android:background="@drawable/rectangle_bg_4"
                 android:paddingBottom="20dp"
                 android:paddingTop="20dp"
+                android:onClick="save"
                 android:text="保存" />
         </LinearLayout>
     </ScrollView>
