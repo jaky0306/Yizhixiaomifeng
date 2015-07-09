@@ -87,6 +87,16 @@
     	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
     	<activity android:name="com.yizhixiaomifeng.admin.EditNewsActivity"
     	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
+    	<activity android:name="com.yizhixiaomifeng.hss.admin.WorkerAdminActivity"
+    	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
+    	<activity android:name="com.yizhixiaomifeng.hss.admin.WorkerAdminDPActivity"
+    	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
+    	<activity android:name="com.yizhixiaomifeng.hss.admin.SearchWorkerActivity"
+    	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
+    	<activity android:name="com.yizhixiaomifeng.hss.admin.AddOrEditWorker"
+    	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
+    	<activity android:name="com.yizhixiaomifeng.hss.admin.AddOrEditDeparmentActivity"
+    	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
     </application>
 
     

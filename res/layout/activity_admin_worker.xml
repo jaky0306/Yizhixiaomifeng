@@ -27,6 +27,16 @@
             android:onClick="back"
             android:padding="8dp"
             android:src="@drawable/back_icon" />
+        
+        <Button
+        	android:id="@+id/admin_worker_add"
+            android:layout_width="65dp"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5dp"
+            android:background="@color/background_2"
+            android:onClick="addDepartment"
+            android:text="新增部门" />
 
     </RelativeLayout>
 

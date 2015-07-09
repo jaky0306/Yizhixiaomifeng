@@ -4,6 +4,7 @@ import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.utils.h;
 import com.yizhixiaomifeng.R;
 import com.yizhixiaomifeng.config.ParameterConfig;
+import com.yizhixiaomifeng.hss.admin.WorkerAdminActivity;
 import com.yizhixiaomifeng.tools.ActivityCloser;
 import com.yizhixiaomifeng.tools.HeadLoader;
 import com.yizhixiaomifeng.tools.LocalStorage;
@@ -86,7 +87,7 @@ public class AdminMainActivity extends Activity{
 				startActivity(intent2);
 				break;	
 			case R.id.admin_main_manage_staff:
-				Intent intent3 = new Intent(AdminMainActivity.this,ManageNewsActivity.class);
+				Intent intent3 = new Intent(AdminMainActivity.this,WorkerAdminActivity.class);
 				startActivity(intent3);
 				break;
 			case R.id.admin_main_manage_client:

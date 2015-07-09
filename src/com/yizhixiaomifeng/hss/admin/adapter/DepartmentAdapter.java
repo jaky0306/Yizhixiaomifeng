@@ -24,7 +24,6 @@ public class DepartmentAdapter extends BaseAdapter{
 	private OnClickListener onItemClickListener=null;
 	private OnClickListener onEditListener=null;
 	private OnClickListener onDeleteListner=null;
-	private OnClickListener onAddListner=null;
 	
 	public DepartmentAdapter(Context context){
 		this.context=context;
@@ -86,25 +85,6 @@ public class DepartmentAdapter extends BaseAdapter{
 	
 	private View buttonItem=null;
 	private View getView(int position,View convertView){
-		/**
-		 * 如果是最后一个item，则添加按钮视图
-		 */
-		if(position==getData().size()){
-			if(buttonItem==null){
-				convertView = View.inflate(context, R.layout.hss_button, null);
-				if(onAddListner!=null){
-					convertView.setOnClickListener(onAddListner);
-				}
-			}else{
-				convertView=buttonItem;
-			}
-			Button btn=(Button) convertView.findViewById(R.id.hss_btn);
-			btn.setText("新增部门");
-			return convertView;
-		}
-		/**
-		 * 不是最后一个item时返回部门视图
-		 */
 		if(convertView==null){
 			convertView = View.inflate(context, R.layout.list_item_department, null);
 		}
@@ -149,14 +129,6 @@ public class DepartmentAdapter extends BaseAdapter{
 
 	public SwipeFadeOutLayout getOpenSwipeLayout() {
 		return openSwipeLayout;
-	}
-
-	public OnClickListener getOnAddListner() {
-		return onAddListner;
-	}
-
-	public void setOnAddListner(OnClickListener onAddListner) {
-		this.onAddListner = onAddListner;
 	}
 
 	private class ViewHolder{

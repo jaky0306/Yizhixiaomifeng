@@ -64,14 +64,6 @@ public class WorkerAdminActivity extends Activity{
 	}
 	
 	private void initListener(){
-		adapter.setOnAddListner(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent intent=new Intent(WorkerAdminActivity.this, AddOrEditDeparmentActivity.class);
-				startActivityForResult(intent,REQUEST_CODE_ADD_DEPARMENT);
-			}
-		});
 		adapter.setOnDeleteListner(new OnClickListener() {
 			int position;
 			@Override
@@ -198,4 +190,10 @@ public class WorkerAdminActivity extends Activity{
 		Intent intent=new Intent(WorkerAdminActivity.this,SearchWorkerActivity.class);
 		startActivity(intent);
 	}
+	
+	public void addDepartment(View view){
+		Intent intent=new Intent(WorkerAdminActivity.this, AddOrEditDeparmentActivity.class);
+		startActivityForResult(intent,REQUEST_CODE_ADD_DEPARMENT);
+	}
+
 }
