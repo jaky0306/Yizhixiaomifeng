@@ -481,6 +481,7 @@ public final class R {
         public static final int guest=0x7f02000a;
         public static final int ic_launcher=0x7f02000b;
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static final int left_icon_small=0x7f02000c;
         public static final int list_icon=0x7f02000d;
         public static final int login_register_background=0x7f02000e;
@@ -645,6 +646,34 @@ public final class R {
         public static final int action_settings=0x7f0900a3;
         public static final int add_client_address=0x7f090004;
         public static final int add_client_back=0x7f090000;
+=======
+        public static final int key_icon=0x7f02000c;
+        public static final int left_icon_small=0x7f02000d;
+        public static final int list_icon=0x7f02000e;
+        public static final int login_register_background=0x7f02000f;
+        public static final int none_photo=0x7f020010;
+        public static final int not_data_icon=0x7f020011;
+        public static final int project_icon=0x7f020012;
+        public static final int publish_icon=0x7f020013;
+        public static final int pull_to_refresh_arrow=0x7f020014;
+        public static final int rectangle_bg_1=0x7f020015;
+        public static final int rectangle_bg_2=0x7f020016;
+        public static final int rectangle_bg_3=0x7f020017;
+        public static final int rectangle_bg_4=0x7f020018;
+        public static final int rectangle_bg_5=0x7f020019;
+        public static final int right_icon_small=0x7f02001a;
+        public static final int search_icon=0x7f02001b;
+        public static final int setting_icon_head=0x7f02001c;
+        public static final int setting_icon_small=0x7f02001d;
+        public static final int time_icon=0x7f02001e;
+        public static final int un_publish_icon=0x7f02001f;
+    }
+    public static final class id {
+        public static final int ToRegister=0x7f090092;
+        public static final int action_settings=0x7f0900a3;
+        public static final int add_client_address=0x7f090004;
+        public static final int add_client_back=0x7f090000;
+>>>>>>> origin/master
         public static final int add_client_button=0x7f09007b;
         public static final int add_client_end_time=0x7f090007;
         public static final int add_client_name=0x7f090002;
@@ -805,6 +834,9 @@ public final class R {
         public static final int worker_entrytime=0x7f09005d;
         public static final int worker_jobnum=0x7f09005c;
         public static final int worker_name=0x7f09005a;
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
     }
     public static final class layout {
@@ -818,6 +850,7 @@ public final class R {
         public static final int activity_search_worker=0x7f030007;
         public static final int check_in=0x7f030008;
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static final int hss_button=0x7f030009;
         public static final int list_item_client=0x7f03000a;
         public static final int list_item_department=0x7f03000b;
@@ -830,6 +863,8 @@ public final class R {
         public static final int set_head=0x7f030012;
         public static final int setting_center=0x7f030013;
 =======
+=======
+>>>>>>> origin/master
         public static final int edit_client=0x7f030009;
         public static final int edit_news=0x7f03000a;
         public static final int hss_button=0x7f03000b;
@@ -853,6 +888,9 @@ public final class R {
         public static final int show_client_listview_item=0x7f03001d;
         public static final int show_news_listview_item=0x7f03001e;
         public static final int testtest=0x7f03001f;
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
     }
     public static final class menu {
