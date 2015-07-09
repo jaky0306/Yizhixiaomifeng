@@ -525,6 +525,9 @@ public final class R {
         public static final int ToRegister=0x7f090061;
         public static final int action_settings=0x7f090066;
 >>>>>>> origin/master
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
         public static final int add_client_address=0x7f090003;
         public static final int add_client_back=0x7f090000;
@@ -789,6 +792,9 @@ public final class R {
         public static final int worker_jobnum=0x7f09003a;
         public static final int worker_name=0x7f090038;
 >>>>>>> origin/master
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
     }
     public static final class layout {
