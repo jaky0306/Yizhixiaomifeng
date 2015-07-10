@@ -11,8 +11,9 @@
     <!-- 所有权限 -->
     <uses-permission android:name="android.permission.INTERNET" ></uses-permission>
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" >
-    </uses-permission>
+    <uses-permission android:name="android.permission.WAKE_LOCK" ></uses-permission>
+    <!--添加可以向外拨打电话的权限  -->  
+    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>  
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- SDK1.5需要android.permission.GET_TASKS权限判断本程序是否为当前运行的应用? -->
@@ -40,6 +41,10 @@
 	<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
 	<!--允许应用读取低级别的系统日志文件 -->
 	<uses-permission android:name="android.permission.READ_LOGS"></uses-permission>
+	<!-- 录音权限 -->  
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />  
+    <!-- 在SDCard中创建与删除文件权限 -->  
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     
     
     <application
@@ -96,6 +101,18 @@
     	<activity android:name="com.yizhixiaomifeng.hss.admin.AddOrEditWorker"
     	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
     	<activity android:name="com.yizhixiaomifeng.hss.admin.AddOrEditDeparmentActivity"
+    	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
+    	<activity android:name="com.yizhixiaomifeng.admin.ArrangeStaffForClientActivity"
+    	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
+    	<activity android:name="com.yizhixiaomifeng.user.CheckOut"
+    	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
+    	<activity android:name="com.yizhixiaomifeng.admin.ManageAttendanceActivity"
+    	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
+    	<activity android:name="com.yizhixiaomifeng.admin.SearchAttendanceActivity"
+    	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
+    	<activity android:name="com.yizhixiaomifeng.admin.ShowFailAttendanceInfoActivity"
+    	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
+    	<activity android:name="com.yizhixiaomifeng.admin.ShowSearchAttendanceResultActivity"
     	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
     </application>
 

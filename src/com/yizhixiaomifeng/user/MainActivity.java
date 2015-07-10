@@ -10,12 +10,16 @@ import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.LogUtil.log;
 import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.search.geocode.GeoCodeOption;
 import com.yizhixiaomifeng.R;
 import com.yizhixiaomifeng.adapter.MenuListViewAdapter;
 import com.yizhixiaomifeng.admin.AdminMainActivity;
+import com.yizhixiaomifeng.admin.bean.Client;
 import com.yizhixiaomifeng.config.ParameterConfig;
 import com.yizhixiaomifeng.tools.ActivityCloser;
 import com.yizhixiaomifeng.tools.AvosTool;
+import com.yizhixiaomifeng.tools.CheckStatusLoader;
+import com.yizhixiaomifeng.tools.ClientInfoLoader;
 import com.yizhixiaomifeng.tools.HeadLoader;
 import com.yizhixiaomifeng.tools.HeadTool;
 import com.yizhixiaomifeng.tools.InfoLoader;
@@ -40,10 +44,12 @@ import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,10 +71,12 @@ public class MainActivity extends Activity implements OnTouchListener {
 	private String user;		//当前用户名
 	private String type;		//用户类型
 	private List<String> menuitems=new ArrayList<String>();	//menu 显示的数据
-	
+	private List<Client> all_Clients =new ArrayList<Client>();
+	private Spinner show_client_for_user_spinner;
+	private LinearLayout show_loadding_client_tip; //当加载客户数据时显示提示
 	private Button checkin ;
 	private Button checkout;
-	
+	private Client client;
 	
 	private ListView showMenuItems ;		//menu显示item的listview
 	private int exit=0;  //	用来记录click 的次数
@@ -106,9 +114,12 @@ public class MainActivity extends Activity implements OnTouchListener {
 		
 		ActivityCloser.activities.add(this);
 		
+		show_client_for_user_spinner=(Spinner)findViewById(R.id.show_all_client_for_staff_Spinner);
+		show_loadding_client_tip=(LinearLayout)findViewById(R.id.show_loadding_client_info);
 		signin=(Button)findViewById(R.id.singin);
 		checkin=(Button)findViewById(R.id.check_in);
 		checkout=(Button)findViewById(R.id.check_out);
+		
 		
 		LocalStorage ls = new LocalStorage(this);
 		user = ls.getString("username", "");
@@ -116,8 +127,6 @@ public class MainActivity extends Activity implements OnTouchListener {
 		
 		
 		initByUser();
-		
-		
 		
 		
 		/**
@@ -170,6 +179,33 @@ public class MainActivity extends Activity implements OnTouchListener {
 		showTimeAndDate();
 		
 		
+		show_client_for_user_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> adapter, View view,
+					int position, long id) {
+				if(position!=0)
+				{
+					client = all_Clients.get(position-1);
+					Log.e("client_name", "aa"+client.getAddress());
+					
+					new CheckStatusLoader(MainActivity.this, show_loadding_client_tip, checkin, checkout).execute(user,""+client.getId());
+//					new GetClientAddress().execute(client.getName());
+					//mSearch.geocode(new GeoCodeOption().city("").address(client.getAddress()));
+					
+				}
+					//Toast.makeText(getApplicationContext(), data_list.get(position), Toast.LENGTH_LONG).show();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				
+			}
+		});
+		
+		
+		
+		
 		/**
 		 * 签到签退事件
 		 */
@@ -180,15 +216,40 @@ public class MainActivity extends Activity implements OnTouchListener {
 				if(user.equals("")){
 					Toast.makeText(getApplicationContext(), "请先登录...", Toast.LENGTH_LONG).show();
 					return;
-				}else {
-					Intent intent = new Intent(MainActivity.this,CheckIn.class);
-					startActivity(intent);
 				}
+				if(client==null){
+					Toast.makeText(getApplicationContext(), "请选择客户...", Toast.LENGTH_LONG).show();
+					return;
+				}
+				Intent intent = new Intent(MainActivity.this,CheckIn.class);
+				intent.putExtra("client", client);
+				startActivity(intent);
+			}
+		});
+		checkout.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(user.equals("")){
+					Toast.makeText(getApplicationContext(), "请先登录...", Toast.LENGTH_LONG).show();
+					return;
+				}
+				if(client==null){
+					Toast.makeText(getApplicationContext(), "请选择客户...", Toast.LENGTH_LONG).show();
+					return;
+				}
+				Intent intent = new Intent(MainActivity.this,CheckOut.class);
+				intent.putExtra("client", client);
+				startActivity(intent);
 			}
 		});
 		
 	}
-
+	/****************************业务方法**************************/
+	public void loadAllClientInfo(){
+		new ClientInfoLoader(MainActivity.this,show_client_for_user_spinner, show_loadding_client_tip,all_Clients).execute(user);
+	}
+	
 	public void initByUser()
 	{
 		if(user.equals("")){
@@ -212,6 +273,7 @@ public class MainActivity extends Activity implements OnTouchListener {
 			if(type.equals("staff"))
 			{
 				loadUserInfo(); //加载用户信息
+				loadAllClientInfo();
 				menuitems.clear();
 				menuitems.add("个人中心");
 				showMenuItems=(ListView)findViewById(R.id.showMenuItems_listview);

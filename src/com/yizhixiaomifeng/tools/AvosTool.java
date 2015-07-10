@@ -1,5 +1,6 @@
 package com.yizhixiaomifeng.tools;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -12,6 +13,8 @@ import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.DeleteCallback;
 import com.avos.avoscloud.LogUtil.log;
+import com.yizhixiaomifeng.config.ParameterConfig;
+import com.yizhixiaomifeng.config.YzxmfConfig;
 /**
  * 用来与LeanCloud进行交换
  * @author Jaky
@@ -68,30 +71,163 @@ public class AvosTool {
 	}
 	/**
 	 * 根据用户名和日期保存用户签到时的情景
-	 * @param username
-	 * @param date
+	 * @param username 用户名(手机号)
+	 * @param date （new Date().toString()）
 	 */
-	public void saveCheckInScene(String username,String type,String date){
+	public boolean saveCheckInScene(String username,String type,String date){
+		File existfile = new File("data/data/com.yizhixiaomifeng/files/checkinScene.jpg");
+		if(!existfile.exists()){
+			return false;
+		}
 		try{
-			AVFile file;
-			file = AVFile.withAbsoluteLocalPath(type+"_"+username+"_"+date+"_checkin", "data/data/com.yizhixiaomifeng/files/checkinScene.jpg");
+			AVQuery<AVObject> query = new AVQuery<AVObject>("_File");
+			query.whereEqualTo("name", type+"_"+username+"_"+date+"_checkin_scene");
+			query.deleteAll();
+			AVFile file=null;
+			file = AVFile.withAbsoluteLocalPath(type+"_"+username+"_"+date+"_checkin_scene", "data/data/com.yizhixiaomifeng/files/checkinScene.jpg");
 			file.save();
+			return true;
 		}catch(Exception  e){
+			
 			log.e("saveCheckInScene error",""+e.toString());
+			return false;
 		}
 	}
 	/**
-	 * 根据用户名和日期保存用户签退时的情景
-	 * @param username
-	 * @param date
+	 * 获取签到现场的URL
+	 * @param username 用户名(手机号)
+	 * @param type 用户类型
+	 * @param date	日期（new Date().toString()）
+	 * @return URL
 	 */
-	public void saveCheckOutScene(String username,String type,String date){
-		try{
-			AVFile file;
-			file = AVFile.withAbsoluteLocalPath(type+"_"+username+"_"+date+"_checkout", "data/data/com.yizhixiaomifeng/files/checkoutScene.jpg");
-			file.save();
-		}catch(Exception  e){
-			log.e("saveCheckOutScene error",""+e.toString());
+	public String getCheckInSceneUrl(String username,String type,String date){
+		AVQuery<AVObject> query = new AVQuery<AVObject>("_File");
+		query.whereEqualTo("name",type+"_"+username+"_"+date+"_checkin_scene");
+		try {
+			
+			List<AVObject> avObjects=query.find();
+			if(avObjects.size()>0){
+				String url = avObjects.get(0).getString("url");
+		        return url;
+		        
+			}else {
+				return null;
+			}
+		} catch (AVException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
+	
+	
+	/**
+	 * 保存签到的录音
+	 * @param username 用户名(手机号)
+	 * @param type 用户类型
+	 * @param date	日期（new Date().toString()）
+	 */
+	public boolean saveCheckInVoice(String username,String type,String date){
+		File existfile = new File(YzxmfConfig.voicesrc);
+		if(!existfile.exists()){
+			return false;
+		}
+		try{
+			AVQuery<AVObject> query = new AVQuery<AVObject>("_File");
+			query.whereEqualTo("name", type+"_"+username+"_"+date+"_checkin_voice");
+			query.deleteAll();
+			AVFile file;
+			file = AVFile.withAbsoluteLocalPath(type+"_"+username+"_"+date+"_checkin_voice", YzxmfConfig.voicesrc);
+			file.save();
+			return true;
+		}catch(Exception  e){
+			log.e("saveCheckInVoice error",""+e.toString());
+			return false;
+		}
+	}
+	/**
+	 * 保存签退的录音
+	 * @param username 用户名(手机号)
+	 * @param type 用户类型
+	 * @param date	日期（new Date().toString()）
+	 */
+	public boolean saveCheckOutVoice(String username,String type,String date){
+		File existfile = new File(YzxmfConfig.voicesrc);
+		if(!existfile.exists()){
+			return false;
+		}
+		try{
+			AVQuery<AVObject> query = new AVQuery<AVObject>("_File");
+			query.whereEqualTo("name", type+"_"+username+"_"+date+"_checkout_voice");
+			query.deleteAll();
+			AVFile file;
+			file = AVFile.withAbsoluteLocalPath(type+"_"+username+"_"+date+"_checkout_voice", YzxmfConfig.voicesrc);
+			file.save();
+			return true;
+		}catch(Exception  e){
+			log.e("saveCheckOutVoice error",""+e.toString());
+			return false;
+		}
+	}
+	/**
+	 * 获取签到的录音的URL
+	 * @param username 用户名(手机号)
+	 * @param type 用户类型
+	 * @param date	日期（new Date().toString()）
+	 * @return URL
+	 */
+	public String getCheckInVoiceUrl(String username,String type,String date){
+		AVQuery<AVObject> query = new AVQuery<AVObject>("_File");
+		query.whereEqualTo("name",type+"_"+username+"_"+date+"_checkin_voice");
+		try {
+			
+			List<AVObject> avObjects=query.find();
+			if(avObjects.size()>0){
+				String url = avObjects.get(0).getString("url");
+		        return url;
+		        
+			}else {
+				return null;
+			}
+		} catch (AVException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	/**
+	 * 获取签退的录音的URL
+	 * @param username 用户名(手机号)
+	 * @param type 用户类型
+	 * @param date	日期（new Date().toString()）
+	 * @return URL
+	 */
+	public String getCheckOutVoiceUrl(String username,String type,String date){
+		AVQuery<AVObject> query = new AVQuery<AVObject>("_File");
+		query.whereEqualTo("name",type+"_"+username+"_"+date+"_checkout_voice");
+		try {
+			
+			List<AVObject> avObjects=query.find();
+			if(avObjects.size()>0){
+				String url = avObjects.get(0).getString("url");
+		        return url;
+		        
+			}else {
+				return null;
+			}
+		} catch (AVException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public  byte[] getImgData(String url){
+        try {
+        	AVFile avFile = new AVFile("goal_img", url,null);
+			return avFile.getData();
+		} catch (AVException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
 }

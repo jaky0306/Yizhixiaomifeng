@@ -61,7 +61,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/edittext_bg"
                 android:hint="请输入客户名称" />
 
             <TextView
@@ -77,7 +76,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/edittext_bg"
                 android:hint="请输入合作项目" />
 
             <TextView
@@ -99,7 +97,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/edittext_bg"
                     android:singleLine="false"/>
 
                 <Button
@@ -127,7 +124,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/edittext_bg"
                 android:focusable="false"
                 android:drawableRight="@drawable/date_icon"/>
             
@@ -144,7 +140,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
-                android:background="@drawable/edittext_bg"
                 android:drawableRight="@drawable/date_icon"/>
 
             

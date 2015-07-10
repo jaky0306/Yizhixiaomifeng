@@ -5,20 +5,26 @@
  */
 package com.yizhixiaomifeng.domain;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class MissionAllotEntity {
-	private Integer missionAllotId; 
+public class MissionAllotEntity implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private long missionAllotId; 
 	private ClientEntity clientEntity; 
 	private WorkerEntity workerEntity;
 	private Long startTime;   
 	private Long endTime;     
-	private List<WorkingRecordEntity> workingRecordEntities;  
-	public Integer getMissionAllotId() {
+	private List<WorkingRecordEntity> workingRecordEntities=new ArrayList<WorkingRecordEntity>();  
+	public long getMissionAllotId() {
 		return missionAllotId;
 	}
 
-	public void setMissionAllotId(Integer missionAllotId) {
+	public void setMissionAllotId(long missionAllotId) {
 		this.missionAllotId = missionAllotId;
 	}
 	public ClientEntity getClientEntity() {

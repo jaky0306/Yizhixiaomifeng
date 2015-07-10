@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_3"
+    android:orientation="vertical" >
+    <RelativeLayout 
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+        
+        <ImageView
+	        android:layout_centerInParent="true"
+	        android:layout_alignParentLeft="true"
+	        android:layout_width="45px"
+	        android:layout_height="45px"
+	        android:id="@+id/search_attendance_back"
+	        android:src="@drawable/left_icon_small"/>
+       <TextView
+	        android:layout_toRightOf="@id/search_attendance_back"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerVertical="true"
+	        android:textSize="20sp"
+	        android:text="管理消息"/>
+
+	</RelativeLayout>
+    
+    <ScrollView 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbars="none">
+        
+    	<LinearLayout 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical">
+        
+			<LinearLayout 
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="5dip"
+			    android:layout_marginTop="10dip"
+			    android:layout_gravity="fill_vertical"
+			    android:orientation="vertical">
+			    
+			    <TextView 
+			        android:layout_width="100dip"
+			        android:layout_height="wrap_content"
+			        android:textSize="15sp"
+			        android:text="员工姓名"/>
+			    <EditText 
+			        android:id="@+id/search_attendance_staff_name"
+			        android:layout_width="fill_parent"
+			        android:layout_height="50dip"
+			        android:singleLine="false"
+			        android:layout_marginRight="10dip"
+			        android:hint="输入员工姓名"/>
+			    
+			    <TextView 
+			        android:layout_width="100dip"
+			        android:layout_height="wrap_content"
+			        android:textSize="15sp"
+			        android:text="开始时间"/>
+
+            	<EditText
+                	android:id="@+id/search_attendance_start_time"
+                	android:layout_width="match_parent"
+                	android:layout_height="wrap_content"
+                	android:layout_marginBottom="10dp"
+                	android:focusable="false"
+                	android:drawableRight="@drawable/date_icon"/>
+            
+            	<TextView 
+			        android:layout_width="100dip"
+			        android:layout_height="wrap_content"
+			        android:textSize="15sp"
+			        android:text="结束时间"/>
+
+            	<EditText
+                	android:id="@+id/search_attendance_end_time"
+                	android:layout_width="match_parent"
+                	android:layout_height="wrap_content"
+                	android:layout_marginBottom="10dp"
+                	android:focusable="false"
+                	android:drawableRight="@drawable/date_icon"/>
+
+			</LinearLayout>
+			<LinearLayout 
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="5dip"
+			    android:layout_marginRight="5dip"
+			    android:layout_marginTop="10dip"
+			    android:layout_gravity="fill_vertical"
+			    android:orientation="horizontal">
+			    
+			    <Button 
+			        android:id="@+id/search_attendance_button"
+			        android:layout_width="fill_parent"
+			        android:layout_height="50dip"
+			        android:layout_margin="5dip"
+			        android:background="@drawable/rectangle_bg_4"
+			        android:text="查询"/>
+			   
+			</LinearLayout>
+    	</LinearLayout>
+    
+	</ScrollView>
+    
+    
+</LinearLayout>

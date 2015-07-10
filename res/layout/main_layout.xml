@@ -152,7 +152,7 @@
 
 	<LinearLayout 
 	    android:layout_width="fill_parent"
-	    android:layout_height="100dip"
+	    android:layout_height="110dip"
 	    android:background="@color/background_3"
 	    android:layout_marginTop="5dip"
 	    android:orientation="vertical">
@@ -165,37 +165,103 @@
 	        android:text="03:06"
 	        android:gravity="center"
 	        android:textSize="40sp"/>
-	    <TextView 
+
+	    <TextView
 	        android:id="@+id/show_date"
 	        android:layout_width="fill_parent"
 	        android:layout_height="30dip"
-	        android:text="03:06"
 	        android:gravity="center"
-	        android:textSize="20sp"/>
+	        android:text="03:06"
+	        android:textSize="20sp" />
+
 	</LinearLayout>
+	
+	
+	
+	
 	
     <LinearLayout
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
 	    android:gravity="center"
+	    android:layout_marginTop="5dip"
 	    android:background="@color/background_3"
-	    android:orientation="horizontal">
+	    android:orientation="vertical">
         
-        <Button 
-            android:id="@+id/check_in"
-            android:layout_width="120dip"
-            android:layout_height="120dip"
-            android:background="@drawable/rectangle_bg_1"
-            android:text="签到"
-            android:textSize="20sp"/>
-        <Button 
-            android:id="@+id/check_out"
-            android:layout_width="120dip"
-            android:layout_height="120dip"
-            android:layout_marginLeft="20dip"
-            android:background="@drawable/rectangle_bg_1"
-            android:text="签退"
-            android:textSize="20sp"/>
+		<RelativeLayout 
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content">
+			    <LinearLayout 
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+				    android:layout_marginLeft="5dip"
+				    android:layout_marginTop="10dip"
+				    android:layout_gravity="fill_vertical"
+				    android:orientation="vertical">
+				    <TextView 
+			            android:layout_height="wrap_content"
+			            android:layout_width="wrap_content"
+			            android:layout_margin="5dp"
+			            android:textColor="@color/white"
+			            android:text="选择客户进行操作"
+			            />
+				    <Spinner 
+				        android:id="@+id/show_all_client_for_staff_Spinner"
+				        android:layout_width="fill_parent"
+				        android:layout_height="wrap_content"
+				        android:layout_marginLeft="5dip"
+				        android:layout_marginRight="5dip"/>
+				</LinearLayout>
+
+				<LinearLayout
+				    android:id="@+id/show_loadding_client_info"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_centerHorizontal="true"
+				    android:layout_centerVertical="true"
+				    android:gravity="center"
+				    android:visibility="invisible"
+				    android:orientation="horizontal" >
+
+				    <ProgressBar
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:layout_gravity="center" />
+
+				    <TextView
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:layout_gravity="center"
+				        android:text="正在加载客户信息..."
+				        android:textColor="@color/background_2"
+				        android:textSize="15sp" />
+				</LinearLayout>
+		    
+		</RelativeLayout>
+        
+        
+        <LinearLayout
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:gravity="center"
+		    android:background="@color/background_3"
+		    android:orientation="horizontal">
+	        <Button 
+	            android:id="@+id/check_in"
+	            android:layout_width="120dip"
+	            android:layout_height="120dip"
+	            android:background="@drawable/rectangle_bg_1"
+	            android:text="签到"
+	            android:textSize="20sp"/>
+	        <Button 
+	            android:id="@+id/check_out"
+	            android:layout_width="120dip"
+	            android:layout_height="120dip"
+	            android:layout_marginLeft="20dip"
+	            android:background="@drawable/rectangle_bg_1"
+	            android:text="签退"
+	            android:textSize="20sp"/>
+	    </LinearLayout>
     
 	</LinearLayout>
     

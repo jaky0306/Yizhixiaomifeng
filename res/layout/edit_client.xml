@@ -48,20 +48,36 @@
             android:orientation="vertical"
             android:padding="10dp" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="客户名称"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+            <RelativeLayout 
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                <TextView
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginBottom="10dp"
+	                android:layout_centerVertical="true"
+	                android:layout_alignParentLeft="true"
+	                android:text="客户名称"
+	                android:textColor="@color/black"
+	                android:textSize="18sp" />
+                
+                <Button
+		            android:id="@+id/arrange_staff_button"
+		            android:layout_width="100dp"
+		            android:layout_height="30dp"
+		            android:layout_alignParentRight="true"
+		            android:layout_margin="5dp"
+		            android:background="@drawable/rectangle_bg_2"
+		            android:text="安排员工" />
+            </RelativeLayout>
+            
 
             <EditText
                 android:id="@+id/edit_client_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/edittext_bg"
+                android:layout_marginTop="5dip"
                 android:hint="请输入客户名称" />
 
             <TextView
@@ -77,7 +93,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/edittext_bg"
                 android:hint="请输入合作项目"
                 android:inputType="phone" />
 
@@ -100,7 +115,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/edittext_bg"
+                    android:hint="输入地址进行定位"
                     android:singleLine="false"/>
 
                 <Button

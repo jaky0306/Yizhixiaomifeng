@@ -12,4 +12,7 @@ public class ParameterConfig {
 	 * 未发布（草稿箱）消息的转态
 	 */
 	public static int un_publish_news_status=0;
+	
+	
+	
 }

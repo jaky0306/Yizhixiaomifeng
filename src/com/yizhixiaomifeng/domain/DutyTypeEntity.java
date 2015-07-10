@@ -5,19 +5,24 @@
  */
 package com.yizhixiaomifeng.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DutyTypeEntity {
-	private Integer dutyId; 
+public class DutyTypeEntity implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private long dutyId; 
 	private String name; 
     private BusinessTypeEntity businessTypeEntity; 
 	private List<WorkerEntity> workerEntities=new ArrayList<WorkerEntity>();  
-	public Integer getDutyId() {
+	public long getDutyId() {
 		return dutyId;
 	}
 
-	public void setDutyId(Integer dutyId) {
+	public void setDutyId(long dutyId) {
 		this.dutyId = dutyId;
 	}
 

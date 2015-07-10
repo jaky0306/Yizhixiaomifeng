@@ -17,9 +17,14 @@ import com.yizhixiaomifeng.admin.bean.Client;
 import com.yizhixiaomifeng.tools.ClientInfoSaver;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -32,6 +37,7 @@ public class EditClientActivity extends Activity implements OnGetGeoCoderResultL
 	private MapView mMapView = null;
 	private LatLng clientLatLng=null;
 	private Button commit_edit_button;
+	private Button arrange_staff_button;
 	private EditText edit_client_name;
 	private EditText edit_client_project;
 	private EditText edit_client_address;
@@ -53,6 +59,7 @@ public class EditClientActivity extends Activity implements OnGetGeoCoderResultL
 		setContentView(R.layout.edit_client);
 		final Client client = (Client) getIntent().getSerializableExtra("client");
 		commit_edit_button=(Button)findViewById(R.id.commit_edit_button);
+		arrange_staff_button=(Button)findViewById(R.id.arrange_staff_button);
 		edit_client_name=(EditText)findViewById(R.id.edit_client_name);
 		edit_client_project=(EditText)findViewById(R.id.edit_client_project);
 		edit_client_address=(EditText)findViewById(R.id.edit_client_address);
@@ -81,6 +88,25 @@ public class EditClientActivity extends Activity implements OnGetGeoCoderResultL
 					.address(edit_client_address.getText().toString()));
 			}
 		});
+		
+		arrange_staff_button.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+			}
+		});
+		
+		arrange_staff_button.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(EditClientActivity.this,ArrangeStaffForClientActivity.class);
+				intent.putExtra("client", client);
+				startActivity(intent);
+			}
+		});
+		
 		commit_edit_button.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -96,7 +122,7 @@ public class EditClientActivity extends Activity implements OnGetGeoCoderResultL
 			}
 		});
 	}
-	
+
 	@Override
 	public void onGetGeoCodeResult(GeoCodeResult result) {
 		if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {

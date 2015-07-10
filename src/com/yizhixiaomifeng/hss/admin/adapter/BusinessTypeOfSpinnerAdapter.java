@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,12 +30,14 @@ public class BusinessTypeOfSpinnerAdapter extends BaseAdapter{
 
 	@Override
 	public Object getItem(int position) {
-		return getData().get(position-1);
+		if(position>0)
+			return getData().get(position-1);
+		return null;
 	}
 
 	@Override
 	public long getItemId(int position) {
-		return getData().get(position-1).getBusinessId();
+		return position;
 	}
 
 	@Override
@@ -42,8 +45,10 @@ public class BusinessTypeOfSpinnerAdapter extends BaseAdapter{
 		convertView=getView(convertView);
 		if(position==0)
 			((TextView)convertView).setText("请选择部门业务类型");
-		else
+		else{
 			((TextView)convertView).setText(getData().get(position-1).getName());
+			((TextView)convertView).setTextColor(Color.BLACK);
+		}
 		return convertView;
 	}
 	

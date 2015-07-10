@@ -5,22 +5,29 @@
  */
 package com.yizhixiaomifeng.domain;
 
+import java.io.Serializable;
 
-public class WorkingRecordEntity {
-	private Integer workingRecordId;
+
+public class WorkingRecordEntity implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private long workingRecordId;
 	private Long recordDate; 
 	private Long firstRecordTime; 
 	private Long lastRecordTime; 
 	private Double longitude; 
+	private Double latitude; 
 	private String remark; 
 	private MissionAllotEntity missionAllotEntity; 
 	private String imageUrl; 
 
-	public Integer getWorkingRecordId() {
+	public long getWorkingRecordId() {
 		return workingRecordId;
 	}
 
-	public void setWorkingRecordId(Integer workingRecordId) {
+	public void setWorkingRecordId(long workingRecordId) {
 		this.workingRecordId = workingRecordId;
 	}
 	public Long getRecordDate() {
@@ -79,6 +86,14 @@ public class WorkingRecordEntity {
 
 	public void setMissionAllotEntity(MissionAllotEntity missionAllotEntity) {
 		this.missionAllotEntity = missionAllotEntity;
+	}
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
 	}
 	
 

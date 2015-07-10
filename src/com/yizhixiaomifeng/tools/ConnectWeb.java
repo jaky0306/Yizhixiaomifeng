@@ -108,6 +108,30 @@ public class ConnectWeb {
         }
     }
     
+    public String getAllUserInfo(){
+    	try {
+			String target = URLConfig.getAllUser;
+			HttpClient httpClient = new DefaultHttpClient();
+			httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 6000);
+			httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 6000);
+			HttpPost httpRequest = new HttpPost(target);
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			httpRequest.setEntity(new UrlEncodedFormEntity(params,"utf-8"));
+    	    HttpResponse httpResponse = httpClient.execute(httpRequest);
+    	    if(httpResponse.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
+    	    	String result = EntityUtils.toString(httpResponse.getEntity());
+    	    	return result;
+    	    }else {
+				return "error";
+			}
+    	} catch (Exception e) {
+    		
+    		Log.e("getAllUserInfo: error", e.toString());
+            return "error";
+		}
+    }
+    
+    
     public String getUserInfoByPhone(String phone){
     	try {
 			String target = "";
@@ -131,6 +155,37 @@ public class ConnectWeb {
             return "error";
 		}
     }
+    
+    /**
+     * 通过下标获取用户信息，可以节约资源
+     * @param start 下标
+     * @return
+     */
+    public String getAllClientDataByPhone(String phone){
+    	try {
+			String target = URLConfig.getAllClientByPhone;
+			HttpClient httpClient = new DefaultHttpClient();
+			httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 6000);
+			httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 6000);
+			HttpPost httpRequest = new HttpPost(target);
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("phone",phone));
+			httpRequest.setEntity(new UrlEncodedFormEntity(params,"utf-8"));
+    	    HttpResponse httpResponse = httpClient.execute(httpRequest);
+    	    if(httpResponse.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
+    	    	String result = EntityUtils.toString(httpResponse.getEntity());
+    	    	return result;
+    	    }else {
+				return "error";
+			}
+    	} catch (Exception e) {
+    		
+    		Log.e("getAllClientData: error", e.toString());
+            return "error";
+		}
+    }
+    
+    
     /**
      * 通过下标获取用户信息，可以节约资源
      * @param start 下标
@@ -159,6 +214,31 @@ public class ConnectWeb {
             return "error";
 		}
     }
+    public String getCheckStatusByUserAndClient(String user,String clientId){
+    	try {
+			String target = URLConfig.getClientByStart;
+			HttpClient httpClient = new DefaultHttpClient();
+			httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 6000);
+			httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 6000);
+			HttpPost httpRequest = new HttpPost(target);
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("phone",""+user));
+			params.add(new BasicNameValuePair("clientId",""+clientId));
+			httpRequest.setEntity(new UrlEncodedFormEntity(params,"utf-8"));
+    	    HttpResponse httpResponse = httpClient.execute(httpRequest);
+    	    if(httpResponse.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
+    	    	String result = EntityUtils.toString(httpResponse.getEntity());
+    	    	return result;
+    	    }else {
+				return "error";
+			}
+    	} catch (Exception e) {
+    		
+    		Log.e("getCheckStatusByUserAndClient: error", e.toString());
+            return "error";
+		}
+    }
+    
     /**
      * 保存客户
      * @param client
@@ -406,5 +486,173 @@ public class ConnectWeb {
             return "error";
 		}
     }
+    /**
+     * 签到
+     * @param phone 用户电话
+     * @param clientId	客户ID
+     * @param latitude	用户当前经度
+     * @param longitute 用户当前纬度
+     * @param sceneUrl	签到现场图片路径
+     * @param voiceUrl	签到现场录音路径
+     * @param distance	签到现场距离目的地的距离
+     * @return
+     */
+    public String checkIn(String phone,long clientId,double latitude,double longitute,String sceneUrl,String voiceUrl,double distance){
+    	try {
+			String target = URLConfig.checkin;
+			HttpClient httpClient = new DefaultHttpClient();
+			httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 6000);
+			httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 6000);
+			HttpPost httpRequest = new HttpPost(target);
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("phone",phone));
+			params.add(new BasicNameValuePair("clientId",""+clientId));
+			params.add(new BasicNameValuePair("latitude",""+latitude));
+			params.add(new BasicNameValuePair("longitude",""+longitute));
+			params.add(new BasicNameValuePair("sceneUrl",""+sceneUrl));
+			params.add(new BasicNameValuePair("voiceUrl",""+voiceUrl));
+			params.add(new BasicNameValuePair("distance", ""+distance));  //把位置的状态发给后台
+			httpRequest.setEntity(new UrlEncodedFormEntity(params,"utf-8"));
+    	    HttpResponse httpResponse = httpClient.execute(httpRequest);
+    	    if(httpResponse.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
+    	    	String result = EntityUtils.toString(httpResponse.getEntity());
+    	    	return result;
+    	    }else {
+				return "error";
+			}
+    	} catch (Exception e) {
+    		
+    		Log.e("checkIn: error", e.toString());
+            return "error";
+		}
+    }
     
+    public String checkOut(String phone,double latitude,double longitute,String voiceUrl,String positionStatus){
+    	try {
+			String target = URLConfig.checkin;
+			HttpClient httpClient = new DefaultHttpClient();
+			httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 6000);
+			httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 6000);
+			HttpPost httpRequest = new HttpPost(target);
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("phone",phone));
+			params.add(new BasicNameValuePair("latitude",""+latitude));
+			params.add(new BasicNameValuePair("longitude",""+longitute));
+			params.add(new BasicNameValuePair("voiceUrl",""+voiceUrl));
+			params.add(new BasicNameValuePair("positionStatus", ""+positionStatus));  //把位置的状态发给后台
+			httpRequest.setEntity(new UrlEncodedFormEntity(params,"utf-8"));
+    	    HttpResponse httpResponse = httpClient.execute(httpRequest);
+    	    if(httpResponse.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
+    	    	String result = EntityUtils.toString(httpResponse.getEntity());
+    	    	return result;
+    	    }else {
+				return "error";
+			}
+    	} catch (Exception e) {
+    		
+    		Log.e("checkOut: error", e.toString());
+            return "error";
+		}
+    }
+    
+    
+    public String saveArrangement(String json){
+    	try {
+			String target = URLConfig.checkin;
+			HttpClient httpClient = new DefaultHttpClient();
+			httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 6000);
+			httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 6000);
+			HttpPost httpRequest = new HttpPost(target);
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("arrange",json));
+			httpRequest.setEntity(new UrlEncodedFormEntity(params,"utf-8"));
+    	    HttpResponse httpResponse = httpClient.execute(httpRequest);
+    	    if(httpResponse.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
+    	    	String result = EntityUtils.toString(httpResponse.getEntity());
+    	    	return result;
+    	    }else {
+				return "error";
+			}
+    	} catch (Exception e) {
+    		
+    		Log.e("saveArrangement: error", e.toString());
+            return "error";
+		}
+    }
+    
+    public String getAttendanceDataByDate(long date){
+    	try {
+			String target = URLConfig.getAttendanceDataByDate;
+			HttpClient httpClient = new DefaultHttpClient();
+			httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 6000);
+			httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 6000);
+			HttpPost httpRequest = new HttpPost(target);
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("date",""+date));
+			httpRequest.setEntity(new UrlEncodedFormEntity(params,"utf-8"));
+    	    HttpResponse httpResponse = httpClient.execute(httpRequest);
+    	    if(httpResponse.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
+    	    	String result = EntityUtils.toString(httpResponse.getEntity());
+    	    	return result;
+    	    }else {
+				return "error";
+			}
+    	} catch (Exception e) {
+    		
+    		Log.e("getAttendanceDataByDate: error", e.toString());
+            return "error";
+		}
+    }
+    
+    public String getAttendanceDataByDate(long startTime,long endTime){
+    	try {
+			String target = URLConfig.getAttendanceDataByDate;
+			HttpClient httpClient = new DefaultHttpClient();
+			httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 6000);
+			httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 6000);
+			HttpPost httpRequest = new HttpPost(target);
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("startTime",""+startTime));
+			params.add(new BasicNameValuePair("endTime",""+endTime));
+			httpRequest.setEntity(new UrlEncodedFormEntity(params,"utf-8"));
+    	    HttpResponse httpResponse = httpClient.execute(httpRequest);
+    	    if(httpResponse.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
+    	    	String result = EntityUtils.toString(httpResponse.getEntity());
+    	    	return result;
+    	    }else {
+				return "error";
+			}
+    	} catch (Exception e) {
+    		
+    		Log.e("getAttendanceDataByDate: error", e.toString());
+            return "error";
+		}
+    }
+    
+    public String getAttendanceDataByDateAndName(String name , long startTime,long endTime){
+    	try {
+			String target = URLConfig.getAttendanceDataByDate;
+			HttpClient httpClient = new DefaultHttpClient();
+			httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 6000);
+			httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 6000);
+			HttpPost httpRequest = new HttpPost(target);
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("name",""+name));
+			params.add(new BasicNameValuePair("startTime",""+startTime));
+			params.add(new BasicNameValuePair("endTime",""+endTime));
+			httpRequest.setEntity(new UrlEncodedFormEntity(params,"utf-8"));
+    	    HttpResponse httpResponse = httpClient.execute(httpRequest);
+    	    if(httpResponse.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
+    	    	String result = EntityUtils.toString(httpResponse.getEntity());
+    	    	return result;
+    	    }else {
+				return "error";
+			}
+    	} catch (Exception e) {
+    		
+    		Log.e("getAttendanceDataByDateAndName: error", e.toString());
+            return "error";
+		}
+    }
+
 }

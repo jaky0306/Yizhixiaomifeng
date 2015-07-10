@@ -139,7 +139,7 @@ public class AddClientActivity extends Activity implements OnGetGeoCoderResultLi
 				client.setLatitude(latitude);
 				//保存客户信息到数据库
 				new ClientInfoSaver(AddClientActivity.this, commit_add_client, "save").execute(client);
-				
+				AddClientActivity.this.finish();
 			}
 		});
 		

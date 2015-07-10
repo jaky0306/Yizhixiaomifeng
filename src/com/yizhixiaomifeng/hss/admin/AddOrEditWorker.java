@@ -63,8 +63,6 @@ public class AddOrEditWorker extends Activity{
 		titleView=(TextView) this.findViewById(R.id.add_worker_title);
 		nameView=(EditText) this.findViewById(R.id.add_worker_name);
 		entryTimeView=(EditText) this.findViewById(R.id.add_worker_entrytime);
-		entryTimeView.setEnabled(false);
-		entryTimeView.setFocusable(false);
 		basePayView=(EditText) this.findViewById(R.id.add_worker_basepay);
 		
 		entryTimeView.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +94,7 @@ public class AddOrEditWorker extends Activity{
 		worker=(WorkerEntity) getIntent().getSerializableExtra("worker");
 		if(worker==null){
 			worker=new WorkerEntity();
+			worker.setDepartmenttEntity((DepartmenttEntity) getIntent().getSerializableExtra("department"));
 			titleView.setText("新增员工");
 			isAdd=true;
 		}else{
@@ -104,16 +103,17 @@ public class AddOrEditWorker extends Activity{
 			isAdd=false;
 			nameView.setText(worker.getName());
 			entryTimeView.setText(TimeChangeUtil.getTimeString(worker.getEntryDate()));
-			basePayView.setText(worker.getBasePay());
-			
-			departmentAdapter.getData().add(worker.getDepartmenttEntity());
-			departmentAdapter.notifyDataSetChanged();
-			departmentView.setSelection(1);
+			basePayView.setText(worker.getBasePay()+"");
 			
 			dutyAdapter.getData().add(worker.getDutyTypeEntity());
 			dutyAdapter.notifyDataSetChanged();
 			dutyView.setSelection(1);
 		}
+
+		departmentAdapter.getData().add(worker.getDepartmenttEntity());
+		departmentAdapter.notifyDataSetChanged();
+		departmentView.setSelection(1);
+		
 		departmentView.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -129,7 +129,7 @@ public class AddOrEditWorker extends Activity{
 					dutyAdapter.setData(departmentAdapter.getData().get(position-1).getBusinessTypeEntity().getDutyTypeEntities());
 					dutyAdapter.notifyDataSetChanged();
 
-					if(!isAdd){
+					if(!isAdd&&departmentAdapter.getData().get(position-1).getNumber()==worker.getDepartmenttEntity().getNumber()){
 						/**
 						 * 如果当前是处于编辑用户的操做，且选择的部门是员工原先的所在的部门
 						 * 则要把员工原本职位设置为选中状态
@@ -184,7 +184,7 @@ public class AddOrEditWorker extends Activity{
 							/**
 							 * 如果是编辑，则需要将原本员工所处的部门设置为选中状态
 							 */
-							if(!isAdd){
+//							if(!isAdd){
 								for(int i=0;i<departmentAdapter.getData().size();i++){
 									if(departmentAdapter.getData().get(i).getNumber()
 											==worker.getDepartmenttEntity().getNumber()){
@@ -192,7 +192,7 @@ public class AddOrEditWorker extends Activity{
 										break;
 									}
 								}
-							}
+//							}
 						}else{
 							Toast.makeText(AddOrEditWorker.this, "部门列表加载失败：网络不给力", Toast.LENGTH_SHORT).show();
 						}

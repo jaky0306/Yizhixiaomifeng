@@ -6,8 +6,14 @@ import android.net.NetworkInfo;
 import android.os.Environment;
 
 public class YzxmfConfig {
-	
+	/**
+	 * 保存录音的路径
+	 */
 	public static String voicesrc="/sdcard/voice.amr";
+	/**
+	 * 定位最大误差距离
+	 */
+	public static double maxDistance = 500;
 	
 	/**
 	 * 检查是否存在SDCard

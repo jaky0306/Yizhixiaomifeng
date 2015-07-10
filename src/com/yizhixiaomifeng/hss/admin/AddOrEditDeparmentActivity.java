@@ -77,8 +77,7 @@ public class AddOrEditDeparmentActivity extends Activity{
 				OtherOperate operate=new OtherOperateImpl();
 				List<BusinessTypeEntity> data=operate.loaderBusinessTypes();
 				if(data!=null){
-					adapter.getData().clear();
-					adapter.setData(data);
+					adapter.getData().addAll(data);
 					rs=true;
 				}else{
 					rs=false;
@@ -96,15 +95,15 @@ public class AddOrEditDeparmentActivity extends Activity{
 							/**
 							 * 如果是编辑，则需要将当前的部门的业务类型设置为选中状态
 							 */
-							if(!isAdd){
-								for(int i=0;i<adapter.getData().size();i++){
-									if(adapter.getData().get(i).getBusinessId()
-											==department.getBusinessTypeEntity().getBusinessId()){
-										businessTypeView.setSelection(i+1);
-										break;
-									}
-								}
-							}
+//							if(!isAdd){
+//								for(int i=0;i<adapter.getData().size();i++){
+//									if(adapter.getData().get(i).getBusinessId()
+//											==department.getBusinessTypeEntity().getBusinessId()){
+//										businessTypeView.setSelection(i+1);
+//										break;
+//									}
+//								}
+//							}
 						}else{
 							Toast.makeText(AddOrEditDeparmentActivity.this, "业务类型加载失败：网络不给力", Toast.LENGTH_SHORT).show();
 						}

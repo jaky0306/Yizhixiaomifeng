@@ -16,7 +16,7 @@ public class HeadLoader extends AsyncTask<String, Integer, byte[]>{
 	}
 	@Override
 	protected byte[] doInBackground(String... params) {
-		show_loadinfo_tip.setVisibility(View.VISIBLE);
+		
 		byte []headdata = new AvosTool().getHead(params[0],params[1]);
 		return headdata;
 	}
@@ -39,7 +39,8 @@ public class HeadLoader extends AsyncTask<String, Integer, byte[]>{
 	}
 
 	@Override
-	protected void onPreExecute() {
+	protected void onPreExecute() { 
+		show_loadinfo_tip.setVisibility(View.VISIBLE);
 		super.onPreExecute();
 	}
 

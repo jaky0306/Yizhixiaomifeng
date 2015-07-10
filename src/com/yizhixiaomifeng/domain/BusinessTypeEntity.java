@@ -5,20 +5,26 @@
  */
 package com.yizhixiaomifeng.domain;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class BusinessTypeEntity {
-	private Integer businessId; 
+public class BusinessTypeEntity implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private long businessId; 
 	private String name;
-	private List<DutyTypeEntity> dutyTypeEntities;
+	private List<DutyTypeEntity> dutyTypeEntities=new ArrayList<DutyTypeEntity>();
 	private DepartmenttEntity departmenttEntity;
 	
-	public Integer getBusinessId() {
+	public long getBusinessId() {
 		return businessId;
 	}
 
-	public void setBusinessId(Integer businessId) {
+	public void setBusinessId(long businessId) {
 		this.businessId = businessId;
 	}
 	public String getName() {

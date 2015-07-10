@@ -76,7 +76,7 @@ public class WorkerAdminDPActivity extends Activity{
 						 * 加载成功则更新视图
 						 * 失败则提示失败
 						 */
-						if(data==null){
+						if(data!=null){
 							WorkerAdapter adapter=((WorkerAdapter)workerView.getAdapter());
 							adapter.setData(data);
 							adapter.notifyDataSetChanged();
@@ -110,24 +110,44 @@ public class WorkerAdminDPActivity extends Activity{
 			}
 		});
 		adapter.setDeleteListener(new OnClickListener() {
-			
+			int position;
 			public void onClick(View v) {
-				int position=(Integer) v.getTag();
-				WorkerEntity worker=adapter.getData().get(position);
+				position=(Integer) v.getTag();
+				ThreadManager.getInstance().clearALL();
+				ThreadManager.getInstance().submit(new Runnable() {
+					
+					boolean rs=false;
+					@Override
+					public void run() {
+						WorkerEntity worker=adapter.getData().get(position);
 
-				AdminOperate operate=new AdminOperateImpl();
-				/**
-				 * 执行员工信息删除操作
-				 * 
-				 * 删除成功则更新视图
-				 * 失败则提示失败
-				 */
-				if(operate.deleteWorker(worker)){
-					adapter.getData().remove(position);
-					adapter.notifyDataSetChanged();
-				}else{
-					Toast.makeText(getApplicationContext(), "操作失败：网络不给力", Toast.LENGTH_SHORT).show();
-				}
+						AdminOperate operate=new AdminOperateImpl();
+						if(operate.deleteWorker(worker)){
+							adapter.getData().remove(position);
+							department.setWorkNumber(adapter.getData().size());
+							rs=true;
+						}else{
+							rs=false;
+						}
+						runOnUiThread(new Runnable() {
+							
+							@Override
+							public void run() {
+								/**
+								 * 执行员工信息删除操作
+								 * 
+								 * 删除成功则更新视图
+								 * 失败则提示失败
+								 */
+								if(rs){
+									adapter.notifyDataSetChanged();
+								}else{
+									Toast.makeText(getApplicationContext(), "操作失败：网络不给力", Toast.LENGTH_SHORT).show();
+								}
+							}
+						});
+					}
+				}, ThreadManager.DEFALSE_REQUEST_POOL);
 			}
 		});
 	}
@@ -142,6 +162,7 @@ public class WorkerAdminDPActivity extends Activity{
 			if(resultCode==RESULT_OK){
 				adapter.getData().add((WorkerEntity) data.getSerializableExtra("worker"));
 				adapter.notifyDataSetChanged();
+				department.setWorkNumber(adapter.getData().size());
 			}
 		}else if(requestCode==REQUEST_CODE_EDIT_WORKER){
 			if(resultCode==RESULT_OK){
@@ -183,6 +204,9 @@ public class WorkerAdminDPActivity extends Activity{
 	 * @param v
 	 */
 	public void back(View v){
+		Intent intent=new Intent();
+		intent.putExtra("department", department);
+		setResult(RESULT_OK,intent);
 		ThreadManager.getInstance().clearALL();
 		finish();
 	}
@@ -196,6 +220,7 @@ public class WorkerAdminDPActivity extends Activity{
 		 * 跳转到添加员工的界面
 		 */
 		Intent intent=new Intent(WorkerAdminDPActivity.this, AddOrEditWorker.class);
+		intent.putExtra("department", department);
 		startActivityForResult(intent, REQUEST_CODE_ADD_WORKER);
 //		Toast.makeText(getApplicationContext(), "跳转到添加员工的界面", Toast.LENGTH_SHORT).show();
 	}

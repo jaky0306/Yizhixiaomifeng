@@ -9,11 +9,14 @@ import org.json.JSONObject;
 import com.yizhixiaomifeng.R;
 import com.yizhixiaomifeng.adapter.ShowClientListViewAdapter;
 import com.yizhixiaomifeng.admin.bean.Client;
+import com.yizhixiaomifeng.admin.bean.News;
+import com.yizhixiaomifeng.config.ParameterConfig;
 import com.yizhixiaomifeng.opensource.autoListview.AutoListView;
 import com.yizhixiaomifeng.opensource.autoListview.AutoListView.OnLoadListener;
 import com.yizhixiaomifeng.opensource.autoListview.AutoListView.OnRefreshListener;
 import com.yizhixiaomifeng.tools.ActivityCloser;
 import com.yizhixiaomifeng.tools.ConnectWeb;
+import com.yizhixiaomifeng.tools.NewsManager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,8 +24,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
+import android.view.View.OnCreateContextMenuListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Toast;
@@ -38,7 +46,7 @@ public class ManageClientActivity extends Activity implements OnRefreshListener,
 	private Button add_client_button;
 	private AutoListView show_all_client;
 	private ShowClientListViewAdapter adapter;
-	private List<Client> list = new ArrayList<Client>();
+	private List<Client> all_clients_list = new ArrayList<Client>();
 	private int start=0;
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -46,12 +54,12 @@ public class ManageClientActivity extends Activity implements OnRefreshListener,
 			switch (msg.what) {
 			case AutoListView.REFRESH:
 				show_all_client.onRefreshComplete();
-				list.clear();
-				list.addAll(result);
+				all_clients_list.clear();
+				all_clients_list.addAll(result);
 				break;
 			case AutoListView.LOAD:
 				show_all_client.onLoadComplete();
-				list.addAll(result);
+				all_clients_list.addAll(result);
 				break;
 			}
 			show_all_client.setResultSize(result.size());
@@ -68,7 +76,7 @@ public class ManageClientActivity extends Activity implements OnRefreshListener,
 		add_client_button=(Button)findViewById(R.id.add_client_button);
 		
 		show_all_client = (AutoListView) findViewById(R.id.show_client_listview);
-		adapter = new ShowClientListViewAdapter(this, list);
+		adapter = new ShowClientListViewAdapter(this, all_clients_list);
 		show_all_client.setAdapter(adapter);
 		show_all_client.setOnRefreshListener(this);
 		show_all_client.setOnLoadListener(this);
@@ -92,6 +100,7 @@ public class ManageClientActivity extends Activity implements OnRefreshListener,
 		});
 	}
 
+	
 	private void initData() {
 		loadData(AutoListView.REFRESH);
 	}

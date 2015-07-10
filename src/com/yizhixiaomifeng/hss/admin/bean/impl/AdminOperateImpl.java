@@ -79,6 +79,7 @@ public class AdminOperateImpl implements AdminOperate {
 		List<WorkerEntity> list=null;
 
 		HashMap<String, String> paramsData=new HashMap<String,String>();
+		paramsData.put("number", department.getNumber()+"");
 		
 		String result=HTTPRequest.request(HTTPURL.LOAD_WORKER, paramsData);
 		if(!result.equals("«Î«Û“Ï≥£")&&!result.equals("«Î«Û ß∞‹")&&!result.equals("failed")){
@@ -128,7 +129,7 @@ public class AdminOperateImpl implements AdminOperate {
 		paramsData.put("entryDate", worker.getEntryDate()+"");
 		paramsData.put("departmentId", worker.getDepartmenttEntity().getNumber()+"");
 		paramsData.put("dutyId", worker.getDutyTypeEntity().getDutyId()+"");
-		String result=HTTPRequest.request(HTTPURL.EDIT_WORKER, paramsData);
+		String result=HTTPRequest.request(HTTPURL.ADD_WORKER, paramsData);
 		if(!result.equals("«Î«Û“Ï≥£")&&!result.equals("«Î«Û ß∞‹")&&!result.equals("failed")){
 			if(!result.equals("error")){
 				worker.setJobNum(Integer.valueOf(result));

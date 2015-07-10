@@ -47,8 +47,8 @@ public class ManageNewsActivity extends FragmentActivity{
 		//设置背景的颜色
 		pagerTabStrip.setBackgroundColor(getResources().getColor(R.color.background_4));
 		
-		had_publish_news_Fragment=new ManageHadPublishNews();
-		un_publish_news_Fragment=new ManageUnPublishNews();
+		had_publish_news_Fragment=new ManageHadPublishNewsFragment();
+		un_publish_news_Fragment=new ManageUnPublishNewsFragment();
 		fragments.add(had_publish_news_Fragment);
 		fragments.add(un_publish_news_Fragment);
 		titles.add("已发布");

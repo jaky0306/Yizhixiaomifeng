@@ -41,6 +41,19 @@ public class ShowVoiceTool {
 			e.printStackTrace(); // 输出异常信息
 		}
 	}
+	
+	public void play(String url) {
+		try {
+			player.reset();
+			//这里可以传网络音频
+			player.setDataSource(url); // 重新设置要播放的音频
+			player.prepare(); // 预加载音频
+			player.start(); // 开始播放
+		} catch (Exception e) {
+			e.printStackTrace(); // 输出异常信息
+		}
+	}
+	
 	public void stop() 
 	{
 		if(player.isPlaying())

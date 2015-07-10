@@ -1,0 +1,51 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="100dip"
+    android:id="@+id/attendance_item_info"
+    android:background="@drawable/rectangle_bg_4"
+    android:layout_margin="5dip">
+    
+	<TextView 
+	    android:id="@+id/attendance_item_name"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    android:layout_marginLeft="3dip"
+	    android:layout_centerVertical="true"
+	    android:textSize="20sp"
+	    android:text="黄智杰"/>
+	<LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_toRightOf="@id/attendance_item_name"
+	    android:layout_centerVertical="true"
+	    android:layout_marginLeft="10dip"
+	    android:orientation="vertical">
+	    <TextView 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:textColor="@color/white"
+	        android:textSize="15sp"
+	        android:text="签到情况: "/>
+	    <TextView 
+	        android:id="@+id/attendance_item_checkin_info"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="2dip"
+	        android:text="aaaaaaaaaaaaaaaaaaaaaaa"/>
+	    <TextView 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:textColor="@color/white"
+	        android:textSize="15sp"
+	        android:text="签退情况: "/>
+	    <TextView 
+	        android:id="@+id/attendance_item_checkout_info"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="2dip"
+	        android:text="aaaaaaaaaaaaaaaaaaaaaaa"/>
+	</LinearLayout>
+
+</RelativeLayout>

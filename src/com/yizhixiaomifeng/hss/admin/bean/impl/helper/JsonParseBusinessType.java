@@ -20,19 +20,21 @@ public class JsonParseBusinessType {
 		 */
 		try {
 			BusinessTypeEntity business;
-			JSONObject root=new JSONObject(jsonString);
-			JSONArray jsonArray = root.getJSONArray("businessTypeList");
+//			JSONObject root=new JSONObject(jsonString);
+//			JSONArray jsonArray = root.getJSONArray("businessTypeList");;
+			JSONArray jsonArray = new JSONArray(jsonString);
 			JSONObject jsonObj = null;
 			for (int i = 0; i < jsonArray.length(); i++) {
 				jsonObj = jsonArray.getJSONObject(i);
 				business = new BusinessTypeEntity();
-				business.setBusinessId(jsonObj.getInt("businessId"));
+				business.setBusinessId(jsonObj.getLong("businessId"));
 				business.setName(jsonObj.getString("name"));
 				data.add(business);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 			Log.d("JsonParseBusinessType", "JSON½âÎö³ö´í");
+			Log.e("JsonParseBusinessType", jsonString);
 			return null;
 		}
 		return data;

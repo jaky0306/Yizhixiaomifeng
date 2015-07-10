@@ -314,4 +314,5 @@ public class SwipeLayout extends FrameLayout{
 		void onClose(SwipeLayout layout);
 		void onSwipe(SwipeLayout layout);
 	}
+
 }

@@ -1,0 +1,253 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/background_4" >
+    
+    <RelativeLayout 
+        android:id="@+id/check_out_layout_head"
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_5"
+        android:padding="5dp">
+        
+        <ImageView
+	        android:layout_centerInParent="true"
+	        android:layout_alignParentLeft="true"
+	        android:layout_width="30dip"
+	        android:layout_height="30dip"
+	        android:id="@+id/back"
+	        android:src="@drawable/left_icon_small"/>
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerVertical="true"
+           android:layout_toRightOf="@+id/back"
+           android:textColor="@color/white"
+           android:text="签退"
+           android:textSize="20sp" />
+       <Button 
+	        android:id="@+id/commit_check_out_button"
+	        android:layout_width="100dip"
+	        android:layout_height="40dip"
+	        android:background="@drawable/rectangle_bg_3"
+	        android:text="签退"
+	        android:layout_alignParentRight="true"/>
+
+	</RelativeLayout>
+	
+    <ImageView 
+        android:id="@+id/show_catching_voice_imageview"
+	    android:layout_width="100dip"
+	    android:layout_height="100dip"
+	    android:layout_gravity="center"
+	    android:layout_centerHorizontal="true"
+	    android:layout_marginTop="50dip"
+	    android:visibility="invisible"
+	    android:src="@drawable/catching_voice"/>
+		
+    <ScrollView 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/check_out_layout_head"
+        android:scrollbars="none">
+        <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            
+        <LinearLayout 
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="5dip"
+		    android:layout_marginTop="10dip"
+		    android:layout_gravity="fill_vertical"
+		    android:orientation="horizontal">
+		    
+		    <TextView 
+		        android:layout_width="50dip"
+		        android:layout_height="wrap_content"
+		        android:textSize="15sp"
+		        android:text="时间"/>
+		    <TextView 
+		        android:id="@+id/check_out_time"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textSize="20sp"
+		        android:textColor="@color/white"/>
+		</LinearLayout>
+		<View  
+   			android:layout_width="fill_parent"  
+    		android:layout_height="2px"
+    		android:layout_margin="3dip"
+   			android:background="@color/background_5"  
+		/> 
+		<LinearLayout 
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="5dip"
+		    android:layout_marginTop="10dip"
+		    android:layout_gravity="fill_vertical"
+		    android:orientation="horizontal">
+		    
+		    <TextView 
+		        android:layout_width="50dip"
+		        android:layout_height="wrap_content"
+		        android:textSize="15sp"
+		        android:text="姓名"/>
+		    <TextView 
+		        android:id="@+id/check_out_name"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textSize="20sp"
+		        android:textColor="@color/white"/>
+		</LinearLayout>
+		<View  
+   			android:layout_width="fill_parent"  
+    		android:layout_height="2px"
+    		android:layout_margin="3dip"
+   			android:background="@color/background_5"  
+		/> 
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="fill_vertical"
+	        android:layout_marginLeft="5dip"
+	        android:layout_marginTop="10dip"
+	        android:orientation="vertical" >
+
+		    <LinearLayout 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal">
+		        <TextView 
+			        android:layout_width="50dip"
+			        android:layout_height="wrap_content"
+			        android:textSize="15sp"
+			        android:layout_gravity="center"
+			        android:text="位置"/>
+			    <Button 
+			        android:id="@+id/get_position_button"
+			        android:layout_width="100dip"
+			        android:layout_height="35dip"
+			        android:layout_gravity="center"
+			        android:background="@drawable/rectangle_bg_2"
+			        android:text="定位"/>
+			    <ProgressBar 
+			        android:id="@+id/show_getting_position_progressbar"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_gravity="center"/>
+		    </LinearLayout>
+			<TextView 
+		        android:id="@+id/check_out_position"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textSize="20sp"
+		        android:textColor="@color/white"/>
+			<TextView 
+		        android:id="@+id/check_out_position_tip"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="10dip"
+		        android:textSize="18sp"
+		        android:textColor="@color/white"/>
+		</LinearLayout>
+		<View  
+   			android:layout_width="fill_parent"  
+    		android:layout_height="2px"
+    		android:layout_margin="3dip"
+   			android:background="@color/background_5"  
+		/> 
+		<LinearLayout 
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="5dip"
+		    android:layout_marginTop="10dip"
+		    android:layout_gravity="center"
+		    android:orientation="horizontal">
+		    
+		    <TextView 
+		        android:layout_width="50dip"
+		        android:layout_height="wrap_content"
+		        android:textSize="15sp"
+		        android:layout_gravity="center"
+		        android:text="客户"/>
+		    <TextView 
+		        android:id="@+id/check_out_client"
+		        android:layout_width="fill_parent"
+		        android:layout_height="50dip"
+		        android:textSize="20sp"
+		        android:textColor="@color/white"/>
+		</LinearLayout>
+		
+		<View  
+   			android:layout_width="fill_parent"  
+    		android:layout_height="2px"
+    		android:layout_margin="3dip"
+   			android:background="@color/background_5"  
+		/> 
+		
+
+		<LinearLayout 
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="5dip"
+		    android:layout_marginTop="10dip"
+		    android:layout_gravity="fill_vertical"
+		    android:orientation="horizontal">
+		    
+		    <TextView 
+		        android:layout_width="100dip"
+		        android:layout_height="wrap_content"
+		        android:textSize="15sp"
+		        android:layout_gravity="center"
+		        android:text="录音留言"/>
+				<LinearLayout 
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+				    android:orientation="horizontal">
+				    
+				    <Button 
+				        android:id="@+id/catch_voice_button"
+				        android:layout_width="100dip"
+				        android:layout_height="50dip"
+				        android:text="长按录音"
+				        android:background="@drawable/rectangle_bg_2"
+				        android:drawableLeft="@drawable/catch_voice"
+				        />
+				    <LinearLayout 
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:orientation="vertical">
+				        <Button 
+					        android:id="@+id/show_voice_button"
+					        android:layout_width="100dip"
+					        android:layout_height="50dip"
+					        android:layout_marginLeft="10dip"
+					        android:text="试听录音"
+					        android:enabled="false"
+					        android:background="@drawable/rectangle_bg_6"
+					        android:drawableLeft="@drawable/show_voice"/>
+				        <Button 
+					        android:id="@+id/delete_voice_button"
+					        android:layout_width="100dip"
+					        android:layout_height="50dip"
+					        android:layout_marginLeft="10dip"
+					        android:layout_marginTop="5dip"
+					        android:text="删除录音"
+					        android:enabled="false"
+					        android:background="@drawable/rectangle_bg_6"
+					        android:drawableLeft="@drawable/show_voice"/>
+				    </LinearLayout>
+				    
+				    
+				</LinearLayout>
+				
+			</LinearLayout>
+			
+    </LinearLayout>
+    
+	</ScrollView>
+	
+</RelativeLayout>

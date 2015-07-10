@@ -16,5 +16,10 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    
+    <style name="spinner_style">
+    	<item name="android:background">@drawable/spinner_selector</item>
+    	<item name="android:paddingLeft">5dip</item>
+    </style>
 
 </resources>

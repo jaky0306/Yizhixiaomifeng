@@ -1,6 +1,8 @@
 package com.yizhixiaomifeng.user;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -8,6 +10,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import com.baidu.a.a.a.c;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -22,14 +25,16 @@ import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.baidu.mapapi.utils.DistanceUtil;
 import com.yizhixiaomifeng.R;
+import com.yizhixiaomifeng.admin.bean.Client;
 import com.yizhixiaomifeng.config.ParameterConfig;
 import com.yizhixiaomifeng.config.YzxmfConfig;
 import com.yizhixiaomifeng.tools.ActivityCloser;
 import com.yizhixiaomifeng.tools.AvosTool;
+import com.yizhixiaomifeng.tools.CatchVoiceTool;
 import com.yizhixiaomifeng.tools.ClientInfoLoader;
 import com.yizhixiaomifeng.tools.ConnectWeb;
-import com.yizhixiaomifeng.tools.HeadTool;
 import com.yizhixiaomifeng.tools.LocalStorage;
+import com.yizhixiaomifeng.tools.ShowVoiceTool;
 import com.yizhixiaomifeng.user.SetHead.HeadUper;
 
 import android.app.Activity;
@@ -46,14 +51,16 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
+import android.view.View.OnTouchListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -61,7 +68,6 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 public class CheckIn extends Activity
 {
@@ -73,24 +79,33 @@ public class CheckIn extends Activity
 	private ProgressBar show_getting_position_proProgressBar;
 	private TextView check_in_position;
 	private TextView check_in_position_tip;
-	private Spinner spinner;
+	private TextView check_in_client;
 	private ImageView check_in_scene;
 	private String check_in_scene_name="checkinScene.jpg";
 	private EditText check_in_leave_word;
-	private LinearLayout show_loadding_client_tip; //当加载客户数据时显示提示
 	
-	private ToggleButton catch_voice_ToggleButton;
-	private ToggleButton show_voice_ToggleButton;
 	
+	private Button catch_voice_Button;
+	private Button show_voice_Button;
+	private Button delete_voice_Button;
+	private ImageView show_catching_voice_imageview;
 	private List<String>data_list;
 	
 	private LocationClient mLocationClient=null;
 	private GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
     private LatLng mylLatLng=null;  //我当前的位置
     private LatLng goalLatLng=null;	//我的目标位置
+    
+	private Client client;
 	
     private double nowDistance = 0;  //当前位置距离目标地点的距离
-    private double maxDistance = 0;  //管理员设置的到目标地点的最大偏差值
+    private double maxDistance = YzxmfConfig.maxDistance;  //管理员设置的到目标地点的最大偏差值
+    
+    
+    private CatchVoiceTool cvt = null;
+    private boolean hadCatchVoice = false;
+    private boolean isCatchingVoice=false;
+    private boolean isPlayingVoice=false;
     
     
     private Handler handler = new Handler(){
@@ -106,10 +121,11 @@ public class CheckIn extends Activity
     			get_position_button.setEnabled(false);
     			show_getting_position_proProgressBar.setVisibility(View.VISIBLE);
     		}
-    		if(msg.what==0x113){	//显示用户的
+    		if(msg.what==0x113){	//显示用户的与目的地的距离提示
     			if(nowDistance>maxDistance){
+    				DecimalFormat   df   =new   java.text.DecimalFormat("#.00");
     				check_in_position_tip.setTextColor(Color.RED);
-        			check_in_position_tip.setText("距离目的地还大概有 "+(nowDistance-maxDistance)+" m ,加油...");
+        			check_in_position_tip.setText("距离目的地还大概有 "+df.format(nowDistance-maxDistance)+" m ,加油...");
     			}else {
     				check_in_position_tip.setTextColor(Color.GREEN);
         			check_in_position_tip.setText("目标地点就在你周围...");
@@ -122,6 +138,36 @@ public class CheckIn extends Activity
     		if(msg.what==0x115){  //用来显示基本信息
     			LocalStorage ls = new LocalStorage(CheckIn.this);
     			check_in_name.setText(ls.getString("name", "****"));
+    			check_in_client.setText(client.getName());
+    		}
+    		
+    		if(msg.what==0x116){  //控制录制音频
+    			if(isCatchingVoice){
+    				show_voice_Button.setBackgroundResource(R.drawable.rectangle_bg_6);
+        			show_voice_Button.setEnabled(false);
+        			delete_voice_Button.setBackgroundResource(R.drawable.rectangle_bg_6);
+        			delete_voice_Button.setEnabled(false);
+    			}else {
+    				show_voice_Button.setBackgroundResource(R.drawable.rectangle_bg_2);
+        			show_voice_Button.setEnabled(true);
+        			delete_voice_Button.setBackgroundResource(R.drawable.rectangle_bg_2);
+        			delete_voice_Button.setEnabled(true);
+				}
+    			
+    		}
+    		if(msg.what==0x117){ //控制播放音频
+    			if(isPlayingVoice){
+    				catch_voice_Button.setBackgroundResource(R.drawable.rectangle_bg_6);
+        			catch_voice_Button.setEnabled(false);
+        			delete_voice_Button.setBackgroundResource(R.drawable.rectangle_bg_6);
+        			delete_voice_Button.setEnabled(false);
+    			}else {
+    				catch_voice_Button.setBackgroundResource(R.drawable.rectangle_bg_2);
+        			catch_voice_Button.setEnabled(true);
+        			delete_voice_Button.setBackgroundResource(R.drawable.rectangle_bg_2);
+        			delete_voice_Button.setEnabled(true);
+				}
+    			
     		}
     	};
     };
@@ -133,6 +179,10 @@ public class CheckIn extends Activity
         setContentView(R.layout.check_in);
         
         ActivityCloser.activities.add(this);
+        
+        client=(Client) getIntent().getSerializableExtra("client");
+        goalLatLng=new LatLng(client.getLatitude(), client.getLongitude());
+        
         /**
          * 初始化组件
          */
@@ -143,13 +193,13 @@ public class CheckIn extends Activity
         show_getting_position_proProgressBar=(ProgressBar)findViewById(R.id.show_getting_position_progressbar);
         check_in_position=(TextView)findViewById(R.id.check_in_position);
         check_in_position_tip=(TextView)findViewById(R.id.check_in_position_tip);
-        spinner = (Spinner) findViewById(R.id.check_in_customer);
+        check_in_client=(TextView)findViewById(R.id.check_in_client);
         check_in_scene=(ImageView)findViewById(R.id.check_in_scene);
 //        check_in_leave_word=(EditText)findViewById(R.id.check_in_leave_word);
-        show_loadding_client_tip=(LinearLayout)findViewById(R.id.show_loadding_client_info);
-        catch_voice_ToggleButton=(ToggleButton)findViewById(R.id.catch_voice_togglebutton);
-        show_voice_ToggleButton=(ToggleButton)findViewById(R.id.show_voice_togglebutton);
-        
+        catch_voice_Button=(Button)findViewById(R.id.catch_voice_button);
+        show_voice_Button=(Button)findViewById(R.id.show_voice_button);
+        delete_voice_Button=(Button)findViewById(R.id.delete_voice_button);
+        show_catching_voice_imageview=(ImageView)findViewById(R.id.show_catching_voice_imageview);
         
         mLocationClient= new LocationClient(getApplicationContext());
 	    LocationClientOption option = new LocationClientOption();
@@ -204,6 +254,7 @@ public class CheckIn extends Activity
 					return;
 				}
 				goalLatLng=new LatLng(result.getLocation().latitude, result.getLocation().longitude);
+				getDistanceToGoal();
 			}
 
 			@Override
@@ -244,53 +295,12 @@ public class CheckIn extends Activity
 			}
 		});
 		
-		
-//		mSearch.geocode(new GeoCodeOption().city(
-//				editCity.getText().toString()).address(
-//				editGeoCodeKey.getText().toString()));
-		
+		/**
+		 * 加载所有客户的信息
+		 */
+//		loadAllClientInfo();
         
-		//根据电话号码获取用户的姓名
-		//获取所有客户的数据
-		//获取管理员规定的最远距离值
-		
-		
         
-        /**
-         * 初始化Spinner的数据
-         */
-        data_list = new ArrayList<String>();
-        data_list.add("请选择客户");
-        data_list.add("中国移动南方基地");
-        data_list.add("bbb");
-        data_list.add("ccc");
-        data_list.add("ddd");
-        
-        //适配器
-        ArrayAdapter<String> arr_adapter= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data_list);
-        //设置样式
-        arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //加载适配器
-        spinner.setAdapter(arr_adapter);
-        
-        spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> adapter, View view,
-					int position, long id) {
-				if(position!=0)
-				{
-					String clientname = data_list.get(position);
-					new GetClientAddress().execute(clientname);
-				}
-					//Toast.makeText(getApplicationContext(), data_list.get(position), Toast.LENGTH_LONG).show();
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				
-			}
-		});
         
         
         
@@ -321,22 +331,83 @@ public class CheckIn extends Activity
 				1, 
 				TimeUnit.SECONDS);
         
+        /**
+         * 录制音频
+         */
+        cvt = new CatchVoiceTool();
         
-        catch_voice_ToggleButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        
+        catch_voice_Button.setOnLongClickListener(new OnLongClickListener() {
 			
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				catch_voice_ToggleButton.setChecked(isChecked);
+			public boolean onLongClick(View v) {
+				
+				show_catching_voice_imageview.setVisibility(View.VISIBLE);
+				Animation showCatchingVoiceAnimation = AnimationUtils.loadAnimation(CheckIn.this, R.anim.show_catching_voice_anim);
+				show_catching_voice_imageview.setAnimation(showCatchingVoiceAnimation);
+				
+				cvt.startCatchVoice();
+				hadCatchVoice=true;
+				isCatchingVoice=true;
+				/**
+				 * 发送正在录制音频信号
+				 */
+				Message msg = new Message();
+				msg.what=0x116;
+				handler.sendMessage(msg);
+				return false;
 			}
 		});
-        show_voice_ToggleButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        catch_voice_Button.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v,MotionEvent event){ 
+            	if(event.getAction() == MotionEvent.ACTION_UP) { //松开手后就不录制
+            		show_catching_voice_imageview.setVisibility(View.INVISIBLE);
+            		Animation showUnCatchingVoiceAnimation = AnimationUtils.loadAnimation(CheckIn.this, R.anim.unshow_catching_voice_anim);
+    				show_catching_voice_imageview.setAnimation(showUnCatchingVoiceAnimation);
+            		
+                    isCatchingVoice=false;
+                    cvt.stopCatchVoice(); //不再录制
+                    Message msg = new Message();
+    				msg.what=0x116;
+    				handler.sendMessage(msg);
+                }
+				return false;
+            }
+
+        });
+        delete_voice_Button.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				// TODO Auto-generated method stub
+			public void onClick(View v) {
+				cvt.deleteVoice();
+			}
+		});
+        show_voice_Button.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(!isPlayingVoice){
+					if(hadCatchVoice){
+						ShowVoiceTool svt = new ShowVoiceTool(CheckIn.this); 
+						svt.play();
+						isPlayingVoice=true;
+						Message msg = new Message();
+						msg.what=0x117;
+						handler.sendMessage(msg);
+					}
+				}else {
+					isPlayingVoice=false;
+					Message msg = new Message();
+					msg.what=0x117;
+					handler.sendMessage(msg);
+				}
 				
 			}
 		});
+        
+        
+        
         
         
         //为提交按钮绑定事件
@@ -344,15 +415,10 @@ public class CheckIn extends Activity
 			
 			@Override
 			public void onClick(View v) {
-				
-				
-				
 				/**
 				 * 把签到现场保存到云
 				 */
-				LocalStorage ls = new LocalStorage(CheckIn.this);
-				String username = ls.getString("username", "");
-				String type =ls.getString("type", "");
+				
 				if(YzxmfConfig.isConnect(CheckIn.this)){
 					Calendar c = Calendar.getInstance();
 					int year = c.get(Calendar.YEAR);
@@ -360,7 +426,7 @@ public class CheckIn extends Activity
 					int date = c.get(Calendar.DATE);
 					String time = ""+year+"-"+month+"-"+date;
 					//保存签到现场到云端
-					new CheckInHelper().execute(username,type,time);
+					new CheckInHelper().execute(time);
 				}
 			}
 		});
@@ -482,6 +548,7 @@ public class CheckIn extends Activity
 		msg.what=0x112;
 		handler.sendMessage(msg);
 		mLocationClient.start();  //开启位置客户端
+		
 		getDistanceToGoal(); //定位完后立即获取与目标的距离
 	}
 	
@@ -501,18 +568,43 @@ public class CheckIn extends Activity
 	    
 	}
 	
-	public void loadAllClientInfo(){
-		new ClientInfoLoader(spinner, show_loadding_client_tip).execute("loadAll");
-	}
 	
-	class GetClientAddress extends AsyncTask<String, Integer, String>{
+	
+	
+	
+	/**
+	 * 提交助手
+	 * @author Jaky
+	 *
+	 */
+	class CheckInHelper extends AsyncTask<String, Integer, String>{
 		@Override
 		protected String doInBackground(String... params) {
-			
 			/**
-			 * 获取客户数据
+			 * 让滚动条显示
 			 */
-			String result = new ConnectWeb().getClientInfoByName(params[0]);
+			Message msg = new Message();
+			msg.what=0x111;
+			handler.sendMessage(msg);
+			double lat=mylLatLng.latitude;
+			double lon=mylLatLng.longitude;
+			LocalStorage ls = new LocalStorage(CheckIn.this);
+			String username = ls.getString("username", "");
+			String type =ls.getString("type", "");
+			String date = params[0];
+			/**
+			 * 保存相应数据到LeanCloud
+			 */
+			AvosTool avosTool = new AvosTool();
+			avosTool.saveCheckInScene(username,type,date);  //把现场图片保存到LeanCloud
+			avosTool.saveCheckInVoice(username, type, date);
+			String sceneUrl=avosTool.getCheckInSceneUrl(username, type, date);
+			String voiceUrl=avosTool.getCheckInVoiceUrl(username, type, date);
+			/**
+			 * 保存数据到数据库
+			 */
+			String result = new ConnectWeb().checkIn(username,client.getId(), lat, lon, sceneUrl, voiceUrl, nowDistance);
+			
 			return result;
 		}
 
@@ -523,65 +615,30 @@ public class CheckIn extends Activity
 
 		@Override
 		protected void onPostExecute(String result) {
-			/**
-			 * 让滚动条隐藏
-			 */
-			Message msg = new Message();
-			msg.what=0x112;
-			handler.sendMessage(msg);
-			super.onPostExecute(result);
+			
+			if(result.equals("ok")){
+				/**
+				 * 让滚动条隐藏
+				 */
+				Message msg = new Message();
+				msg.what=0x112;
+				handler.sendMessage(msg);
+				Toast.makeText(CheckIn.this, "签到成功...", Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(CheckIn.this,MainActivity.class);
+				startActivity(intent);
+				super.onPostExecute(result);
+			}else {
+				Toast.makeText(CheckIn.this, "签到失败...", Toast.LENGTH_LONG).show();
+			}
+			commit_check_in_button.setText("签到");
+			commit_check_in_button.setEnabled(true);
+			
 		}
 
 		@Override
 		protected void onPreExecute() {
-			super.onPreExecute();
-		}
-
-		@Override
-		protected void onProgressUpdate(Integer... values) {
-			super.onProgressUpdate(values);
-		}
-		
-	}
-	
-	
-	
-	/**
-	 * 提交助手
-	 * @author Jaky
-	 *
-	 */
-	class CheckInHelper extends AsyncTask<String, Integer, Void>{
-		@Override
-		protected Void doInBackground(String... params) {
-			/**
-			 * 让滚动条显示
-			 */
-			Message msg = new Message();
-			msg.what=0x111;
-			handler.sendMessage(msg);
-			new AvosTool().saveCheckInScene(params[0],params[1],params[2]);  //把头像保存到LeanCloud
-			return null;
-		}
-
-		@Override
-		protected void onCancelled() {
-			super.onCancelled();
-		}
-
-		@Override
-		protected void onPostExecute(Void result) {
-			/**
-			 * 让滚动条隐藏
-			 */
-			Message msg = new Message();
-			msg.what=0x112;
-			handler.sendMessage(msg);
-			super.onPostExecute(result);
-		}
-
-		@Override
-		protected void onPreExecute() {
+			commit_check_in_button.setText("签到中...");
+			commit_check_in_button.setEnabled(false);
 			super.onPreExecute();
 		}
 

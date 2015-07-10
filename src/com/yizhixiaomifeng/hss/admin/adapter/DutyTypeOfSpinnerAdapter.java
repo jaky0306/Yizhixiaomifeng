@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ public class DutyTypeOfSpinnerAdapter extends BaseAdapter{
 
 	@Override
 	public long getItemId(int position) {
-		return getData().get(position-1).getDutyId();
+		return position;
 	}
 
 	@Override
@@ -42,8 +43,10 @@ public class DutyTypeOfSpinnerAdapter extends BaseAdapter{
 		convertView=getView(convertView);
 		if(position==0)
 			((TextView)convertView).setText("«Î—°‘Ò÷∞Œª");
-		else
+		else{
 			((TextView)convertView).setText(getData().get(position-1).getName());
+			((TextView)convertView).setTextColor(Color.BLACK);
+		}
 		return convertView;
 	}
 	

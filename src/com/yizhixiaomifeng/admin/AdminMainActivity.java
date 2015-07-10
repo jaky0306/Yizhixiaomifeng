@@ -79,7 +79,7 @@ public class AdminMainActivity extends Activity{
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.admin_main_manage_attendance:
-				Intent intent1 = new Intent(AdminMainActivity.this,ManageNewsActivity.class);
+				Intent intent1 = new Intent(AdminMainActivity.this,ManageAttendanceActivity.class);
 				startActivity(intent1);
 				break;
 			case R.id.admin_main_manage_news:

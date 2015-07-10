@@ -206,7 +206,7 @@ public class Login extends Activity
     	    			 * 登录成功后把用户基本信息保存到SharedPreferences
     	    			 */
     	    			LocalStorage ls = new LocalStorage(Login.this);
-    	    			ls.putString("username",username);
+    	    			ls.putString("username",user); //以登录时候的用户名为主
     	    			ls.putString("type", "admin");
     	    			ls.putString("name", name);
     	    			ls.commitEditor();

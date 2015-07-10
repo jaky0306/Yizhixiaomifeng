@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@color/background_5">
+
+   	<RelativeLayout 
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_2"
+        android:padding="5dp">
+        
+        <ImageView
+	        android:layout_centerInParent="true"
+	        android:layout_alignParentLeft="true"
+	        android:layout_width="30dip"
+	        android:layout_height="40dip"
+	        android:id="@+id/manage_attendance_back"
+	        android:src="@drawable/left_icon_small"/>
+       <TextView
+	        android:layout_centerInParent="true"
+	        android:layout_toRightOf="@id/manage_attendance_back"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"
+	        android:text="考勤管理"/>
+       <ImageView 
+	        android:id="@+id/search_attendance_imageview"
+	        android:layout_width="40dip"
+	        android:layout_height="40dip"
+	        android:layout_centerInParent="true"
+	        android:background="@drawable/search_icon"
+	        android:layout_alignParentRight="true"/>
+
+	</RelativeLayout>
+    
+   	<RelativeLayout 
+   	    android:layout_width="fill_parent"
+   	    android:layout_height="wrap_content"
+   	    android:background="@color/background_5"
+   	    android:layout_marginTop="5dip">
+   	    <TextView 
+   	        android:id="@+id/manage_attendance_time"
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:drawableLeft="@drawable/time_icon"
+   	        android:layout_alignParentLeft="true"
+   	        android:layout_centerVertical="true"
+   	        android:textSize="22dip"
+   	        android:textColor="@color/white"/>
+   	    <TextView 
+   	        android:id="@+id/manage_attendance_nums_tip"
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:layout_toRightOf="@id/manage_attendance_time"
+   	        android:layout_centerVertical="true"
+   	        android:text="考勤人数: "
+   	        android:layout_marginLeft="10dip"
+   	        android:textSize="22dip"
+   	        android:textColor="@color/white"/>
+   	    
+   	    <TextView 
+   	        android:id="@+id/manage_attendance_nums"
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:layout_toRightOf="@id/manage_attendance_nums_tip"
+   	        android:layout_centerVertical="true"
+   	        android:layout_marginLeft="3dip"
+   	        android:textSize="25dip"
+   	        android:textColor="@color/orange"/>
+   	    
+   	</RelativeLayout>
+
+   	<LinearLayout
+   	    android:layout_width="fill_parent"
+   	    android:layout_height="wrap_content"
+   	    android:layout_marginTop="10dip"
+   	    android:orientation="horizontal" >
+
+   	    <TextView
+   	        android:id="@+id/manage_attendance_ok_nums_tip"
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:layout_marginLeft="10dip"
+   	        android:text="考勤正常人数: "
+   	        android:textColor="@color/white"
+   	        android:textSize="15dip" />
+
+   	    <TextView
+   	        android:id="@+id/manage_attendance_ok_nums"
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:layout_marginLeft="3dip"
+   	        android:text=""
+   	        android:textColor="@color/green"
+   	        android:textSize="20dip" />
+   	    <TextView
+   	        android:id="@+id/manage_attendance_fail_nums_tip"
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:layout_marginLeft="10dip"
+   	        android:text="考勤异常人数: "
+   	        android:textColor="@color/white"
+   	        android:textSize="15dip" />
+
+   	    <TextView
+   	        android:id="@+id/manage_attendance_fail_nums"
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:layout_marginLeft="3dip"
+   	        android:text=""
+   	        android:textColor="@color/red"
+   	        android:textSize="20dip" />
+   	</LinearLayout>
+   	<LinearLayout
+   	    android:layout_width="fill_parent"
+   	    android:layout_height="wrap_content"
+   	    android:orientation="horizontal" >
+
+   	    <TextView
+   	        android:id="@+id/manage_attendance_be_late_nums_tip"
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:layout_marginLeft="10dip"
+   	        android:text="迟到人数: "
+   	        android:textColor="@color/white"
+   	        android:textSize="15dip" />
+
+   	    <TextView
+   	        android:id="@+id/manage_attendance_be_late_nums"
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:layout_marginLeft="3dip"
+   	        android:text=""
+   	        android:textColor="@color/red"
+   	        android:textSize="20dip" />
+   	    <TextView
+   	        android:id="@+id/manage_attendance_leave_earlier_nums_tip"
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:layout_marginLeft="10dip"
+   	        android:text="早退人数: "
+   	        android:textColor="@color/white"
+   	        android:textSize="15dip" />
+
+   	    <TextView
+   	        android:id="@+id/manage_attendance_leave_earlier_nums"
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:layout_marginLeft="3dip"
+   	        android:text=""
+   	        android:textColor="@color/red"
+   	        android:textSize="20dip" />
+   	    <TextView
+   	        android:id="@+id/manage_attendance_absence_nums_tip"
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:layout_marginLeft="10dip"
+   	        android:text="缺勤人数: "
+   	        android:textColor="@color/white"
+   	        android:textSize="15dip" />
+
+   	    <TextView
+   	        android:id="@+id/manage_attendance_absence_nums"
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:layout_marginLeft="3dip"
+   	        android:text=""
+   	        android:textColor="@color/red"
+   	        android:textSize="20dip" />
+   	</LinearLayout>
+   	
+   		<LinearLayout
+		    android:id="@+id/show_loadding_attendance_tip"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center"
+		    android:visibility="gone"
+		    android:orientation="horizontal" >
+
+		    <ProgressBar
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center" />
+
+		    <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center"
+		        android:text="正在加载考勤信息..."
+		        android:textColor="@color/green"
+		        android:textSize="15sp" />
+		</LinearLayout>
+   	
+   	<View  
+		android:layout_width="fill_parent"  
+   		android:layout_height="2px"
+   		android:layout_margin="3dip"
+  		android:background="@color/background_2"  
+	/> 
+   	
+   	
+   	<com.yizhixiaomifeng.opensource.autoListview.AutoListView
+   	    android:id="@+id/show_all_fail_attendance"
+   	    android:layout_width="fill_parent"
+   	    android:layout_height="wrap_content">
+   	    
+   	</com.yizhixiaomifeng.opensource.autoListview.AutoListView>
+
+</LinearLayout>
+

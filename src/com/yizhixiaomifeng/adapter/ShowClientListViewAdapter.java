@@ -5,6 +5,7 @@ import java.util.List;
 import com.yizhixiaomifeng.R;
 import com.yizhixiaomifeng.admin.EditClientActivity;
 import com.yizhixiaomifeng.admin.bean.Client;
+import com.yizhixiaomifeng.tools.ConnectWeb;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,11 +13,14 @@ import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGestureListener;
 import android.graphics.Color;
 import android.opengl.Visibility;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.WindowManager;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
@@ -24,6 +28,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
@@ -198,10 +203,32 @@ public class ShowClientListViewAdapter extends BaseAdapter {
 				context.startActivity(intent);
 			}
 		});
-		
+		holder.delete_button.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						new ConnectWeb().deleteClient(client);
+						Message msg = new Message();
+						msg.what=0x111;
+						handler.sendMessage(msg);
+					}
+				}).start();
+			}
+		});
 		return convertView;
 	}
+	private Handler handler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			if(msg.what==0x111){
+				Toast.makeText(context, "正在删除,请稍后刷新...", Toast.LENGTH_LONG).show();
+			}
 
+		};
+	};
 	
 	private static class ViewHolder {
 		TextView name;
