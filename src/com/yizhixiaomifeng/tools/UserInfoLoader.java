@@ -1,24 +1,14 @@
 package com.yizhixiaomifeng.tools;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import com.baidu.a.a.a.c;
-import com.yizhixiaomifeng.admin.bean.Client;
 import com.yizhixiaomifeng.domain.WorkerEntity;
-
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
 
 public class UserInfoLoader extends AsyncTask<String, Integer, String>{
 	private Context context;

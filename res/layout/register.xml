@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical" 
     android:background="@color/background_4">
     
@@ -11,106 +11,100 @@
         android:padding="5dp">
         
         <ImageView
-            android:id="@+id/back"
+            android:id="@+id/register_back"
 	        android:layout_centerInParent="true"
 	        android:layout_alignParentLeft="true"
-	        android:layout_width="45px"
-	        android:layout_height="45px"
+	        android:layout_width="45dip"
+	        android:layout_height="45dip"
 	        android:src="@drawable/left_icon_small"/>
        <TextView
 	        android:layout_centerInParent="true"
-	        android:layout_toRightOf="@id/back"
+	        android:layout_toRightOf="@id/register_back"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:textSize="20sp"
 	        android:text="注册"/>
 
 	</RelativeLayout>
-    
-    
-    <RelativeLayout 
-        android:id="@+id/login_div"
+   		<!--姓名 -->
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_margin="5dp"
+        android:textColor="@color/white"
+        android:text="姓名"/>
+    <Spinner 
+        android:id="@+id/register_userid"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/login_register_background"
-        android:layout_marginTop="50dp"
-        >
-        <!--电话 -->
-        <TextView 
-            android:id="@+id/register_usernameInfo"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_margin="5dp"
-            android:textColor="@color/white"
-            android:text="电话"
-            />
-        <EditText 
-            android:id="@+id/register_username"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="请输入电话号码，将用作登录账号"
-            android:layout_below="@id/register_usernameInfo"
-            android:singleLine="true"
-            android:inputType="text"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="5dip"
-            android:background="@drawable/edittext_bg"
-            />
-        <!--密码 -->
-        <TextView 
-            android:id="@+id/register_passwordInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/register_username"
-            android:layout_margin="5dp"
-            android:textColor="@color/white"
-            android:text="密码"
-            />
-        <EditText 
-            android:id="@+id/register_password"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/register_passwordInfo"
-            android:password="true"
-            android:hint="不少于6个字符，需组合字母、数字或符号"
-            android:singleLine="true"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="5dip"
-            android:inputType="textPassword"
-            android:background="@drawable/edittext_bg"
-            />
-        <TextView 
-            android:id="@+id/register_confirmPasswordInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/register_password"
-            android:layout_margin="5dp"
-            android:textColor="@color/white"
-            android:text="确认密码"
-            />
-        <EditText 
-            android:id="@+id/register_confirmPassword"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/register_confirmPasswordInfo"
-            android:password="true"
-            android:hint="请再次输入密码"
-            android:singleLine="true"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="5dip"
-            android:background="@drawable/edittext_bg"
-            android:inputType="textPassword"
-            />
-        <Button
-            android:id="@+id/ToRegister"
-            android:text="注册"
-            android:layout_width="100dip"
-            android:layout_height="50dip"
-            android:textColor="@color/white"
-            android:layout_below="@id/register_confirmPassword"
-            android:layout_alignRight="@id/register_confirmPassword"
-			android:background="@drawable/rectangle_bg_2"
-            />
-    </RelativeLayout>
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:background="@drawable/edittext_bg"
+        />
+    <!--电话 -->
+    <TextView 
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_margin="5dp"
+        android:textColor="@color/white"
+        android:text="电话"
+        />
+    <EditText 
+        android:id="@+id/register_username"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入电话号码，将用作登录账号"
+        android:singleLine="true"
+        android:inputType="phone"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        />
+    <!--密码 -->
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:textColor="@color/white"
+        android:text="密码"
+        />
+    <EditText 
+        android:id="@+id/register_password"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:password="true"
+        android:hint="不少于6个字符，需组合字母、数字或符号"
+        android:singleLine="true"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:inputType="textPassword"
+        />
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:textColor="@color/white"
+        android:text="确认密码"
+        />
+    <EditText 
+        android:id="@+id/register_confirmPassword"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:password="true"
+        android:hint="请再次输入密码"
+        android:singleLine="true"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:background="@drawable/edittext_bg"
+        android:inputType="textPassword"
+        />
+
+    <Button
+        android:id="@+id/commit_registet_button"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:layout_margin="5dip"
+        android:background="@drawable/rectangle_bg_2"
+        android:text="注册"
+        android:textColor="@color/white" />
 	
 </LinearLayout>

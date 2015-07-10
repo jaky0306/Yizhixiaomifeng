@@ -250,7 +250,8 @@
 	            android:id="@+id/check_in"
 	            android:layout_width="120dip"
 	            android:layout_height="120dip"
-	            android:background="@drawable/rectangle_bg_1"
+	            android:enabled="false"
+	            android:background="@drawable/rectangle_bg_7"
 	            android:text="签到"
 	            android:textSize="20sp"/>
 	        <Button 
@@ -258,7 +259,8 @@
 	            android:layout_width="120dip"
 	            android:layout_height="120dip"
 	            android:layout_marginLeft="20dip"
-	            android:background="@drawable/rectangle_bg_1"
+	            android:enabled="false"
+	            android:background="@drawable/rectangle_bg_7"
 	            android:text="签退"
 	            android:textSize="20sp"/>
 	    </LinearLayout>

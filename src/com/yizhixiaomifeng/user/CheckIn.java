@@ -89,7 +89,6 @@ public class CheckIn extends Activity
 	private Button show_voice_Button;
 	private Button delete_voice_Button;
 	private ImageView show_catching_voice_imageview;
-	private List<String>data_list;
 	
 	private LocationClient mLocationClient=null;
 	private GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用

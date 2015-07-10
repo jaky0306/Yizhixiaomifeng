@@ -46,6 +46,7 @@ public class MenuListViewAdapter extends BaseAdapter {
 					R.layout.menuitems, null);
 			holder.icon=(ImageView)convertView.findViewById(R.id.menuitemes_icon);
 			holder.title = (TextView) convertView.findViewById(R.id.menuitems_title);
+			holder.title.setTextSize(22);
 			convertView.setTag(holder); //∏¥”√Item
 		} else {
 			holder = (ViewHolder) convertView.getTag();

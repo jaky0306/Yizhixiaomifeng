@@ -1,5 +1,7 @@
 package com.yizhixiaomifeng.hss.widget;
 
+import com.avos.avoscloud.LogUtil.log;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -50,6 +52,7 @@ public class SwipeFadeOutLayout extends FrameLayout{
 			@Override
 			public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
 					float distanceY) {
+				isMove=true;
 				return false;
 			}
 			
@@ -175,10 +178,11 @@ public class SwipeFadeOutLayout extends FrameLayout{
 			break;
 			
 		case MotionEvent.ACTION_MOVE:
-			
 			detector.onTouchEvent(event);
+//			if(index==4){
+//				isMove=true;
+//			}
 			
-			isMove=true;
 			int dx=(int) event.getX()-firstX;
 			int dy=(int) event.getY()-firstY;
 			if(Math.abs(dx)>Math.abs(dy)){
@@ -198,7 +202,6 @@ public class SwipeFadeOutLayout extends FrameLayout{
 			}
 			break;
 		case MotionEvent.ACTION_UP:
-			
 			detector.onTouchEvent(event);
 			if(!isMove&&!isFling){
 				super.onTouchEvent(event);

@@ -306,6 +306,7 @@ public class MainActivity extends Activity implements OnTouchListener {
 	 * 初始化没有用户信息时，界面的显示
 	 */
 	public void initWithoutUser(){
+		
 		menuitems.clear();
 		menuitems.add("登录");
 		showMenuItems=(ListView)findViewById(R.id.showMenuItems_listview);

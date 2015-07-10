@@ -1,23 +1,14 @@
 package com.yizhixiaomifeng.tools;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.baidu.a.a.a.c;
-import com.yizhixiaomifeng.admin.bean.Client;
+import com.yizhixiaomifeng.R.color;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Message;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 
 public class CheckStatusLoader extends AsyncTask<String, Integer, String>{
 	private Context context;
@@ -49,11 +40,32 @@ public class CheckStatusLoader extends AsyncTask<String, Integer, String>{
 
 	@Override
 	protected void onPostExecute(String result) {
+		if(result!="error"){
+			try {
+				JSONObject jsonObject = new JSONObject(result);
+				String checkInStatus = jsonObject.getString("checkInStatus");
+				String checkOutStatus = jsonObject.getString("checkOutStatus");
+				if(!checkInStatus.equals("ok")){
+					checkIn_button.setEnabled(false);
+					checkIn_button.setBackgroundResource(context.getResources().getColor(color.gray));
+				}else {
+					checkIn_button.setEnabled(true);
+					checkIn_button.setBackgroundResource(context.getResources().getColor(color.white));
+				}
+				if(!checkOutStatus.equals("ok")){
+					checkOut_button.setEnabled(false);
+					checkOut_button.setBackgroundResource(context.getResources().getColor(color.gray));
+				}else {
+					checkOut_button.setEnabled(true);
+					checkOut_button.setBackgroundResource(context.getResources().getColor(color.white));
+				}
+				show_loadinfo_tip.setVisibility(View.GONE);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		
-
 		
-		
-		show_loadinfo_tip.setVisibility(View.GONE);
 		super.onPostExecute(result);
 	}
 

@@ -131,6 +131,29 @@ public class ConnectWeb {
 		}
     }
     
+    public String getAllUnRegisterUserInfo(){
+    	try {
+			String target = URLConfig.getUnRegisterUserNameAndIdInfo;
+			HttpClient httpClient = new DefaultHttpClient();
+			httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 6000);
+			httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 6000);
+			HttpPost httpRequest = new HttpPost(target);
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			httpRequest.setEntity(new UrlEncodedFormEntity(params,"utf-8"));
+    	    HttpResponse httpResponse = httpClient.execute(httpRequest);
+    	    if(httpResponse.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
+    	    	String result = EntityUtils.toString(httpResponse.getEntity());
+    	    	return result;
+    	    }else {
+				return "error";
+			}
+    	} catch (Exception e) {
+    		
+    		Log.e("getAllUserInfo: error", e.toString());
+            return "error";
+		}
+    }
+    
     
     public String getUserInfoByPhone(String phone){
     	try {
@@ -216,7 +239,7 @@ public class ConnectWeb {
     }
     public String getCheckStatusByUserAndClient(String user,String clientId){
     	try {
-			String target = URLConfig.getClientByStart;
+			String target = URLConfig.canCheckInandOut;
 			HttpClient httpClient = new DefaultHttpClient();
 			httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 6000);
 			httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 6000);
@@ -654,5 +677,31 @@ public class ConnectWeb {
             return "error";
 		}
     }
-
+    
+    public String registerUser(long id,String phone,String password){
+    	try {
+			String target = URLConfig.getAttendanceDataByDate;
+			HttpClient httpClient = new DefaultHttpClient();
+			httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 6000);
+			httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 6000);
+			HttpPost httpRequest = new HttpPost(target);
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("id",""+id));
+			params.add(new BasicNameValuePair("phone",""+phone));
+			params.add(new BasicNameValuePair("password",""+password));
+			httpRequest.setEntity(new UrlEncodedFormEntity(params,"utf-8"));
+    	    HttpResponse httpResponse = httpClient.execute(httpRequest);
+    	    if(httpResponse.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
+    	    	String result = EntityUtils.toString(httpResponse.getEntity());
+    	    	return result;
+    	    }else {
+				return "error";
+			}
+    	} catch (Exception e) {
+    		
+    		Log.e("registerUser: error", e.toString());
+            return "error";
+		}
+    }
+    
 }
