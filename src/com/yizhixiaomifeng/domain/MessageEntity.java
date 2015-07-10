@@ -5,18 +5,24 @@
  */
 package com.yizhixiaomifeng.domain;
 
+import java.io.Serializable;
 
-public class MessageEntity {
-	private Integer id; 
+
+public class MessageEntity implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private long id; 
 	private String title; 
 	private String content; 
 	private Long releasedTime; 
 
-	public Integer getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

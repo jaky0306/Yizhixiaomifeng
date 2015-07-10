@@ -5,10 +5,16 @@
  */
 package com.yizhixiaomifeng.domain;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ClientEntity {
-	private Integer clientId; 
+public class ClientEntity implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private long clientId; 
 	private String name; 
 	private String projectName; 
 	private String address; 
@@ -16,13 +22,13 @@ public class ClientEntity {
 	private double latitude; 
 	private Long startTime; 
 	private Long endTime; 
-	private List<MissionAllotEntity> missionAllotEntities; 
+	private List<MissionAllotEntity> missionAllotEntities=new ArrayList<MissionAllotEntity>(); 
 
-	public Integer getClientId() {
+	public long getClientId() {
 		return clientId;
 	}
 
-	public void setClientId(Integer clientId) {
+	public void setClientId(long clientId) {
 		this.clientId = clientId;
 	}
 	public String getName() {

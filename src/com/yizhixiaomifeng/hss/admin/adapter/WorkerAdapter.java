@@ -66,7 +66,14 @@ public class WorkerAdapter  extends BaseAdapter{
 		holder = getHolder(convertView);
 		holder.name.setText(getData().get(position).getName());
 		holder.duty.setText("职位："+getData().get(position).getDutyTypeEntity().getName());
-		holder.jobNumber.setText("工号："+getData().get(position).getJobNum());
+		int i=10000;
+		String jobNum="";
+		while(getData().get(position).getJobNum()/i>0){
+			jobNum+="0";
+			i/=10;
+		}
+		jobNum+=getData().get(position).getJobNum();
+		holder.jobNumber.setText("工号："+jobNum);
 		holder.entryTime.setText("入职时间："+TimeChangeUtil.getTimeString(getData().get(position).getEntryDate()));
 		/**
 		 * 设置位置标识，方便监听器获取该位置对应的worker对象

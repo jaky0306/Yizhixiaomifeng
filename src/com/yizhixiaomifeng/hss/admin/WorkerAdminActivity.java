@@ -24,6 +24,7 @@ public class WorkerAdminActivity extends Activity{
 	
 	public final static int REQUEST_CODE_ADD_DEPARMENT=10001;
 	public final static int REQUEST_CODE_EDIT_DEPARMENT=10002;
+	public final static int REQUEST_CODE_ADMIN_DEPARMENT_WORKER=10003;
 	
 	private ListView departmentView=null;
 	private DepartmentAdapter adapter=null;
@@ -47,7 +48,7 @@ public class WorkerAdminActivity extends Activity{
 				adapter.getData().add((DepartmenttEntity) data.getSerializableExtra("department"));
 				adapter.notifyDataSetChanged();
 			}
-		}else if(requestCode==REQUEST_CODE_EDIT_DEPARMENT){
+		}else if(requestCode==REQUEST_CODE_EDIT_DEPARMENT||requestCode==REQUEST_CODE_ADMIN_DEPARMENT_WORKER){
 			if(resultCode==RESULT_OK){
 				DepartmenttEntity department=(DepartmenttEntity) data.getSerializableExtra("department");
 				for(int i=0;i<adapter.getData().size();i++){
@@ -55,6 +56,7 @@ public class WorkerAdminActivity extends Activity{
 						adapter.getData().get(i).setBusinessTypeEntity(department.getBusinessTypeEntity());
 						adapter.getData().get(i).setName(department.getName());
 						adapter.getData().get(i).setPhone(department.getPhone());
+						adapter.getData().get(i).setWorkNumber(department.getWorkNumber());
 						break;
 					}
 				}
@@ -113,7 +115,7 @@ public class WorkerAdminActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				SwipeFadeOutLayout swipeView=(SwipeFadeOutLayout) v;
-				if(swipeView.getStatus()!=SwipeStatus.ClOSE){
+				if(swipeView.getStatus()==SwipeStatus.ClOSE){
 					/**
 					 * 跳转到部门人员列表界面
 					 */
@@ -121,7 +123,7 @@ public class WorkerAdminActivity extends Activity{
 					DepartmenttEntity department=adapter.getData().get(position);
 					Intent intent=new Intent(WorkerAdminActivity.this,WorkerAdminDPActivity.class);
 					intent.putExtra("department", department);
-					startActivity(intent);
+					startActivityForResult(intent, REQUEST_CODE_ADMIN_DEPARMENT_WORKER);
 				}
 			}
 		});

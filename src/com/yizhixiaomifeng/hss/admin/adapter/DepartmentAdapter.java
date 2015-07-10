@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,7 +38,7 @@ public class DepartmentAdapter extends BaseAdapter{
 	
 	@Override
 	public int getCount() {
-		return getData().size()+1;
+		return getData().size();
 	}
 
 	@Override
@@ -59,31 +58,24 @@ public class DepartmentAdapter extends BaseAdapter{
 		 * 获取item视图
 		 */
 		convertView = getView(position, convertView);
-		convertView.setTag(position);
+//		convertView.setTag(position);
 		
 		/**
-		 * 如果不是最后一个item则填充数据
+		 * 获取视图内容拥有者
 		 */
-		if(position!=getData().size()){
-			/**
-			 * 获取视图内容拥有者
-			 */
-			holder = getHolder(convertView);
-			holder.name.setText(getData().get(position).getName());
-			holder.member.setText(getData().get(position).getNumber()+"人");
-			/**
-			 * 设置位置标识，方便监听器获取对应数据
-			 */
-			holder.deleteButton.setTag(position);
-			holder.editButton.setTag(position);
-			holder.swipeLayout.setTag(position);
-		}else{
-			
-		}
+		holder = getHolder(convertView);
+		holder.name.setText(getData().get(position).getName());
+		holder.member.setText(getData().get(position).getWorkNumber()+"人");
+		/**
+		 * 设置位置标识，方便监听器获取对应数据
+		 */
+		holder.deleteButton.setTag(position);
+		holder.editButton.setTag(position);
+		holder.swipeLayout.setTag(position);
+		
 		return convertView;
 	}
 	
-	private View buttonItem=null;
 	private View getView(int position,View convertView){
 		if(convertView==null){
 			convertView = View.inflate(context, R.layout.list_item_department, null);
@@ -147,7 +139,7 @@ public class DepartmentAdapter extends BaseAdapter{
 			editButton=(ImageView) convertView.findViewById(R.id.department_edit);
 			deleteButton=(ImageView) convertView.findViewById(R.id.department_delete);
 			if(onItemClickListener!=null)
-				convertView.setOnClickListener(onItemClickListener);
+				swipeLayout.setOnClickListener(onItemClickListener);
 			if(onEditListener!=null)
 				editButton.setOnClickListener(onEditListener);
 			if(onDeleteListner!=null)

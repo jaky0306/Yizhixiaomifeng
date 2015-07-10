@@ -24,16 +24,17 @@ public class JsonParseWorker {
 			WorkerEntity worker;
 			DepartmenttEntity department;
 			DutyTypeEntity duty;
-			JSONObject root=new JSONObject(jsonString);
-
-			JSONArray jsonArray = root.getJSONArray("workerList");
+//			JSONObject root=new JSONObject(jsonString);
+//
+//			JSONArray jsonArray = root.getJSONArray("workerList");
+			JSONArray jsonArray = new JSONArray(jsonString);
 			JSONObject json_worker = null;
 			JSONObject json_department = null;
 			JSONObject json_duty = null;
 			for (int i = 0; i < jsonArray.length(); i++) {
 				json_worker = jsonArray.getJSONObject(i);
 				worker=new WorkerEntity();
-				worker.setJobNum(json_worker.getInt("jobNum"));
+				worker.setJobNum(json_worker.getLong("jobNum"));
 				worker.setName(json_worker.getString("name"));
 				worker.setEntryDate(json_worker.getLong("entryDate"));
 				worker.setBasePay(json_worker.getInt("basepay"));
@@ -42,8 +43,9 @@ public class JsonParseWorker {
 				 */
 				department = new DepartmenttEntity();
 				json_department=json_worker.getJSONObject("department");
-				department.setNumber(json_department.getInt("number"));
+				department.setNumber(json_department.getLong("number"));
 				department.setName(json_department.getString("name"));
+				department.setPhone(json_department.getString("phone"));
 				department.setWorkNumber(json_department.getInt("workerNumber"));
 				worker.setDepartmenttEntity(department);
 				/**
@@ -51,13 +53,14 @@ public class JsonParseWorker {
 				 */
 				duty=new DutyTypeEntity();
 				json_duty=json_worker.getJSONObject("dutyType");
-				duty.setDutyId(json_duty.getInt("dutyId"));
-				duty.setName(json_duty.getString("naem"));
+				duty.setDutyId(json_duty.getLong("dutyId"));
+				duty.setName(json_duty.getString("name"));
 				worker.setDutyTypeEntity(duty);
 				data.add(worker);
 			}
 		} catch (JSONException e) {
 			Log.d("JsonParseWorker_parseWorkers", "JSON½âÎö³ö´í");
+			Log.d("JsonParseWorker_parseWorkers", jsonString);
 			e.printStackTrace();
 		}
 		return data;

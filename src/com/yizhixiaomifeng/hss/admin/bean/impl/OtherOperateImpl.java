@@ -43,7 +43,7 @@ public class OtherOperateImpl implements OtherOperate {
 
 		HashMap<String, String> paramsData=new HashMap<String,String>();
 		
-		String result=HTTPRequest.request(HTTPURL.LOAD_BUSINESS_TYPE_NAME, paramsData);
+		String result=HTTPRequest.request(HTTPURL.LOAD_DEPARTMENTS_AND_DUTY, paramsData);
 		if(!result.equals("«Î«Û“Ï≥£")&&!result.equals("«Î«Û ß∞‹")&&!result.equals("failed")){
 			if(result.equals("error")){
 				list=new ArrayList<DepartmenttEntity>();
@@ -63,7 +63,7 @@ public class OtherOperateImpl implements OtherOperate {
 		HashMap<String, String> paramsData=new HashMap<String,String>();
 		paramsData.put("name", name);
 		
-		String result=HTTPRequest.request(HTTPURL.LOAD_WORKER, paramsData);
+		String result=HTTPRequest.request(HTTPURL.LOAD_WORKER_BY_NAME, paramsData);
 		if(!result.equals("«Î«Û“Ï≥£")&&!result.equals("«Î«Û ß∞‹")&&!result.equals("failed")){
 			if(result.equals("error")){
 				list=new ArrayList<WorkerEntity>();

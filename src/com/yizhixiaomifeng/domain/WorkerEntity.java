@@ -1,6 +1,7 @@
 package com.yizhixiaomifeng.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class WorkerEntity implements Serializable{
@@ -8,7 +9,7 @@ public class WorkerEntity implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Integer jobNum; 
+	private long jobNum; 
 	private String name; 
 	private String nativePlace; 
 	private String gender; 
@@ -17,18 +18,18 @@ public class WorkerEntity implements Serializable{
 	private String major; 
 	private DutyTypeEntity dutyTypeEntity; 
 	private Long entryDate; 
-	private Integer workerYear;
-	private Integer basePay; 
+	private Integer workerYear=0;
+	private Integer basePay=0; 
 	private DepartmenttEntity departmenttEntity;
 	private String cellPhone; 
 	private String password; 
 	private String headPortraitUrl; 
-    private List<MissionAllotEntity> missionAllotEntities; 
-	public Integer getJobNum() {
+    private List<MissionAllotEntity> missionAllotEntities=new ArrayList<MissionAllotEntity>(); 
+	public long getJobNum() {
 		return jobNum;
 	}
 
-	public void setJobNum(Integer jobNum) {
+	public void setJobNum(long jobNum) {
 		this.jobNum = jobNum;
 	}
 

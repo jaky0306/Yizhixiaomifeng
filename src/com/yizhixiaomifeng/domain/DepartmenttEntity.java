@@ -6,6 +6,7 @@
 package com.yizhixiaomifeng.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DepartmenttEntity implements Serializable{
@@ -13,19 +14,19 @@ public class DepartmenttEntity implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Integer number; 
+	private long number; 
 	private BusinessTypeEntity businessTypeEntity; 
 	private String name; 
-	private List<WorkerEntity> workerEntities; 
+	private List<WorkerEntity> workerEntities=new ArrayList<WorkerEntity>(); 
 	private String phone; 
-	private Integer workNumber; 
+	private Integer workNumber=0; 
 	  
 
-	public Integer getNumber() {
+	public long getNumber() {
 		return number;
 	}
 
-	public void setNumber(Integer number) {
+	public void setNumber(long number) {
 		this.number = number;
 	}
 

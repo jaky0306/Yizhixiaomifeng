@@ -86,6 +86,8 @@
                     android:layout_marginLeft="10dp"
                     android:layout_weight="3"
                     android:onClick="addDepartment"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:background="@drawable/rectangle_bg_4"
                     android:text="新增" />
             </LinearLayout>
@@ -119,6 +121,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/edittext_bg"
+                android:focusable="false"
+                android:paddingLeft="5dp"
                 android:drawableRight="@drawable/date_icon"/>
             
             <TextView

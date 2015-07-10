@@ -47,7 +47,7 @@
         android:layout_margin="10dp"
         android:background="@drawable/edittext_bg"
         android:drawableLeft="@drawable/search_icon"
-        android:enabled="false"
+        android:focusable="false"
         android:hint="请输入姓名进行查找"
         android:onClick="search" />
 
