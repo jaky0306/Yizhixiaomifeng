@@ -70,4 +70,5 @@ public class HeadTool {
         //返回已经绘画好的backgroundBmp  
         return backgroundBmp;  
     }
+	
 }

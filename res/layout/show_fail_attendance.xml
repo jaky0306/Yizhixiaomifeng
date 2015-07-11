@@ -24,12 +24,7 @@
 	        android:textSize="20sp"
 	        android:text="问题现场"/>
        
-       <Button android:id="@+id/show_fail_attendance_phone"
-           android:layout_width="100dip"
-           android:layout_height="40dip"
-           android:drawableLeft="@drawable/time_icon"
-           android:background="@drawable/rectangle_bg_3"
-           android:layout_alignParentRight="true"/>
+
 
 	</RelativeLayout>
     
@@ -56,6 +51,26 @@
 	        android:scaleType="fitXY"
 	        android:src="@drawable/none_photo"/>
 		</LinearLayout>
+
+    	<LinearLayout 
+	        android:id="@+id/show_loadattendanceinfo_tip_LinearLayout"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:visibility="visible"
+	        android:layout_gravity="center">
+	        <ProgressBar 
+		        android:layout_width="wrap_content" 
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="25dip"
+		        />  
+		    <TextView 
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center"
+		        android:textColor="@color/white"
+		        android:text="正在加载信息，请稍后..."/>
+	    </LinearLayout> 
 		<View  
    			android:layout_width="fill_parent"  
     		android:layout_height="5px"
@@ -82,16 +97,16 @@
 				    android:layout_marginTop="10dip"
 				    android:orientation="vertical">
 				    <ImageView
-					    android:id="@+id/show_catching_voice_imageview"
+					    android:id="@+id/show_playing_voice_imageview"
 					    android:layout_width="40dip"
 					    android:layout_height="40dip"
 					    android:src="@drawable/playing_voice"
 					    android:layout_gravity="center"
-					    android:visibility="visible" />
+					    android:visibility="invisible" />
 				    
 				    <Button 
 				        android:id="@+id/showfailattendance_checkin_voice_button"
-				        android:layout_width="wrap_content"
+				        android:layout_width="150dip"
 				        android:layout_height="50dip"
 				        android:layout_gravity="center"
 				        android:layout_marginTop="5dip"
@@ -101,7 +116,7 @@
 				        />
 				    <Button 
 				        android:id="@+id/showfailattendance_checkout_voice_button"
-				        android:layout_width="wrap_content"
+				        android:layout_width="150dip"
 				        android:layout_height="50dip"
 				        android:layout_marginTop="10dip"
 				        android:layout_gravity="center"
@@ -111,7 +126,6 @@
 				    
 				</LinearLayout>
 
-				
 
 			</LinearLayout>
     

@@ -211,9 +211,10 @@ public class ShowClientListViewAdapter extends BaseAdapter {
 					
 					@Override
 					public void run() {
-						new ConnectWeb().deleteClient(client);
+						String result = new ConnectWeb().deleteClient(client);
 						Message msg = new Message();
 						msg.what=0x111;
+						msg.obj=result;
 						handler.sendMessage(msg);
 					}
 				}).start();
@@ -223,8 +224,15 @@ public class ShowClientListViewAdapter extends BaseAdapter {
 	}
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
+			
 			if(msg.what==0x111){
 				Toast.makeText(context, "ÕýÔÚÉ¾³ý,ÇëÉÔºóË¢ÐÂ...", Toast.LENGTH_LONG).show();
+				if(msg.obj.equals("error")){
+					Toast.makeText(context, "É¾³ýÊ§°Ü...", Toast.LENGTH_LONG).show();
+				}else{
+					Toast.makeText(context, "É¾³ý³É¹¦...", Toast.LENGTH_LONG).show();
+				}
+				
 			}
 
 		};

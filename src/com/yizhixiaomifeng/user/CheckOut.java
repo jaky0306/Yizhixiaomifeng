@@ -1,32 +1,17 @@
 package com.yizhixiaomifeng.user;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
-import com.baidu.a.a.a.c;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
 import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.search.core.SearchResult;
-import com.baidu.mapapi.search.geocode.GeoCodeOption;
-import com.baidu.mapapi.search.geocode.GeoCodeResult;
-import com.baidu.mapapi.search.geocode.GeoCoder;
-import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
-import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.baidu.mapapi.utils.DistanceUtil;
 import com.yizhixiaomifeng.R;
 import com.yizhixiaomifeng.admin.bean.Client;
-import com.yizhixiaomifeng.config.ParameterConfig;
 import com.yizhixiaomifeng.config.YzxmfConfig;
 import com.yizhixiaomifeng.tools.ActivityCloser;
 import com.yizhixiaomifeng.tools.AvosTool;
@@ -37,19 +22,14 @@ import com.yizhixiaomifeng.tools.LocalStorage;
 import com.yizhixiaomifeng.tools.ShowVoiceTool;
 import com.yizhixiaomifeng.user.SetHead.HeadUper;
 
+import android.R.bool;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -58,14 +38,9 @@ import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -96,6 +71,7 @@ public class CheckOut extends Activity
     
     
     private CatchVoiceTool cvt = null;
+    ShowVoiceTool svt=null;
     private boolean hadCatchVoice = false;
     private boolean isCatchingVoice=false;
     private boolean isPlayingVoice=false;
@@ -107,7 +83,8 @@ public class CheckOut extends Activity
     			get_position_button.setText("定位");
     			get_position_button.setEnabled(true);
     			show_getting_position_proProgressBar.setVisibility(View.INVISIBLE);
-    			check_out_position.setText(msg.obj.toString());
+    			if(msg.obj!=null)
+    				check_out_position.setText(msg.obj.toString());
     		}
     		if(msg.what==0x112){  //显示正在定位的进度条
     			get_position_button.setText("正在定位中...");
@@ -116,10 +93,11 @@ public class CheckOut extends Activity
     		}
     		if(msg.what==0x113){	//显示用户的与目的地的距离提示
     			if(nowDistance>maxDistance){
-    				positionStatus="fail";//如果符合条件，就把位置的状态改为fail
-    				DecimalFormat   df   =new   java.text.DecimalFormat("#.00");
+    				DecimalFormat df=new DecimalFormat(".##");
+    				double d=nowDistance-maxDistance;
+    				String st=df.format(d);
     				check_out_position_tip.setTextColor(Color.RED);
-        			check_out_position_tip.setText("没有在目标范围签退，相差"+df.format(nowDistance-maxDistance)+" m ,加油...");
+        			check_out_position_tip.setText("没有在目标范围签退，相差"+st+" m ,加油...");
     			}else {
     				positionStatus="ok";//如果符合条件，就把位置的状态改为ok
     				check_out_position_tip.setTextColor(Color.GREEN);
@@ -152,17 +130,26 @@ public class CheckOut extends Activity
     		}
     		if(msg.what==0x117){ //控制播放音频
     			if(isPlayingVoice){
+    				show_voice_Button.setText("停止播放");
     				catch_voice_Button.setBackgroundResource(R.drawable.rectangle_bg_6);
         			catch_voice_Button.setEnabled(false);
         			delete_voice_Button.setBackgroundResource(R.drawable.rectangle_bg_6);
         			delete_voice_Button.setEnabled(false);
     			}else {
+    				show_voice_Button.setText("试听录音");
     				catch_voice_Button.setBackgroundResource(R.drawable.rectangle_bg_2);
         			catch_voice_Button.setEnabled(true);
         			delete_voice_Button.setBackgroundResource(R.drawable.rectangle_bg_2);
         			delete_voice_Button.setEnabled(true);
 				}
     			
+    		}
+    		if(msg.what==0x118){
+    			isCatchingVoice=false;
+    			catch_voice_Button.setBackgroundResource(R.drawable.rectangle_bg_2);
+    			catch_voice_Button.setEnabled(true);
+    			show_voice_Button.setBackgroundResource(R.drawable.rectangle_bg_6);
+    			show_voice_Button.setEnabled(false);
     		}
     	};
     };
@@ -234,6 +221,8 @@ public class CheckOut extends Activity
 				msg.what=0x111; //设置当前位置
 				msg.obj=sb.toString();
 				handler.sendMessage(msg);
+
+				getDistanceToGoal(); //定位完后立即获取与目标的距离
 			}
 		});
 		
@@ -334,7 +323,7 @@ public class CheckOut extends Activity
 			public void onClick(View v) {
 				if(!isPlayingVoice){
 					if(hadCatchVoice){
-						ShowVoiceTool svt = new ShowVoiceTool(CheckOut.this); 
+						svt = new ShowVoiceTool(CheckOut.this); 
 						svt.play();
 						isPlayingVoice=true;
 						Message msg = new Message();
@@ -342,6 +331,7 @@ public class CheckOut extends Activity
 						handler.sendMessage(msg);
 					}
 				}else {
+					svt.stop();
 					isPlayingVoice=false;
 					Message msg = new Message();
 					msg.what=0x117;
@@ -354,7 +344,15 @@ public class CheckOut extends Activity
 			
 			@Override
 			public void onClick(View v) {
-				cvt.deleteVoice();
+				boolean isdelete=cvt.deleteVoice();
+				if(isdelete){
+					Toast.makeText(getApplicationContext(), "删除成功", Toast.LENGTH_LONG).show();
+				}else {
+					Toast.makeText(getApplicationContext(), "删除失败", Toast.LENGTH_LONG).show();
+				}
+				Message msg = new Message();
+				msg.what=0x118;
+				handler.sendMessage(msg);
 			}
 		});
         
@@ -413,7 +411,6 @@ public class CheckOut extends Activity
 		handler.sendMessage(msg);
 		mLocationClient.start();  //开启位置客户端
 		
-		getDistanceToGoal(); //定位完后立即获取与目标的距离
 	}
 	
 	public void getDistanceToGoal(){
@@ -461,7 +458,7 @@ public class CheckOut extends Activity
 			/**
 			 * 保存数据到数据库
 			 */
-			String result = new ConnectWeb().checkOut(username, lat, lon, voiceUrl, positionStatus);
+			String result = new ConnectWeb().checkOut(username,client.getId(),lat, lon, voiceUrl,nowDistance );
 			
 			return result;
 		}

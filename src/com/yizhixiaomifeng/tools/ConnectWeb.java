@@ -157,7 +157,7 @@ public class ConnectWeb {
     
     public String getUserInfoByPhone(String phone){
     	try {
-			String target = "";
+			String target = URLConfig.getAllClientByPhone;
 			HttpClient httpClient = new DefaultHttpClient();
 			httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 6000);
 			httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 6000);
@@ -550,9 +550,9 @@ public class ConnectWeb {
 		}
     }
     
-    public String checkOut(String phone,double latitude,double longitute,String voiceUrl,String positionStatus){
+    public String checkOut(String phone,long clientId,double latitude,double longitute,String voiceUrl,double distance){
     	try {
-			String target = URLConfig.checkin;
+			String target = URLConfig.checkout;
 			HttpClient httpClient = new DefaultHttpClient();
 			httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 6000);
 			httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 6000);
@@ -562,7 +562,8 @@ public class ConnectWeb {
 			params.add(new BasicNameValuePair("latitude",""+latitude));
 			params.add(new BasicNameValuePair("longitude",""+longitute));
 			params.add(new BasicNameValuePair("voiceUrl",""+voiceUrl));
-			params.add(new BasicNameValuePair("positionStatus", ""+positionStatus));  //把位置的状态发给后台
+			params.add(new BasicNameValuePair("clientId",""+clientId));
+			params.add(new BasicNameValuePair("distance", ""+distance));  //把位置的状态发给后台
 			httpRequest.setEntity(new UrlEncodedFormEntity(params,"utf-8"));
     	    HttpResponse httpResponse = httpClient.execute(httpRequest);
     	    if(httpResponse.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
@@ -581,7 +582,7 @@ public class ConnectWeb {
     
     public String saveArrangement(String json){
     	try {
-			String target = URLConfig.checkin;
+			String target = URLConfig.saveArrangement;
 			HttpClient httpClient = new DefaultHttpClient();
 			httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 6000);
 			httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 6000);
@@ -629,7 +630,7 @@ public class ConnectWeb {
     
     public String getAttendanceDataByDate(long startTime,long endTime){
     	try {
-			String target = URLConfig.getAttendanceDataByDate;
+			String target = URLConfig.getAttendanceDateByDateAndDate;
 			HttpClient httpClient = new DefaultHttpClient();
 			httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 6000);
 			httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 6000);
@@ -654,7 +655,7 @@ public class ConnectWeb {
     
     public String getAttendanceDataByDateAndName(String name , long startTime,long endTime){
     	try {
-			String target = URLConfig.getAttendanceDataByDate;
+			String target = URLConfig.getAttendanceDateByDateAndDate;
 			HttpClient httpClient = new DefaultHttpClient();
 			httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 6000);
 			httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 6000);
@@ -680,7 +681,7 @@ public class ConnectWeb {
     
     public String registerUser(long id,String phone,String password){
     	try {
-			String target = URLConfig.getAttendanceDataByDate;
+			String target = URLConfig.registerUser;
 			HttpClient httpClient = new DefaultHttpClient();
 			httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 6000);
 			httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 6000);

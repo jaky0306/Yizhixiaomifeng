@@ -43,6 +43,24 @@ public class AvosTool {
 			log.e("saveHead error",""+e.toString());
 		}
 	}
+	
+	public String getHeadUrl(String username,String type){
+		AVQuery<AVObject> query = new AVQuery<AVObject>("_File");
+		query.whereEqualTo("name",type+"_"+username+"_head");
+		try {
+			List<AVObject> avObjects=query.find();
+			if(avObjects.size()>0){
+				String url = avObjects.get(0).getString("url");
+		        return url;
+		        
+			}else {
+				return null;
+			}
+		} catch (AVException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	/**
 	 * 获取username 在LeanCloud的头像数据
 	 * @param username
@@ -75,20 +93,21 @@ public class AvosTool {
 	 * @param date （new Date().toString()）
 	 */
 	public boolean saveCheckInScene(String username,String type,String date){
-		File existfile = new File("data/data/com.yizhixiaomifeng/files/checkinScene.jpg");
-		if(!existfile.exists()){
-			return false;
-		}
 		try{
 			AVQuery<AVObject> query = new AVQuery<AVObject>("_File");
 			query.whereEqualTo("name", type+"_"+username+"_"+date+"_checkin_scene");
 			query.deleteAll();
-			AVFile file=null;
-			file = AVFile.withAbsoluteLocalPath(type+"_"+username+"_"+date+"_checkin_scene", "data/data/com.yizhixiaomifeng/files/checkinScene.jpg");
-			file.save();
+			AVFile file;
+			try {
+				file = AVFile.withAbsoluteLocalPath(type+"_"+username+"_"+date+"_checkin_scene", "data/data/com.yizhixiaomifeng/files/checkinScene.jpg");
+				file.save();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			return true;
 		}catch(Exception  e){
-			
 			log.e("saveCheckInScene error",""+e.toString());
 			return false;
 		}
@@ -127,7 +146,7 @@ public class AvosTool {
 	 * @param date	日期（new Date().toString()）
 	 */
 	public boolean saveCheckInVoice(String username,String type,String date){
-		File existfile = new File(YzxmfConfig.voicesrc);
+		File existfile = new File("data/data/com.yizhixiaomifeng/files/"+YzxmfConfig.voicename);
 		if(!existfile.exists()){
 			return false;
 		}
@@ -136,11 +155,17 @@ public class AvosTool {
 			query.whereEqualTo("name", type+"_"+username+"_"+date+"_checkin_voice");
 			query.deleteAll();
 			AVFile file;
-			file = AVFile.withAbsoluteLocalPath(type+"_"+username+"_"+date+"_checkin_voice", YzxmfConfig.voicesrc);
-			file.save();
+			try {
+				file = AVFile.withAbsoluteLocalPath(type+"_"+username+"_"+date+"_checkin_voice", "data/data/com.yizhixiaomifeng/files/"+YzxmfConfig.voicename);
+				file.save();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			return true;
 		}catch(Exception  e){
-			log.e("saveCheckInVoice error",""+e.toString());
+			log.e("saveCheckInScene error",""+e.toString());
 			return false;
 		}
 	}
@@ -151,7 +176,7 @@ public class AvosTool {
 	 * @param date	日期（new Date().toString()）
 	 */
 	public boolean saveCheckOutVoice(String username,String type,String date){
-		File existfile = new File(YzxmfConfig.voicesrc);
+		File existfile = new File("data/data/com.yizhixiaomifeng/files/"+YzxmfConfig.voicename);
 		if(!existfile.exists()){
 			return false;
 		}
@@ -160,11 +185,17 @@ public class AvosTool {
 			query.whereEqualTo("name", type+"_"+username+"_"+date+"_checkout_voice");
 			query.deleteAll();
 			AVFile file;
-			file = AVFile.withAbsoluteLocalPath(type+"_"+username+"_"+date+"_checkout_voice", YzxmfConfig.voicesrc);
-			file.save();
+			try {
+				file = AVFile.withAbsoluteLocalPath(type+"_"+username+"_"+date+"_checkout_voice", "data/data/com.yizhixiaomifeng/files/"+YzxmfConfig.voicename);
+				file.save();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			return true;
 		}catch(Exception  e){
-			log.e("saveCheckOutVoice error",""+e.toString());
+			log.e("saveCheckInScene error",""+e.toString());
 			return false;
 		}
 	}

@@ -19,7 +19,7 @@ public class CatchVoiceTool {
         recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
 		//mRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
 		recorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
-		recorder.setOutputFile(YzxmfConfig.voicesrc);
+		recorder.setOutputFile("data/data/com.yizhixiaomifeng/files/"+YzxmfConfig.voicename);
 	}
 	public void startCatchVoice()
 	{
@@ -39,7 +39,7 @@ public class CatchVoiceTool {
 		recorder.release(); //ÊÍ·Å×ÊÔ´
 	}
 	public boolean deleteVoice(){
-		File file = new File(YzxmfConfig.voicesrc);
+		File file = new File("data/data/com.yizhixiaomifeng/files/"+YzxmfConfig.voicename);
 		if(file.exists()){
 			file.delete();
 		}

@@ -2,13 +2,16 @@ package com.yizhixiaomifeng.tools;
 
 import org.json.JSONObject;
 
+import com.yizhixiaomifeng.R;
 import com.yizhixiaomifeng.R.color;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class CheckStatusLoader extends AsyncTask<String, Integer, String>{
 	private Context context;
@@ -40,26 +43,27 @@ public class CheckStatusLoader extends AsyncTask<String, Integer, String>{
 
 	@Override
 	protected void onPostExecute(String result) {
-		if(result!="error"){
+		if(!result.equals("error")){
 			try {
 				JSONObject jsonObject = new JSONObject(result);
 				String checkInStatus = jsonObject.getString("checkInStatus");
 				String checkOutStatus = jsonObject.getString("checkOutStatus");
+				Log.e("aaaaaaaaaa", checkInStatus+":"+checkOutStatus);
 				if(!checkInStatus.equals("ok")){
 					checkIn_button.setEnabled(false);
-					checkIn_button.setBackgroundResource(context.getResources().getColor(color.gray));
+					checkIn_button.setBackgroundResource(R.drawable.rectangle_bg_8);
 				}else {
 					checkIn_button.setEnabled(true);
-					checkIn_button.setBackgroundResource(context.getResources().getColor(color.white));
+					checkIn_button.setBackgroundResource(R.drawable.rectangle_bg_1);
 				}
 				if(!checkOutStatus.equals("ok")){
 					checkOut_button.setEnabled(false);
-					checkOut_button.setBackgroundResource(context.getResources().getColor(color.gray));
+					checkOut_button.setBackgroundResource(R.drawable.rectangle_bg_8);
 				}else {
 					checkOut_button.setEnabled(true);
-					checkOut_button.setBackgroundResource(context.getResources().getColor(color.white));
+					checkOut_button.setBackgroundResource(R.drawable.rectangle_bg_1);
 				}
-				show_loadinfo_tip.setVisibility(View.GONE);
+				show_loadinfo_tip.setVisibility(View.INVISIBLE);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

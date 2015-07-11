@@ -154,6 +154,7 @@ public class SetHead extends Activity {
 
 		Intent intent = new Intent("com.android.camera.action.CROP");
 		intent.setDataAndType(uri, "image/*");
+		
 		// 设置裁剪
 		intent.putExtra("crop", "true");
 		// aspectX aspectY 是宽高的比例
@@ -217,7 +218,6 @@ public class SetHead extends Activity {
 		}
 		
 		
-		
 	}
 
 	
@@ -232,6 +232,8 @@ public class SetHead extends Activity {
 			msg.what=0x111;
 			handler.sendMessage(msg);
 			new AvosTool().saveHead(params[0],params[1]);  //把头像保存到LeanCloud
+//			String url = new AvosTool().getHeadUrl(params[0], params[1]);
+//			Log.e("aaaaaaaaaaaaaa", url);
 			return null;
 		}
 

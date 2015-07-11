@@ -169,6 +169,10 @@ public class ArrangeStaffForClientActivity extends Activity{
 			
 			@Override
 			public void onClick(View v) {
+				if(staffPhoneforClient.size()==0){
+					Toast.makeText(ArrangeStaffForClientActivity.this, "请选择员工...", Toast.LENGTH_LONG).show();
+					return ;
+				}
 				//保存数据到后台
 				new ArrangementSaver().execute("");
 			}

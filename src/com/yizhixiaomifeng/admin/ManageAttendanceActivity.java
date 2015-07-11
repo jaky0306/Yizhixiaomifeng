@@ -1,5 +1,6 @@
 package com.yizhixiaomifeng.admin;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,7 +52,6 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class ManageAttendanceActivity extends Activity implements OnRefreshListener,OnLoadListener{
 	private ImageView search_attendance_imageview;
-	private LinearLayout show_loadding_attendance_tip;
 	private AutoListView show_all_fail_attendance;
 	private ShowFailAttendanceListViewAdapter adapter;
 	private List<FailAttendance> all_failattendances_list = new ArrayList<FailAttendance>();
@@ -103,9 +103,8 @@ public class ManageAttendanceActivity extends Activity implements OnRefreshListe
 		manage_attendance_absence_nums=(TextView)findViewById(R.id.manage_attendance_absence_nums);
 		
 		search_attendance_imageview=(ImageView)findViewById(R.id.search_attendance_imageview);
-		show_loadding_attendance_tip=(LinearLayout)findViewById(R.id.show_loadding_attendance_tip);
 		show_all_fail_attendance = (AutoListView) findViewById(R.id.show_all_fail_attendance);
-		adapter = new ShowFailAttendanceListViewAdapter(this, all_failattendances_list);
+		adapter = new ShowFailAttendanceListViewAdapter(ManageAttendanceActivity.this, all_failattendances_list);
 		show_all_fail_attendance.setAdapter(adapter);
 		show_all_fail_attendance.setOnRefreshListener(this);
 		show_all_fail_attendance.setOnLoadListener(this);
@@ -116,6 +115,9 @@ public class ManageAttendanceActivity extends Activity implements OnRefreshListe
 			public void onItemClick(AdapterView<?> arg0, View arg1, int postion,
 					long arg3) {
 				FailAttendance fa = all_failattendances_list.get(postion-1);
+				Intent intent = new Intent(ManageAttendanceActivity.this,ShowFailAttendanceInfoActivity.class);
+				intent.putExtra("failattendance", fa);
+				startActivity(intent);
 			}
 		});
 		show_all_fail_attendance.setOnCreateContextMenuListener(new OnCreateContextMenuListener()
@@ -166,7 +168,17 @@ public class ManageAttendanceActivity extends Activity implements OnRefreshListe
 
 	private void loadData(final int what) {
 		//获取异常考勤
-		new LoadFailAttendanceDataHelper(what).execute(Calendar.getInstance().getTimeInMillis());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String date=sdf.format(new Date(Calendar.getInstance().getTimeInMillis()));
+		Date goaldate;
+		try {
+			goaldate = sdf.parse(date);
+			new LoadFailAttendanceDataHelper(what).execute(goaldate.getTime());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+		
 
 	}
 
@@ -199,35 +211,37 @@ public class ManageAttendanceActivity extends Activity implements OnRefreshListe
 		@Override
 		protected void onPostExecute(String result) {
 			if(result!=null){
-				Log.e("aaaaaaaaaaa", result);
+				Log.e("LoadFailAttendanceDataHelper", result);
 				List<FailAttendance> data = new ArrayList<FailAttendance>();
 				try {
 					JSONArray jsonArray = new JSONArray(result);
+					Log.e("size", ""+jsonArray.length());
 					for(int i=0;i<jsonArray.length();i++){
 						JSONObject object = jsonArray.getJSONObject(i);
-						totalnum=object.getInt("recordAllNum");
-						String phone = object.getString("phone");
-						String name = object.getString("name");
+						totalnum=object.getInt("RecordAllNum");
 						long checkInTime = object.getLong("checkInTime");
 						String checkInStatus = object.getString("checkInStatus");
 						String checkInResult = object.getString("checkInResult");
 						long checkOutTime = object.getLong("checkOutTime");
 						String checkOutStatus = object.getString("checkOutStatus");
 						String checkOutResult=object.getString("checkOutResult");
-						String checkInSceneUrl=object.getString("checkInSceneUrl");
-						String checkInVoiceUrl=object.getString("checkInVoiceUrl");
+						String checkInSceneUrl=object.getString("checkInSceneURL");
+						String checkInVoiceUrl=object.getString("checkInVoice");
 						String checkOutVoiceUrl=object.getString("checkOutVoiceUrl");
+						
+						JSONObject mission= object.getJSONObject("missionAllotId");
+						JSONObject jobnum=mission.getJSONObject("jobNum");
+						String phone = jobnum.getString("phone");
+						String name = jobnum.getString("name");
+						
 						FailAttendance fa = new FailAttendance(phone, name, checkInTime, checkInStatus, checkInResult, checkOutTime, checkOutStatus, checkOutResult, checkInSceneUrl, checkInVoiceUrl, checkOutVoiceUrl);
 						data.add(fa);
 						//迟到
-						if(fa.getCheckInStatus().equals(CheckInAndOutStauts.checkIn_late)){
+						if(fa.getCheckInResult().equals(CheckInAndOutStauts.checkIn_late)){
 							belatenum++;
 						}
 						//早退
-						if(fa.getCheckInStatus().equals(CheckInAndOutStauts.checkOut_earier)){
-							leaveeariernum++;
-						}
-						if(fa.getCheckInStatus().equals(CheckInAndOutStauts.checkOut_earier)){
+						if(fa.getCheckOutResult().equals(CheckInAndOutStauts.checkOut_earier)){
 							leaveeariernum++;
 						}
 						if(fa.getCheckInResult().equals(CheckInAndOutStauts.checkIn_nocheck)||fa.getCheckOutResult().equals(CheckInAndOutStauts.checkOut_nocheck)){
@@ -235,20 +249,22 @@ public class ManageAttendanceActivity extends Activity implements OnRefreshListe
 						}
 					}
 					
-					SimpleDateFormat sdf = new SimpleDateFormat("YYYY-mm-DD");
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					manage_attendance_time.setText(sdf.format(new Date()));
+					
 					manage_attendance_nums.setText(""+totalnum);
-					manage_attendance_ok_nums.setText(""+(totalnum-all_failattendances_list.size()));
-					manage_attendance_fail_nums.setText(""+(all_failattendances_list.size()));
+					manage_attendance_ok_nums.setText(""+(totalnum-data.size()));
+					manage_attendance_fail_nums.setText(""+(data.size()));
 					manage_attendance_be_late_nums.setText(""+belatenum);
 					manage_attendance_leave_earlier_nums.setText(""+leaveeariernum);
 					manage_attendance_absence_nums.setText(""+absencenum);
 					
-					
+					Log.e("datasize", "datasize "+data.size());
 					Message msg = new Message();
 					msg.what = what;
 					msg.obj = data;
 					handler.sendMessage(msg);
+					
 				} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
@@ -256,13 +272,11 @@ public class ManageAttendanceActivity extends Activity implements OnRefreshListe
 				//[{"address":"中国移动南方基地","endTime":1,"id":1,"laitude":1,"longitude":1,"name":"华软软件学院","projectName":"APP开发","startTime":1},{"address":"广州诺特科技有限公司","endTime":1,"id":2,"laitude":1,"longitude":1,"name":"华软软件学院","projectName":"企业外勤人员考勤管理系统","startTime":1}]
 				
 			}
-			show_loadding_attendance_tip.setVisibility(View.GONE);
 			super.onPostExecute(result);
 		}
 
 		@Override
 		protected void onPreExecute() {
-			show_loadding_attendance_tip.setVisibility(View.VISIBLE);
 			super.onPreExecute();
 		}
 

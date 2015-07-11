@@ -8,6 +8,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
+import android.util.Log;
 
 public class ShowVoiceTool {
 	private MediaPlayer player; // MediaPlayer对象
@@ -15,10 +16,11 @@ public class ShowVoiceTool {
 	private Context context;
 	public ShowVoiceTool(Context context){
 		this.context=context;
-		file=new File(YzxmfConfig.voicesrc);
+		file=new File("data/data/com.yizhixiaomifeng/files/"+YzxmfConfig.voicename);
 		if (file.exists()) { // 如果文件存在
 			player = MediaPlayer
 					.create(context, Uri.parse(file.getAbsolutePath())); // 创建MediaPlayer对象
+		}else {
 		}
 		// 为MediaPlayer对象添加完成事件监听器
 		player.setOnCompletionListener(new OnCompletionListener() {

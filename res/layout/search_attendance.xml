@@ -104,6 +104,15 @@
 			        android:text="查询"/>
 			   
 			</LinearLayout>
+			
+			
+			<TextView android:id="@+id/show_search_attendance_result"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:layout_margin="3dip"
+			    android:textSize="18sp"
+			    android:textColor="@color/orange"/>
+			
     	</LinearLayout>
     
 	</ScrollView>

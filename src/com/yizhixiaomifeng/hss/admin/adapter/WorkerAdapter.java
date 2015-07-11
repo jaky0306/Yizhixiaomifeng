@@ -68,7 +68,7 @@ public class WorkerAdapter  extends BaseAdapter{
 		holder.duty.setText("Ö°Î»£º"+getData().get(position).getDutyTypeEntity().getName());
 		int i=10000;
 		String jobNum="";
-		while(getData().get(position).getJobNum()/i>0){
+		while(getData().get(position).getJobNum()/i<=0){
 			jobNum+="0";
 			i/=10;
 		}

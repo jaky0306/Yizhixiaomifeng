@@ -1,6 +1,9 @@
 package com.yizhixiaomifeng.tools;
 
+import com.yizhixiaomifeng.user.Login;
+
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Button;
 import android.widget.Toast;
@@ -27,6 +30,8 @@ public class UserRegister extends AsyncTask<String, Integer, String>{
 		}
 		button.setText("зЂВс");
 		button.setEnabled(true);
+		Intent intent = new Intent(context,Login.class);
+		context.startActivity(intent);
 		super.onPostExecute(result);
 	}
 

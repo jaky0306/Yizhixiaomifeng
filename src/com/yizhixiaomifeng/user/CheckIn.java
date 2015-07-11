@@ -81,7 +81,6 @@ public class CheckIn extends Activity
 	private TextView check_in_position_tip;
 	private TextView check_in_client;
 	private ImageView check_in_scene;
-	private String check_in_scene_name="checkinScene.jpg";
 	private EditText check_in_leave_word;
 	
 	
@@ -102,6 +101,7 @@ public class CheckIn extends Activity
     
     
     private CatchVoiceTool cvt = null;
+    ShowVoiceTool svt=null;
     private boolean hadCatchVoice = false;
     private boolean isCatchingVoice=false;
     private boolean isPlayingVoice=false;
@@ -113,7 +113,9 @@ public class CheckIn extends Activity
     			get_position_button.setText("定位");
     			get_position_button.setEnabled(true);
     			show_getting_position_proProgressBar.setVisibility(View.INVISIBLE);
-    			check_in_position.setText(msg.obj.toString());
+    			if(msg.obj!=null){
+    				check_in_position.setText(msg.obj.toString());
+    			}
     		}
     		if(msg.what==0x112){  //显示正在定位的进度条
     			get_position_button.setText("正在定位中...");
@@ -122,9 +124,11 @@ public class CheckIn extends Activity
     		}
     		if(msg.what==0x113){	//显示用户的与目的地的距离提示
     			if(nowDistance>maxDistance){
-    				DecimalFormat   df   =new   java.text.DecimalFormat("#.00");
+    				DecimalFormat df=new DecimalFormat(".##");
+    				double d=nowDistance-maxDistance;
+    				String st=df.format(d);
     				check_in_position_tip.setTextColor(Color.RED);
-        			check_in_position_tip.setText("距离目的地还大概有 "+df.format(nowDistance-maxDistance)+" m ,加油...");
+        			check_in_position_tip.setText("距离目的地还大概有 "+st+" m ,加油");
     			}else {
     				check_in_position_tip.setTextColor(Color.GREEN);
         			check_in_position_tip.setText("目标地点就在你周围...");
@@ -156,17 +160,26 @@ public class CheckIn extends Activity
     		}
     		if(msg.what==0x117){ //控制播放音频
     			if(isPlayingVoice){
+    				show_voice_Button.setText("停止播放");
     				catch_voice_Button.setBackgroundResource(R.drawable.rectangle_bg_6);
         			catch_voice_Button.setEnabled(false);
         			delete_voice_Button.setBackgroundResource(R.drawable.rectangle_bg_6);
         			delete_voice_Button.setEnabled(false);
     			}else {
+    				show_voice_Button.setText("试听录音");
     				catch_voice_Button.setBackgroundResource(R.drawable.rectangle_bg_2);
         			catch_voice_Button.setEnabled(true);
         			delete_voice_Button.setBackgroundResource(R.drawable.rectangle_bg_2);
         			delete_voice_Button.setEnabled(true);
 				}
     			
+    		}
+    		if(msg.what==0x118){
+    			isCatchingVoice=false;
+    			catch_voice_Button.setBackgroundResource(R.drawable.rectangle_bg_2);
+    			catch_voice_Button.setEnabled(true);
+    			show_voice_Button.setBackgroundResource(R.drawable.rectangle_bg_6);
+    			show_voice_Button.setEnabled(false);
     		}
     	};
     };
@@ -181,7 +194,7 @@ public class CheckIn extends Activity
         
         client=(Client) getIntent().getSerializableExtra("client");
         goalLatLng=new LatLng(client.getLatitude(), client.getLongitude());
-        
+        Log.e("goallatlng", goalLatLng.latitude+" : "+goalLatLng.longitude);
         /**
          * 初始化组件
          */
@@ -239,6 +252,7 @@ public class CheckIn extends Activity
 				msg.what=0x111; //设置当前位置
 				msg.obj=sb.toString();
 				handler.sendMessage(msg);
+				getDistanceToGoal(); //定位完后立即获取与目标的距离
 			}
 		});
 	    
@@ -288,7 +302,7 @@ public class CheckIn extends Activity
 							MediaStore.EXTRA_OUTPUT,
 							Uri.fromFile(new File(Environment
 									.getExternalStorageDirectory(),
-									check_in_scene_name)));
+									YzxmfConfig.checkinScenename)));
 				}
 				startActivityForResult(intentFromCapture,1);
 			}
@@ -379,7 +393,15 @@ public class CheckIn extends Activity
 			
 			@Override
 			public void onClick(View v) {
-				cvt.deleteVoice();
+				boolean isdelete=cvt.deleteVoice();
+				if(isdelete){
+					Toast.makeText(getApplicationContext(), "删除成功", Toast.LENGTH_LONG).show();
+				}else {
+					Toast.makeText(getApplicationContext(), "删除失败", Toast.LENGTH_LONG).show();
+				}
+				Message msg = new Message();
+				msg.what=0x118;
+				handler.sendMessage(msg);
 			}
 		});
         show_voice_Button.setOnClickListener(new OnClickListener() {
@@ -388,7 +410,7 @@ public class CheckIn extends Activity
 			public void onClick(View v) {
 				if(!isPlayingVoice){
 					if(hadCatchVoice){
-						ShowVoiceTool svt = new ShowVoiceTool(CheckIn.this); 
+						svt = new ShowVoiceTool(CheckIn.this); 
 						svt.play();
 						isPlayingVoice=true;
 						Message msg = new Message();
@@ -396,6 +418,7 @@ public class CheckIn extends Activity
 						handler.sendMessage(msg);
 					}
 				}else {
+					svt.stop();
 					isPlayingVoice=false;
 					Message msg = new Message();
 					msg.what=0x117;
@@ -417,6 +440,27 @@ public class CheckIn extends Activity
 				/**
 				 * 把签到现场保存到云
 				 */
+//				LocalStorage ls = new LocalStorage(CheckIn.this);
+//				String username = ls.getString("username", "");
+//				String type =ls.getString("type", "");
+//				Calendar c = Calendar.getInstance();
+//				int year = c.get(Calendar.YEAR);
+//				int month = c.get(Calendar.MONTH)+1;
+//				int date = c.get(Calendar.DATE);
+//				String time = ""+year+"-"+month+"-"+date;
+//				/**
+//				 * 保存相应数据到LeanCloud
+//				 */
+//				AvosTool avosTool = new AvosTool();
+//				avosTool.saveCheckInScene(username,type,time);  //把现场图片保存到LeanCloud
+//				avosTool.saveCheckInVoice(username, type, time);
+//				String sceneUrl=avosTool.getCheckInSceneUrl(username, type, time);
+//				String voiceUrl=avosTool.getCheckInVoiceUrl(username, type, time);
+//				
+//				Log.e("sceneUrl", "aa"+sceneUrl);
+//				Log.e("voiceUrl", "aa"+voiceUrl);
+				
+				
 				
 				if(YzxmfConfig.isConnect(CheckIn.this)){
 					Calendar c = Calendar.getInstance();
@@ -444,7 +488,7 @@ public class CheckIn extends Activity
 				if (YzxmfConfig.hasSdcard()) {
 					File tempFile = new File(
 							Environment.getExternalStorageDirectory(),
-							check_in_scene_name);
+							YzxmfConfig.checkinScenename);
 					startPhotoZoom(Uri.fromFile(tempFile));
 				} else {
 					Toast.makeText(CheckIn.this, "未找到存储卡，无法存储照片！",
@@ -504,7 +548,7 @@ public class CheckIn extends Activity
 		
 		FileOutputStream fos = null;
 		try {
-			fos = openFileOutput(check_in_scene_name, 0);
+			fos = openFileOutput(YzxmfConfig.checkinScenename, 0);
 			bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -548,12 +592,12 @@ public class CheckIn extends Activity
 		handler.sendMessage(msg);
 		mLocationClient.start();  //开启位置客户端
 		
-		getDistanceToGoal(); //定位完后立即获取与目标的距离
 	}
 	
 	public void getDistanceToGoal(){
 	  //计算p1、p2两点之间的直线距离，单位：米  
 		if(mylLatLng!=null&&goalLatLng!=null){
+			
 			nowDistance = DistanceUtil.getDistance(mylLatLng, goalLatLng);
 			/**
 			 * 获取最新距离后，给用户一个提示
@@ -591,6 +635,7 @@ public class CheckIn extends Activity
 			String username = ls.getString("username", "");
 			String type =ls.getString("type", "");
 			String date = params[0];
+			
 			/**
 			 * 保存相应数据到LeanCloud
 			 */
@@ -599,6 +644,8 @@ public class CheckIn extends Activity
 			avosTool.saveCheckInVoice(username, type, date);
 			String sceneUrl=avosTool.getCheckInSceneUrl(username, type, date);
 			String voiceUrl=avosTool.getCheckInVoiceUrl(username, type, date);
+			Log.e("sceneUrl", "aa"+sceneUrl);
+			Log.e("voiceUrl", "aa"+voiceUrl);
 			/**
 			 * 保存数据到数据库
 			 */

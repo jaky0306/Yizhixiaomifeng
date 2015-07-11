@@ -37,6 +37,7 @@ public class ClientInfoLoader extends AsyncTask<String, Integer, String>{
 		 */
 		String phone = params[0];
 		String result = new ConnectWeb().getAllClientDataByPhone(phone);
+		Log.e("aaaaaaaaaa", result);
 		return result;
 	}
 
@@ -47,7 +48,7 @@ public class ClientInfoLoader extends AsyncTask<String, Integer, String>{
 
 	@Override
 	protected void onPostExecute(String result) {
-		Log.e("aaaaaaaaaaaaa", "result");
+		Log.e("bbbbbbb", result);
 		if(result!=null){
 			try {
 				JSONArray jsonArray = new JSONArray(result);

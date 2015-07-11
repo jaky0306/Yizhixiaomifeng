@@ -9,6 +9,7 @@ import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.LogUtil.log;
+import com.baidu.location.f;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.search.geocode.GeoCodeOption;
 import com.yizhixiaomifeng.R;
@@ -18,12 +19,14 @@ import com.yizhixiaomifeng.admin.bean.Client;
 import com.yizhixiaomifeng.config.ParameterConfig;
 import com.yizhixiaomifeng.tools.ActivityCloser;
 import com.yizhixiaomifeng.tools.AvosTool;
+import com.yizhixiaomifeng.tools.CatchVoiceTool;
 import com.yizhixiaomifeng.tools.CheckStatusLoader;
 import com.yizhixiaomifeng.tools.ClientInfoLoader;
 import com.yizhixiaomifeng.tools.HeadLoader;
 import com.yizhixiaomifeng.tools.HeadTool;
 import com.yizhixiaomifeng.tools.InfoLoader;
 import com.yizhixiaomifeng.tools.LocalStorage;
+import com.yizhixiaomifeng.tools.ShowVoiceTool;
 
 import android.app.Activity;
 import android.content.Context;
@@ -40,7 +43,10 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -81,6 +87,8 @@ public class MainActivity extends Activity implements OnTouchListener {
 	private ListView showMenuItems ;		//menu显示item的listview
 	private int exit=0;  //	用来记录click 的次数
 	
+	CatchVoiceTool cvt=new CatchVoiceTool();
+	
 	private Handler handler=new Handler(){
 		public void handleMessage(Message msg) {
 			if(msg.what==0x111){
@@ -119,6 +127,44 @@ public class MainActivity extends Activity implements OnTouchListener {
 		signin=(Button)findViewById(R.id.singin);
 		checkin=(Button)findViewById(R.id.check_in);
 		checkout=(Button)findViewById(R.id.check_out);
+		
+		
+		
+//		Button catch_voice_Button = (Button)findViewById(R.id.catch_voice_button);
+//		
+//		catch_voice_Button.setOnLongClickListener(new OnLongClickListener() {
+//			
+//			@Override
+//			public boolean onLongClick(View v) {
+//				
+//				cvt.startCatchVoice();
+//				return false;
+//			}
+//		});
+//        catch_voice_Button.setOnTouchListener(new OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v,MotionEvent event){ 
+//            	if(event.getAction() == MotionEvent.ACTION_UP) { //松开手后就不录制
+//                    cvt.stopCatchVoice(); //不再录制
+//                    new Thread(new Runnable() {
+//						
+//						@Override
+//						public void run() {
+//							new AvosTool().saveCheckInVoice("aa", "aa", "aa");
+//		                    String url = new AvosTool().getCheckInVoiceUrl("aa", "aa", "aa");
+//		                    Log.e("aaaaaaaaaaa", ""+url);
+//		                    new ShowVoiceTool(MainActivity.this).play(url);
+//						}
+//					}).start();
+//                    
+//                }
+//				return false;
+//            }
+//
+//        });
+		
+		
+		
 		
 		
 		LocalStorage ls = new LocalStorage(this);
@@ -187,7 +233,7 @@ public class MainActivity extends Activity implements OnTouchListener {
 				if(position!=0)
 				{
 					client = all_Clients.get(position-1);
-					Log.e("client_name", "aa"+client.getAddress());
+					Log.e("client_id", "aa"+client.getId());
 					
 					new CheckStatusLoader(MainActivity.this, show_loadding_client_tip, checkin, checkout).execute(user,""+client.getId());
 //					new GetClientAddress().execute(client.getName());
@@ -269,11 +315,10 @@ public class MainActivity extends Activity implements OnTouchListener {
 			 */
 			signin.setText("已登录");
 			signin.setEnabled(false);
-			
+			loadAllClientInfo();
 			if(type.equals("staff"))
 			{
 				loadUserInfo(); //加载用户信息
-				loadAllClientInfo();
 				menuitems.clear();
 				menuitems.add("个人中心");
 				showMenuItems=(ListView)findViewById(R.id.showMenuItems_listview);
@@ -452,10 +497,6 @@ public class MainActivity extends Activity implements OnTouchListener {
 	@Override
 	protected void onResume() {
 		
-		LocalStorage ls = new LocalStorage(this);
-		user = ls.getString("username", "");
-		type = ls.getString("type", "");
-		initByUser();
 		super.onResume();
 	}
 	

@@ -184,7 +184,7 @@ public class AddOrEditWorker extends Activity{
 							/**
 							 * 如果是编辑，则需要将原本员工所处的部门设置为选中状态
 							 */
-//							if(!isAdd){
+							if(!isAdd){
 								for(int i=0;i<departmentAdapter.getData().size();i++){
 									if(departmentAdapter.getData().get(i).getNumber()
 											==worker.getDepartmenttEntity().getNumber()){
@@ -192,7 +192,7 @@ public class AddOrEditWorker extends Activity{
 										break;
 									}
 								}
-//							}
+							}
 						}else{
 							Toast.makeText(AddOrEditWorker.this, "部门列表加载失败：网络不给力", Toast.LENGTH_SHORT).show();
 						}

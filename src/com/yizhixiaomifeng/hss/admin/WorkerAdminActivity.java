@@ -115,7 +115,7 @@ public class WorkerAdminActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				SwipeFadeOutLayout swipeView=(SwipeFadeOutLayout) v;
-				if(swipeView.getStatus()==SwipeStatus.ClOSE){
+				if(swipeView.getStatus()!=SwipeStatus.OPEN){
 					/**
 					 * 跳转到部门人员列表界面
 					 */

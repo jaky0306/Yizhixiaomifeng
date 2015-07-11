@@ -18,7 +18,9 @@ public class URLConfig {
 	public static String saveArrangement=IP+"missionAllotController.do?saveMissionAllot";
 	//public static String checkin=IP+"missionAllotController.do?saveMissionAllot";
 	public static String checkin=IP+"workingRecordController.do?saveWorkingRecord";
+	public static String checkout=IP+"workingRecordController.do?saveWorkingRecordOut";
 	public static String getAttendanceDataByDate=IP+"attendanceController.do?listWorkingRecord";
+	public static String getAttendanceDateByDateAndDate=IP+"workingRecordController.do?listWorkingRecordQuantum";
 	public static String canCheckInandOut=IP+"workingRecordController.do?checkWorkingRecord";
 	public static String getUnRegisterUserNameAndIdInfo=IP+"workerController.do?listAllWorkerName";
 	public static String registerUser =IP+"workerController.do?saveWorkerMessage";

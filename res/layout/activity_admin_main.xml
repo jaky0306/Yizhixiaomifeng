@@ -96,7 +96,7 @@
                     android:id="@+id/admin_main_item1_img"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:src="@drawable/setting_icon_head" />
+                    android:src="@drawable/manage_attendance_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -135,7 +135,7 @@
                     android:id="@+id/admin_main_item2_img"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:src="@drawable/setting_icon_head" />
+                    android:src="@drawable/manage_news_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -174,7 +174,7 @@
                     android:id="@+id/admin_main_item3_img"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:src="@drawable/setting_icon_head" />
+                    android:src="@drawable/manage_worker_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -213,7 +213,7 @@
                     android:id="@+id/admin_main_item4_img"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:src="@drawable/setting_icon_head" />
+                    android:src="@drawable/manage_client_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -252,7 +252,7 @@
                     android:id="@+id/admin_main_item5_img"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:src="@drawable/setting_icon_head" />
+                    android:src="@drawable/admin_setting_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
