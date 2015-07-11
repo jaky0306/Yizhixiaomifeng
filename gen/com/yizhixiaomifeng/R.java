@@ -522,6 +522,7 @@ public final class R {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static final int action_settings=0x7f0a00ee;
         public static final int add_client_address=0x7f0a0004;
         public static final int add_client_back=0x7f0a0000;
@@ -542,6 +543,11 @@ public final class R {
 >>>>>>> origin/master
 =======
 <<<<<<< HEAD
+        public static final int action_settings=0x7f0a00e1;
+        public static final int add_client_address=0x7f0a0004;
+        public static final int add_client_back=0x7f0a0000;
+>>>>>>> origin/master
+=======
         public static final int action_settings=0x7f0a00e1;
         public static final int add_client_address=0x7f0a0004;
         public static final int add_client_back=0x7f0a0000;
@@ -567,6 +573,9 @@ public final class R {
 >>>>>>> origin/master
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
 =======
 >>>>>>> origin/master
@@ -586,6 +595,7 @@ public final class R {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static final int add_news_button=0x7f0a00a9;
 =======
 <<<<<<< HEAD
@@ -602,6 +612,9 @@ public final class R {
 <<<<<<< HEAD
         public static final int add_news_button=0x7f0a00a4;
 >>>>>>> origin/master
+=======
+        public static final int add_news_button=0x7f0a00a4;
+>>>>>>> origin/master
         public static final int add_worker_add_department=0x7f0a0014;
         public static final int add_worker_back=0x7f0a0011;
         public static final int add_worker_basepay=0x7f0a0018;
@@ -616,8 +629,13 @@ public final class R {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static final int address=0x7f0a00dd;
         public static final int address_info=0x7f0a00dc;
+=======
+        public static final int address=0x7f0a00d4;
+        public static final int address_info=0x7f0a00d3;
+>>>>>>> origin/master
 =======
         public static final int address=0x7f0a00d4;
         public static final int address_info=0x7f0a00d3;
@@ -655,6 +673,7 @@ public final class R {
         public static final int arrange_client_back=0x7f0a0037;
         public static final int arrange_client_content=0x7f0a003a;
         public static final int arrange_client_name=0x7f0a0039;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -785,6 +804,8 @@ public final class R {
         public static final int search_attendance_textview6=0x7f0a00d1;
         public static final int search_attendance_textview7=0x7f0a00d2;
 =======
+=======
+>>>>>>> origin/master
 =======
 >>>>>>> origin/master
 =======
@@ -948,6 +969,7 @@ public final class R {
         public static final int delete_item_button=0x7f0a00de;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/master
         public static final int delete_voice_button=0x7f0a004a;
@@ -966,6 +988,14 @@ public final class R {
 >>>>>>> origin/master
 >>>>>>> origin/master
 =======
+>>>>>>> origin/master
+=======
+        public static final int delete_voice_button=0x7f0a004a;
+>>>>>>> origin/master
+=======
+        public static final int delete_item_button=0x7f0a00de;
+        public static final int delete_voice_button=0x7f0a004a;
+>>>>>>> origin/master
 >>>>>>> origin/master
         public static final int department_delete=0x7f0a006c;
         public static final int department_edit=0x7f0a006b;
@@ -1054,6 +1084,9 @@ public final class R {
         public static final int search_attendance_textview7=0x7f0a00c9;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
 =======
 >>>>>>> origin/master
@@ -1065,6 +1098,7 @@ public final class R {
         public static final int search_worker_search=0x7f0a0034;
         public static final int search_worker_workers=0x7f0a0036;
         public static final int select_staff_for_client_button=0x7f0a003d;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1122,6 +1156,8 @@ public final class R {
         public static final int worker_jobnum=0x7f0a0071;
         public static final int worker_name=0x7f0a006f;
 =======
+=======
+>>>>>>> origin/master
 =======
 >>>>>>> origin/master
 =======
@@ -1412,6 +1448,9 @@ public final class R {
         public static final int worker_name=0x7f0a006d;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
 =======
 >>>>>>> origin/master
