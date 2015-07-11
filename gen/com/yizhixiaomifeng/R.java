@@ -521,12 +521,19 @@ public final class R {
     public static final class id {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static final int action_settings=0x7f0a00e1;
         public static final int add_client_address=0x7f0a0004;
         public static final int add_client_back=0x7f0a0000;
         public static final int add_client_button=0x7f0a00a1;
 =======
         public static final int action_settings=0x7f0a00eb;
+        public static final int add_client_address=0x7f0a0004;
+        public static final int add_client_back=0x7f0a0000;
+        public static final int add_client_button=0x7f0a00a3;
+>>>>>>> origin/master
+=======
+        public static final int action_settings=0x7f0a00ec;
         public static final int add_client_address=0x7f0a0004;
         public static final int add_client_back=0x7f0a0000;
         public static final int add_client_button=0x7f0a00a3;
@@ -548,6 +555,7 @@ public final class R {
         public static final int add_department_phone=0x7f0a000c;
         public static final int add_department_save=0x7f0a000f;
         public static final int add_department_title=0x7f0a0009;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         public static final int add_news_button=0x7f0a00a4;
@@ -619,6 +627,8 @@ public final class R {
 =======
 =======
 >>>>>>> origin/master
+=======
+>>>>>>> origin/master
         public static final int add_news_button=0x7f0a00a7;
         public static final int add_worker_add_department=0x7f0a0013;
         public static final int add_worker_back=0x7f0a0010;
@@ -630,8 +640,13 @@ public final class R {
         public static final int add_worker_save=0x7f0a0017;
         public static final int add_worker_title=0x7f0a000f;
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static final int address=0x7f0a00da;
         public static final int address_info=0x7f0a00d9;
+=======
+        public static final int address=0x7f0a00db;
+        public static final int address_info=0x7f0a00da;
+>>>>>>> origin/master
 =======
         public static final int address=0x7f0a00db;
         public static final int address_info=0x7f0a00da;
@@ -664,15 +679,21 @@ public final class R {
         public static final int arrange_staff_button=0x7f0a0055;
         public static final int arrow=0x7f0a00b4;
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static final int attendance_item_checkin_info=0x7f0a00d3;
         public static final int attendance_item_checkout_info=0x7f0a00d4;
         public static final int attendance_item_info=0x7f0a00d1;
         public static final int attendance_item_name=0x7f0a00d2;
 =======
+=======
+>>>>>>> origin/master
         public static final int attendance_item_checkin_info=0x7f0a00d4;
         public static final int attendance_item_checkout_info=0x7f0a00d5;
         public static final int attendance_item_info=0x7f0a00d2;
         public static final int attendance_item_name=0x7f0a00d3;
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
         public static final int back=0x7f0a0078;
         public static final int bmapView=0x7f0a0008;
@@ -697,7 +718,11 @@ public final class R {
         public static final int client_address=0x7f0a0063;
         public static final int client_go=0x7f0a0060;
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static final int client_item_info=0x7f0a00d5;
+>>>>>>> origin/master
+=======
+        public static final int client_item_info=0x7f0a00d6;
 >>>>>>> origin/master
 =======
         public static final int client_item_info=0x7f0a00d6;
@@ -723,7 +748,12 @@ public final class R {
         public static final int commit_registet_button=0x7f0a00ba;
         public static final int content=0x7f0a002f;
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static final int delete_item_button=0x7f0a00dd;
+        public static final int delete_voice_button=0x7f0a004a;
+>>>>>>> origin/master
+=======
+        public static final int delete_item_button=0x7f0a00de;
         public static final int delete_voice_button=0x7f0a004a;
 >>>>>>> origin/master
 =======
@@ -738,6 +768,7 @@ public final class R {
         public static final int department_layout=0x7f0a0065;
         public static final int department_member=0x7f0a0068;
         public static final int department_name=0x7f0a0066;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         public static final int edit_client_address=0x7f0a0059;
@@ -862,14 +893,21 @@ public final class R {
 =======
 =======
 >>>>>>> origin/master
+=======
+>>>>>>> origin/master
         public static final int edit_client_address=0x7f0a0058;
         public static final int edit_client_back=0x7f0a0053;
         public static final int edit_client_name=0x7f0a0056;
         public static final int edit_client_project=0x7f0a0057;
         public static final int edit_client_search=0x7f0a0059;
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static final int edit_delete_layout=0x7f0a00db;
         public static final int edit_item_button=0x7f0a00dc;
+=======
+        public static final int edit_delete_layout=0x7f0a00dc;
+        public static final int edit_item_button=0x7f0a00dd;
+>>>>>>> origin/master
 =======
         public static final int edit_delete_layout=0x7f0a00dc;
         public static final int edit_item_button=0x7f0a00dd;
@@ -914,6 +952,7 @@ public final class R {
         public static final int menuitems_title=0x7f0a00af;
         public static final int more=0x7f0a0076;
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static final int name=0x7f0a00d6;
         public static final int news_content=0x7f0a00e9;
         public static final int news_time=0x7f0a00ea;
@@ -924,6 +963,8 @@ public final class R {
         public static final int project_info=0x7f0a00d7;
         public static final int project_name=0x7f0a00d8;
 =======
+=======
+>>>>>>> origin/master
         public static final int name=0x7f0a00d7;
         public static final int news_content=0x7f0a00ea;
         public static final int news_time=0x7f0a00eb;
@@ -933,6 +974,9 @@ public final class R {
         public static final int passwordInfo=0x7f0a007c;
         public static final int project_info=0x7f0a00d8;
         public static final int project_name=0x7f0a00d9;
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
         public static final int public_edit_news_button=0x7f0a005e;
         public static final int refreshing=0x7f0a00b1;
@@ -950,6 +994,7 @@ public final class R {
         public static final int search_attendance_staff_name=0x7f0a00bc;
         public static final int search_attendance_start_time=0x7f0a00bd;
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static final int search_attendance_textview1=0x7f0a00c9;
         public static final int search_attendance_textview2=0x7f0a00ca;
         public static final int search_attendance_textview3=0x7f0a00cb;
@@ -958,6 +1003,8 @@ public final class R {
         public static final int search_attendance_textview6=0x7f0a00ce;
         public static final int search_attendance_textview7=0x7f0a00cf;
 =======
+=======
+>>>>>>> origin/master
         public static final int search_attendance_textview1=0x7f0a00ca;
         public static final int search_attendance_textview2=0x7f0a00cb;
         public static final int search_attendance_textview3=0x7f0a00cc;
@@ -965,6 +1012,9 @@ public final class R {
         public static final int search_attendance_textview5=0x7f0a00ce;
         public static final int search_attendance_textview6=0x7f0a00cf;
         public static final int search_attendance_textview7=0x7f0a00d0;
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
         public static final int search_worker_back=0x7f0a0030;
         public static final int search_worker_input=0x7f0a0031;
@@ -973,6 +1023,7 @@ public final class R {
         public static final int search_worker_workers=0x7f0a0034;
         public static final int select_staff_for_client_button=0x7f0a003b;
         public static final int set_head_back=0x7f0a00c1;
+<<<<<<< HEAD
 <<<<<<< HEAD
         public static final int setting_center_header=0x7f0a00c3;
         public static final int setting_center_signin=0x7f0a00c4;
@@ -984,6 +1035,8 @@ public final class R {
         public static final int show_all_published_news_to_user_back=0x7f0a00c6;
         public static final int show_attendance_back=0x7f0a00c8;
 =======
+=======
+>>>>>>> origin/master
         public static final int setting_center_back=0x7f0a00c3;
         public static final int setting_center_header=0x7f0a00c4;
         public static final int setting_center_signin=0x7f0a00c5;
@@ -994,11 +1047,15 @@ public final class R {
         public static final int show_all_published_news_to_user_Listview=0x7f0a00c8;
         public static final int show_all_published_news_to_user_back=0x7f0a00c7;
         public static final int show_attendance_back=0x7f0a00c9;
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
         public static final int show_be_arranged_staff_textview=0x7f0a003a;
         public static final int show_catching_voice_imageview=0x7f0a003f;
         public static final int show_client_listview=0x7f0a00a4;
         public static final int show_date=0x7f0a008c;
+<<<<<<< HEAD
 <<<<<<< HEAD
         public static final int show_fail_attendance_back=0x7f0a00de;
         public static final int show_getting_position_progressbar=0x7f0a0043;
@@ -1015,6 +1072,8 @@ public final class R {
         public static final int show_search_attendance_result=0x7f0a00c0;
         public static final int show_search_attendance_textview=0x7f0a00d0;
 =======
+=======
+>>>>>>> origin/master
         public static final int show_fail_attendance_back=0x7f0a00df;
         public static final int show_getting_position_progressbar=0x7f0a0043;
         public static final int show_had_publish_news_listview=0x7f0a00a5;
@@ -1029,6 +1088,9 @@ public final class R {
         public static final int show_playing_voice_imageview=0x7f0a00e2;
         public static final int show_search_attendance_result=0x7f0a00c0;
         public static final int show_search_attendance_textview=0x7f0a00d1;
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
         public static final int show_staff_info=0x7f0a008a;
         public static final int show_time=0x7f0a008b;
@@ -1036,9 +1098,15 @@ public final class R {
         public static final int show_uphead_tip=0x7f0a00c2;
         public static final int show_voice_button=0x7f0a0049;
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static final int showfailattendance_check_in_scene=0x7f0a00df;
         public static final int showfailattendance_checkin_voice_button=0x7f0a00e2;
         public static final int showfailattendance_checkout_voice_button=0x7f0a00e3;
+=======
+        public static final int showfailattendance_check_in_scene=0x7f0a00e0;
+        public static final int showfailattendance_checkin_voice_button=0x7f0a00e3;
+        public static final int showfailattendance_checkout_voice_button=0x7f0a00e4;
+>>>>>>> origin/master
 =======
         public static final int showfailattendance_check_in_scene=0x7f0a00e0;
         public static final int showfailattendance_checkin_voice_button=0x7f0a00e3;
@@ -1055,6 +1123,9 @@ public final class R {
         public static final int username=0x7f0a007b;
         public static final int usernameInfo=0x7f0a007a;
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
 =======
 >>>>>>> origin/master
