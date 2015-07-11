@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class SettingCenter extends Activity{
@@ -64,6 +65,15 @@ public class SettingCenter extends Activity{
 				Intent intent = new Intent(SettingCenter.this,MainActivity.class);
 				startActivity(intent);
 				SettingCenter.this.finish();
+			}
+		});
+		
+		ImageView setting_center_back=(ImageView)findViewById(R.id.setting_center_back);
+		setting_center_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
 			}
 		});
 	}
