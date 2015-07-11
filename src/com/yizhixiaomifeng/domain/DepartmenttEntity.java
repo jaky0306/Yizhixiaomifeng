@@ -15,7 +15,7 @@ public class DepartmenttEntity implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private long number; 
-	private BusinessTypeEntity businessTypeEntity; 
+	private BusinessTypeEntity businessTypeEntity=new BusinessTypeEntity(); 
 	private String name; 
 	private List<WorkerEntity> workerEntities=new ArrayList<WorkerEntity>(); 
 	private String phone; 

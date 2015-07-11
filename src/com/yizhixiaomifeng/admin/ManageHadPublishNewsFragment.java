@@ -167,9 +167,8 @@ public class ManageHadPublishNewsFragment extends Fragment implements OnRefreshL
 
 		@Override
 		protected void onPostExecute(String result) {
-			
-			if(result!=null){
-				List<News> data = new ArrayList<News>();
+			List<News> data = new ArrayList<News>();
+			if(!result.equals("error")){
 				try {
 					JSONArray jsonArray = new JSONArray(result);
 					for(int i=0;i<jsonArray.length();i++){
@@ -181,17 +180,17 @@ public class ManageHadPublishNewsFragment extends Fragment implements OnRefreshL
 						News news = new News(id, title, content,time,status);
 						data.add(news);
 					}
-					Message msg = new Message();
-					msg.what = what;
-					msg.obj = data;
-					handler.sendMessage(msg);
+					
 				} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
 				}
 				//[{"address":"中国移动南方基地","endTime":1,"id":1,"laitude":1,"longitude":1,"name":"华软软件学院","projectName":"APP开发","startTime":1},{"address":"广州诺特科技有限公司","endTime":1,"id":2,"laitude":1,"longitude":1,"name":"华软软件学院","projectName":"企业外勤人员考勤管理系统","startTime":1}]
-				
 			}
+			Message msg = new Message();
+			msg.what = what;
+			msg.obj = data;
+			handler.sendMessage(msg);
 			super.onPostExecute(result);
 		}
 

@@ -171,9 +171,9 @@ public class ManageUnPublishNewsFragment extends Fragment implements OnRefreshLi
 
 		@Override
 		protected void onPostExecute(String result) {
-			
-			if(result!=null){
-				List<News> data = new ArrayList<News>();
+			List<News> data = new ArrayList<News>();
+			if(!result.equals("error")){
+				
 				try {
 					JSONArray jsonArray = new JSONArray(result);
 					for(int i=0;i<jsonArray.length();i++){
@@ -194,6 +194,10 @@ public class ManageUnPublishNewsFragment extends Fragment implements OnRefreshLi
 				}
 				
 			}
+			Message msg = new Message();
+			msg.what = what;
+			msg.obj = data;
+			handler.sendMessage(msg);
 			super.onPostExecute(result);
 		}
 
