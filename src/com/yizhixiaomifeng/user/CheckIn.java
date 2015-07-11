@@ -480,8 +480,6 @@ public class CheckIn extends Activity
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(CheckIn.this,MainActivity.class);
-				startActivity(intent);
 				CheckIn.this.finish();
 			}
 		});

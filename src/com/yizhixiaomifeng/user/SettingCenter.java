@@ -1,6 +1,7 @@
 package com.yizhixiaomifeng.user;
 
 import com.yizhixiaomifeng.R;
+import com.yizhixiaomifeng.admin.AdminMainActivity;
 import com.yizhixiaomifeng.config.ParameterConfig;
 import com.yizhixiaomifeng.tools.ActivityCloser;
 import com.yizhixiaomifeng.tools.LocalStorage;
@@ -73,7 +74,18 @@ public class SettingCenter extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				
+				LocalStorage ls = new LocalStorage(SettingCenter.this);
+				String type=ls.getString("type", "");
+				if(type.equals("staff")){
+					Intent intent = new Intent(SettingCenter.this,MainActivity.class);
+					startActivity(intent);
+					SettingCenter.this.finish();
+				}
+				if(type.equals("admin")){
+					Intent intent = new Intent(SettingCenter.this,AdminMainActivity.class);
+					startActivity(intent);
+					SettingCenter.this.finish();
+				}
 			}
 		});
 	}

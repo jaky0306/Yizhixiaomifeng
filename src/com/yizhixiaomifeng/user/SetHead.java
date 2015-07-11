@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 
 import com.baidu.location.f;
 import com.yizhixiaomifeng.R;
+import com.yizhixiaomifeng.admin.AdminMainActivity;
 import com.yizhixiaomifeng.config.ParameterConfig;
 import com.yizhixiaomifeng.config.YzxmfConfig;
 import com.yizhixiaomifeng.tools.ActivityCloser;
@@ -263,9 +264,18 @@ public class SetHead extends Activity {
 			msg.what=0x112;
 			handler.sendMessage(msg);
 			ParameterConfig.headChange=true; //头像更新了，告诉MainActivity
-			Intent intent = new Intent(SetHead.this,SettingCenter.class);
-			startActivity(intent);
-			SetHead.this.finish();
+			LocalStorage ls = new LocalStorage(SetHead.this);
+			String type=ls.getString("type", "");
+			if(type.equals("staff")){
+				Intent intent = new Intent(SetHead.this,MainActivity.class);
+				startActivity(intent);
+				SetHead.this.finish();
+			}
+			if(type.equals("admin")){
+				Intent intent = new Intent(SetHead.this,AdminMainActivity.class);
+				startActivity(intent);
+				SetHead.this.finish();
+			}
 			super.onPostExecute(result);
 		}
 

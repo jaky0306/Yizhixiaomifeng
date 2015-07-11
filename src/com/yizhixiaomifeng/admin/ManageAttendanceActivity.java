@@ -131,8 +131,8 @@ public class ManageAttendanceActivity extends Activity implements OnRefreshListe
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(ManageAttendanceActivity.this,AdminMainActivity.class);
-				startActivity(intent);
+//				Intent intent = new Intent(ManageAttendanceActivity.this,AdminMainActivity.class);
+//				startActivity(intent);
 				ManageAttendanceActivity.this.finish();
 			}
 		});

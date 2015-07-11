@@ -49,8 +49,6 @@ public class ShowNewsActivity extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(ShowNewsActivity.this,ShowAllPublishNewsToUser.class);
-				startActivity(intent);
 				ShowNewsActivity.this.finish();
 			}
 		});

@@ -102,8 +102,6 @@ public class SearchAttendanceActivity extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(SearchAttendanceActivity.this,ManageAttendanceActivity.class);
-				startActivity(intent);
 				SearchAttendanceActivity.this.finish();
 			}
 		});

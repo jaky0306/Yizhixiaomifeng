@@ -187,8 +187,6 @@ public class ArrangeStaffForClientActivity extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent =new Intent(ArrangeStaffForClientActivity.this,ManageClientActivity.class);
-				startActivity(intent);
 				ArrangeStaffForClientActivity.this.finish();
 			}
 		});

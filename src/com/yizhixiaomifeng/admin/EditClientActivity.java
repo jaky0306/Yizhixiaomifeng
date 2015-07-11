@@ -130,8 +130,6 @@ public class EditClientActivity extends Activity implements OnGetGeoCoderResultL
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent =new Intent(EditClientActivity.this,ManageClientActivity.class);
-				startActivity(intent);
 				EditClientActivity.this.finish();
 			}
 		});

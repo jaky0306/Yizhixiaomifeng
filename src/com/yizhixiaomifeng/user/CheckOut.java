@@ -385,8 +385,6 @@ public class CheckOut extends Activity
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(CheckOut.this,MainActivity.class);
-				startActivity(intent);
 				CheckOut.this.finish();
 			}
 		});

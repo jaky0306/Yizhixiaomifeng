@@ -134,8 +134,6 @@ public class ShowFailAttendanceInfoActivity extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(ShowFailAttendanceInfoActivity.this,ManageAttendanceActivity.class);
-				startActivity(intent);
 				ShowFailAttendanceInfoActivity.this.finish();
 			}
 		});

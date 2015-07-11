@@ -72,8 +72,6 @@ public class ManageNewsActivity extends FragmentActivity{
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(ManageNewsActivity.this,AdminMainActivity.class);
-				startActivity(intent);
 				ManageNewsActivity.this.finish();
 			}
 		});

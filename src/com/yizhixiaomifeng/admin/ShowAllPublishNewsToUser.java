@@ -88,8 +88,6 @@ public class ShowAllPublishNewsToUser extends Activity implements OnRefreshListe
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(ShowAllPublishNewsToUser.this,MainActivity.class);
-				startActivity(intent);
 				ShowAllPublishNewsToUser.this.finish();
 			}
 		});

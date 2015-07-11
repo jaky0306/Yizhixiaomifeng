@@ -100,8 +100,6 @@ public class ManageClientActivity extends Activity implements OnRefreshListener,
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(ManageClientActivity.this,AdminMainActivity.class);
-				startActivity(intent);
 				ManageClientActivity.this.finish();
 				
 			}

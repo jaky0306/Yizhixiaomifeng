@@ -53,7 +53,7 @@ public class AdminMainActivity extends Activity{
 		setContentView(R.layout.activity_admin_main);
 		
 		ActivityCloser.activities.add(this);
-		
+		Log.e("aaaaaaaaaaaa", "oncreate");
 		manage_attendance=(RelativeLayout)findViewById(R.id.admin_main_manage_attendance);
 		manage_news = (RelativeLayout)findViewById(R.id.admin_main_manage_news);
 		manage_staff=(RelativeLayout)findViewById(R.id.admin_main_manage_staff);
@@ -157,6 +157,7 @@ public class AdminMainActivity extends Activity{
     }
 	@Override
 	protected void onResume() {
+		Log.e("aaaaaaaaaaaa", "onresume");
 		super.onResume();
 	}
 }

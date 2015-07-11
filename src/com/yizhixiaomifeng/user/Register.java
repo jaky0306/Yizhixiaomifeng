@@ -130,8 +130,6 @@ public class Register extends Activity
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(Register.this,Login.class);
-				startActivity(intent);
 				Register.this.finish();
 			}
 		});

@@ -114,8 +114,6 @@ public class EditNewsActivity extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent =new Intent(EditNewsActivity.this,ManageNewsActivity.class);
-				startActivity(intent);
 				EditNewsActivity.this.finish();
 			}
 		});

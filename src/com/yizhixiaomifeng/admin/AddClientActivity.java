@@ -146,8 +146,6 @@ public class AddClientActivity extends Activity implements OnGetGeoCoderResultLi
 				/**
 				 * 新增完客户后跳转到管理客户界面
 				 */
-				Intent intent =new Intent(AddClientActivity.this,ManageClientActivity.class);
-				startActivity(intent);
 				AddClientActivity.this.finish();
 			}
 		});
