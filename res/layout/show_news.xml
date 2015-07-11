@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_2"
+    android:orientation="vertical" >
+    <RelativeLayout 
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+        
+        <ImageView
+	        android:layout_centerInParent="true"
+	        android:layout_alignParentLeft="true"
+	        android:layout_width="30dip"
+	        android:layout_height="30dip"
+	        android:id="@+id/show_news_back"
+	        android:src="@drawable/left_icon_small"/>
+       <TextView
+	        android:layout_centerInParent="true"
+	        android:layout_toRightOf="@id/show_news_back"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"
+	        android:text="消息查看"/>
+
+	</RelativeLayout>
+    
+    <ScrollView 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbars="none">
+        
+    	<LinearLayout 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical">
+        
+    	    <LinearLayout 
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="5dip"
+			    android:layout_marginTop="10dip"
+			    android:layout_gravity="fill_vertical"
+			    android:orientation="vertical">
+			    
+			    <TextView 
+			        android:layout_width="50dip"
+			        android:layout_height="wrap_content"
+			        android:textSize="15sp"
+			        android:textColor="@color/white"
+			        android:text="时间"/>
+			    <TextView 
+			        android:id="@+id/show_news_time"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:drawableLeft="@drawable/time_icon"
+			        android:singleLine="false"
+			        android:textColor="@color/background_5"
+			        android:textSize="18sp"
+			        android:layout_marginRight="10dip"/>
+			</LinearLayout>
+			<LinearLayout 
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="5dip"
+			    android:layout_marginTop="10dip"
+			    android:layout_gravity="fill_vertical"
+			    android:orientation="vertical">
+			    
+			    <TextView 
+			        android:layout_width="50dip"
+			        android:layout_height="wrap_content"
+			        android:textSize="15sp"
+			        android:textColor="@color/white"
+			        android:text="标题"/>
+			    <TextView 
+			        android:id="@+id/show_news_title"
+			        android:layout_width="fill_parent"
+			        android:layout_height="50dip"
+			        android:singleLine="false"
+			        android:textColor="@color/background_5"
+			        android:textSize="22sp"
+			        android:layout_marginRight="10dip"/>
+			</LinearLayout>
+			
+			<LinearLayout 
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="5dip"
+			    android:layout_marginTop="10dip"
+			    android:layout_gravity="fill_vertical"
+			    android:orientation="vertical">
+			    
+			    <TextView 
+			        android:layout_width="50dip"
+			        android:layout_height="wrap_content"
+			        android:textSize="15sp"
+			        android:textColor="@color/white"
+			        android:text="正文"/>
+			    <TextView 
+			        android:id="@+id/show_news_content"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:singleLine="false"
+			        android:textColor="@color/background_5"
+			        android:textSize="20sp"
+			        android:layout_marginRight="10dip"/>
+
+			</LinearLayout>
+			
+    	</LinearLayout>
+    
+	</ScrollView>
+    
+    
+</LinearLayout>

@@ -380,6 +380,17 @@ public class CheckOut extends Activity
 			}
 		});
         
+        ImageView check_out_back= (ImageView)findViewById(R.id.check_out_back);
+        check_out_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(CheckOut.this,MainActivity.class);
+				startActivity(intent);
+				CheckOut.this.finish();
+			}
+		});
+        
     }
 	
 	

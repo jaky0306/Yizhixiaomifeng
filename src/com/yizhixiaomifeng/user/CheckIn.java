@@ -474,6 +474,17 @@ public class CheckIn extends Activity
 			}
 		});
         
+        
+        ImageView check_in_back =(ImageView)findViewById(R.id.check_in_back);
+        check_in_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(CheckIn.this,MainActivity.class);
+				startActivity(intent);
+				CheckIn.this.finish();
+			}
+		});
     }
 	
 	

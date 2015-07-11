@@ -3,7 +3,7 @@ package com.yizhixiaomifeng.hss.admin.bean.impl.helper;
 import java.io.File;
 
 public class HTTPURL {
-	public final static String REALM_NAME="http://172.16.107.57:8080";
+	public final static String REALM_NAME="http://172.16.44.38:8080";
 	public final static String PROJECT_URL=REALM_NAME+File.separator+"hl-framework-all";
 	/**
 	 * 加载部门信息URL

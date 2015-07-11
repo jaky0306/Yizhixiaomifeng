@@ -27,11 +27,12 @@ public class UserRegister extends AsyncTask<String, Integer, String>{
 	protected void onPostExecute(String result) {
 		if(!result.equals("error")){
 			Toast.makeText(context, "×¢²á³É¹¦...", Toast.LENGTH_LONG).show();
+			Intent intent = new Intent(context,Login.class);
+			context.startActivity(intent);
 		}
 		button.setText("×¢²á");
 		button.setEnabled(true);
-		Intent intent = new Intent(context,Login.class);
-		context.startActivity(intent);
+		
 		super.onPostExecute(result);
 	}
 

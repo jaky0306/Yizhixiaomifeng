@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -91,6 +92,18 @@ public class ManageClientActivity extends Activity implements OnRefreshListener,
 			public void onClick(View v) {
 				Intent intent = new Intent(ManageClientActivity.this,AddClientActivity.class);
 				startActivity(intent);
+			}
+		});
+		
+		ImageView manage_client_back=(ImageView)findViewById(R.id.manage_client_back);
+		manage_client_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(ManageClientActivity.this,AdminMainActivity.class);
+				startActivity(intent);
+				ManageClientActivity.this.finish();
+				
 			}
 		});
 	}

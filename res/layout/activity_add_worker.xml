@@ -76,6 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittext_bg"
+	                android:spinnerMode="dialog"
                     android:layout_weight="1" />
 
                 <Button
@@ -100,12 +101,32 @@
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
-            <Spinner
-                android:id="@+id/add_worker_duty_type"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edittext_bg" 
-                android:layout_marginBottom="10dp"/>
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp" >
+	            <Spinner
+	                android:id="@+id/add_worker_duty_type"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:background="@drawable/edittext_bg"
+	                android:spinnerMode="dialog"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/add_worker_refresh_department"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="3"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:onClick="refreshDepartment"
+                    android:background="@drawable/rectangle_bg_4"
+                    android:text="刷新" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"

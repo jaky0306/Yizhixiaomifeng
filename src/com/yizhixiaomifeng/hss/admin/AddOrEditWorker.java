@@ -8,7 +8,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,7 +18,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.avos.avoscloud.LogUtil.log;
 import com.yizhixiaomifeng.R;
 import com.yizhixiaomifeng.domain.DepartmenttEntity;
 import com.yizhixiaomifeng.domain.DutyTypeEntity;
@@ -89,32 +87,6 @@ public class AddOrEditWorker extends Activity{
 		
 		departmentView.setAdapter(departmentAdapter);
 		dutyView.setAdapter(dutyAdapter);
-	}
-
-	private void initContent() {
-
-		worker=(WorkerEntity) getIntent().getSerializableExtra("worker");
-		if(worker==null){
-			worker=new WorkerEntity();
-			worker.setDepartmenttEntity((DepartmenttEntity) getIntent().getSerializableExtra("department"));
-			titleView.setText("新增员工");
-			isAdd=true;
-		}else{
-			calendar.setTimeInMillis(worker.getEntryDate());
-			titleView.setText("编辑员工");
-			isAdd=false;
-			nameView.setText(worker.getName());
-			entryTimeView.setText(TimeChangeUtil.getTimeString(worker.getEntryDate()));
-			basePayView.setText(worker.getBasePay()+"");
-			
-			dutyAdapter.getData().add(worker.getDutyTypeEntity());
-			dutyAdapter.notifyDataSetChanged();
-			dutyView.setSelection(1);
-		}
-
-		departmentAdapter.getData().add(worker.getDepartmenttEntity());
-		departmentAdapter.notifyDataSetChanged();
-		departmentView.setSelection(1);
 		
 		departmentView.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -128,10 +100,6 @@ public class AddOrEditWorker extends Activity{
 					dutyAdapter.getData().clear();
 					dutyAdapter.notifyDataSetChanged();
 				}else{
-//					Log.e("aaaaaaaaaaa", "---====="+position);
-//					Log.e("bbbbbbbbb", "==---===="+departmentAdapter.getData().get(position-1));
-//					log.e("","======="+departmentAdapter.getData().get(position-1).getBusinessTypeEntity());
-//					log.e("","======="+departmentAdapter.getData().get(position-1).getBusinessTypeEntity().getDutyTypeEntities().size());
 					dutyAdapter.setData(departmentAdapter.getData().get(position-1).getBusinessTypeEntity().getDutyTypeEntities());
 					dutyAdapter.notifyDataSetChanged();
 
@@ -157,6 +125,32 @@ public class AddOrEditWorker extends Activity{
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 		});
+	}
+
+	private void initContent() {
+
+		worker=(WorkerEntity) getIntent().getSerializableExtra("worker");
+		if(worker==null){
+			worker=new WorkerEntity();
+			worker.setDepartmenttEntity((DepartmenttEntity) getIntent().getSerializableExtra("department"));
+			titleView.setText("新增员工");
+			isAdd=true;
+		}else{
+			calendar.setTimeInMillis(worker.getEntryDate());
+			titleView.setText("编辑员工");
+			isAdd=false;
+			nameView.setText(worker.getName());
+			entryTimeView.setText(TimeChangeUtil.getTimeString(worker.getEntryDate()));
+			basePayView.setText(worker.getBasePay()+"");
+			worker.getDepartmenttEntity().getBusinessTypeEntity().getDutyTypeEntities().add(worker.getDutyTypeEntity());
+		}
+
+		departmentAdapter.getData().add(worker.getDepartmenttEntity());
+		departmentView.setSelection(1);
+		loadDepartment();
+	}
+	
+	private void loadDepartment(){
 
 		/**
 		 * 没有做数据缓存，所以每次都要重新加载网络数据
@@ -190,15 +184,28 @@ public class AddOrEditWorker extends Activity{
 							/**
 							 * 如果是编辑，则需要将原本员工所处的部门设置为选中状态
 							 */
-							if(!isAdd){
+//							if(!isAdd){
 								for(int i=0;i<departmentAdapter.getData().size();i++){
 									if(departmentAdapter.getData().get(i).getNumber()
 											==worker.getDepartmenttEntity().getNumber()){
-										departmentView.setSelection(i+1);
+										worker.setDepartmenttEntity(departmentAdapter.getData().get(i));
+										dutyAdapter.setData(worker.getDepartmenttEntity().getBusinessTypeEntity().getDutyTypeEntities());
+										dutyAdapter.notifyDataSetChanged();
+										if(departmentView.getSelectedItemPosition()==i+1&&!isAdd){
+											for(int j=0;j<dutyAdapter.getData().size();j++){
+												if(dutyAdapter.getData().get(j).getDutyId()
+														==worker.getDutyTypeEntity().getDutyId()){
+													dutyView.setSelection(j+1);
+													break;
+												}
+											}
+										}else if(departmentView.getSelectedItemPosition()!=i+1){
+											departmentView.setSelection(i+1);
+										}
 										break;
 									}
 								}
-							}
+//							}
 						}else{
 							Toast.makeText(AddOrEditWorker.this, "部门列表加载失败：网络不给力", Toast.LENGTH_SHORT).show();
 						}
@@ -248,6 +255,14 @@ public class AddOrEditWorker extends Activity{
 		 */
 		Intent intent=new Intent(this, AddOrEditDeparmentActivity.class);
 		startActivityForResult(intent, REQUEST_CODE_ADD_DEPARMENT);
+	}
+	
+	/**
+	 * 监听刷新部门事件
+	 * @param v
+	 */
+	public void refreshDepartment(View v){
+		loadDepartment();
 	}
 	
 	/**

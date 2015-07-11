@@ -8,6 +8,7 @@ import com.yizhixiaomifeng.tools.ShowVoiceTool;
 import com.yizhixiaomifeng.user.CheckOut;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -128,6 +129,16 @@ public class ShowFailAttendanceInfoActivity extends Activity{
 		//
 		new GetSceneDataByUrl().execute(failAttendance.getCheckInSceneUrl());
 		
+		ImageView show_fail_attendance_back=(ImageView)findViewById(R.id.show_fail_attendance_back);
+		show_fail_attendance_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(ShowFailAttendanceInfoActivity.this,ManageAttendanceActivity.class);
+				startActivity(intent);
+				ShowFailAttendanceInfoActivity.this.finish();
+			}
+		});
 	}
 	
 	class GetSceneDataByUrl extends AsyncTask<String, Integer, byte[]>{

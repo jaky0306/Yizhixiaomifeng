@@ -6,27 +6,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import com.avos.avoscloud.LogUtil.log;
 import com.yizhixiaomifeng.R;
-import com.yizhixiaomifeng.adapter.ShowClientListViewAdapter;
 import com.yizhixiaomifeng.adapter.ShowFailAttendanceListViewAdapter;
-import com.yizhixiaomifeng.admin.ManageClientActivity.LoadClientDataHelper;
 import com.yizhixiaomifeng.admin.bean.FailAttendance;
-import com.yizhixiaomifeng.admin.bean.Client;
-import com.yizhixiaomifeng.admin.bean.News;
 import com.yizhixiaomifeng.config.CheckInAndOutStauts;
-import com.yizhixiaomifeng.config.ParameterConfig;
 import com.yizhixiaomifeng.opensource.autoListview.AutoListView;
 import com.yizhixiaomifeng.opensource.autoListview.AutoListView.OnLoadListener;
 import com.yizhixiaomifeng.opensource.autoListview.AutoListView.OnRefreshListener;
 import com.yizhixiaomifeng.tools.ActivityCloser;
 import com.yizhixiaomifeng.tools.ConnectWeb;
-import com.yizhixiaomifeng.tools.NewsManager;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -42,12 +32,8 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.view.View.OnCreateContextMenuListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class ManageAttendanceActivity extends Activity implements OnRefreshListener,OnLoadListener{
@@ -139,6 +125,17 @@ public class ManageAttendanceActivity extends Activity implements OnRefreshListe
 				startActivity(intent);
 			}
 		});
+		
+		ImageView manage_attendance_back = (ImageView)findViewById(R.id.manage_attendance_back);
+		manage_attendance_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(ManageAttendanceActivity.this,AdminMainActivity.class);
+				startActivity(intent);
+				ManageAttendanceActivity.this.finish();
+			}
+		});
 	}
 
 	// 长按菜单响应函数 
@@ -214,7 +211,6 @@ public class ManageAttendanceActivity extends Activity implements OnRefreshListe
 			if(!result.equals("error"))
 			{
 				Log.e("LoadFailAttendanceDataHelper", result);
-				
 				try {
 					JSONArray jsonArray = new JSONArray(result);
 					Log.e("size", ""+jsonArray.length());
