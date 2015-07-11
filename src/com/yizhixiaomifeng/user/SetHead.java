@@ -3,6 +3,7 @@ package com.yizhixiaomifeng.user;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import com.baidu.location.f;
 import com.yizhixiaomifeng.R;
 import com.yizhixiaomifeng.config.ParameterConfig;
 import com.yizhixiaomifeng.config.YzxmfConfig;
@@ -70,6 +71,17 @@ public class SetHead extends Activity {
 
 			public void onClick(View v) {
 				showDialog();
+			}
+		});
+		
+		ImageView set_head_back = (ImageView)findViewById(R.id.set_head_back);
+		set_head_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(SetHead.this,SettingCenter.class);
+				startActivity(intent);
+				SetHead.this.finish();
 			}
 		});
 	}
@@ -251,7 +263,7 @@ public class SetHead extends Activity {
 			msg.what=0x112;
 			handler.sendMessage(msg);
 			ParameterConfig.headChange=true; //头像更新了，告诉MainActivity
-			Intent intent = new Intent(SetHead.this,MainActivity.class);
+			Intent intent = new Intent(SetHead.this,SettingCenter.class);
 			startActivity(intent);
 			SetHead.this.finish();
 			super.onPostExecute(result);

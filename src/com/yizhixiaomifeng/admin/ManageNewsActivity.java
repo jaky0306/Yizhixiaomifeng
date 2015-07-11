@@ -25,6 +25,7 @@ import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class ManageNewsActivity extends FragmentActivity{
 	private ViewPager viewPager;
@@ -63,6 +64,17 @@ public class ManageNewsActivity extends FragmentActivity{
 			public void onClick(View v) {
 				Intent intent = new Intent(ManageNewsActivity.this,EditNewsActivity.class);
 				startActivity(intent);
+			}
+		});
+		
+		ImageView manage_news_back = (ImageView)findViewById(R.id.manage_news_back);
+		manage_news_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(ManageNewsActivity.this,AdminMainActivity.class);
+				startActivity(intent);
+				ManageNewsActivity.this.finish();
 			}
 		});
 	}

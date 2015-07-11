@@ -65,6 +65,11 @@ public class AddOrEditDeparmentActivity extends Activity{
 			adapter.notifyDataSetChanged();
 			businessTypeView.setSelection(1);
 		}
+		loadBusinessType();
+	}
+
+	public void loadBusinessType(){
+
 		/**
 		 * 没有做数据缓存，所以每次都要重新加载网络数据
 		 */
@@ -77,6 +82,7 @@ public class AddOrEditDeparmentActivity extends Activity{
 				OtherOperate operate=new OtherOperateImpl();
 				List<BusinessTypeEntity> data=operate.loaderBusinessTypes();
 				if(data!=null){
+					adapter.getData().clear();
 					adapter.getData().addAll(data);
 					rs=true;
 				}else{
@@ -96,13 +102,13 @@ public class AddOrEditDeparmentActivity extends Activity{
 							 * 如果是编辑，则需要将当前的部门的业务类型设置为选中状态
 							 */
 //							if(!isAdd){
-//								for(int i=0;i<adapter.getData().size();i++){
-//									if(adapter.getData().get(i).getBusinessId()
-//											==department.getBusinessTypeEntity().getBusinessId()){
-//										businessTypeView.setSelection(i+1);
-//										break;
-//									}
-//								}
+								for(int i=0;i<adapter.getData().size();i++){
+									if(adapter.getData().get(i).getBusinessId()
+											==department.getBusinessTypeEntity().getBusinessId()){
+										businessTypeView.setSelection(i+1);
+										break;
+									}
+								}
 //							}
 						}else{
 							Toast.makeText(AddOrEditDeparmentActivity.this, "业务类型加载失败：网络不给力", Toast.LENGTH_SHORT).show();
@@ -112,7 +118,6 @@ public class AddOrEditDeparmentActivity extends Activity{
 			}
 		}, ThreadManager.DEFALSE_REQUEST_POOL);
 	}
-
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -131,7 +136,13 @@ public class AddOrEditDeparmentActivity extends Activity{
 		setResult(RESULT_CANCELED);
 		finish();
 	}
-	
+	/**
+	 * 返回事件处理
+	 * @param v
+	 */
+	public void refreshBusiness(View v){
+		loadBusinessType();
+	}
 	/**
 	 * 监听保存操作
 	 * @param v

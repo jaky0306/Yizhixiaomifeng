@@ -14,6 +14,7 @@ import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.yizhixiaomifeng.R;
 import com.yizhixiaomifeng.admin.bean.Client;
+import com.yizhixiaomifeng.tools.ActivityCloser;
 import com.yizhixiaomifeng.tools.ClientInfoSaver;
 
 import android.app.Activity;
@@ -29,6 +30,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class EditClientActivity extends Activity implements OnGetGeoCoderResultListener{
@@ -57,6 +59,7 @@ public class EditClientActivity extends Activity implements OnGetGeoCoderResultL
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_client);
+		ActivityCloser.activities.add(this);
 		final Client client = (Client) getIntent().getSerializableExtra("client");
 		commit_edit_button=(Button)findViewById(R.id.commit_edit_button);
 		arrange_staff_button=(Button)findViewById(R.id.arrange_staff_button);
@@ -121,6 +124,18 @@ public class EditClientActivity extends Activity implements OnGetGeoCoderResultL
 				new ClientInfoSaver(EditClientActivity.this, commit_edit_button,"update").execute(client);
 			}
 		});
+		
+		ImageView edit_client_back=(ImageView)findViewById(R.id.edit_client_back);
+		edit_client_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent =new Intent(EditClientActivity.this,ManageClientActivity.class);
+				startActivity(intent);
+				EditClientActivity.this.finish();
+			}
+		});
+		
 	}
 
 	@Override

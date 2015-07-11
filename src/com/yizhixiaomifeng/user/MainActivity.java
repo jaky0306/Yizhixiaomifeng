@@ -15,6 +15,7 @@ import com.baidu.mapapi.search.geocode.GeoCodeOption;
 import com.yizhixiaomifeng.R;
 import com.yizhixiaomifeng.adapter.MenuListViewAdapter;
 import com.yizhixiaomifeng.admin.AdminMainActivity;
+import com.yizhixiaomifeng.admin.ShowAllPublishNewsToUser;
 import com.yizhixiaomifeng.admin.bean.Client;
 import com.yizhixiaomifeng.config.ParameterConfig;
 import com.yizhixiaomifeng.tools.ActivityCloser;
@@ -320,6 +321,7 @@ public class MainActivity extends Activity implements OnTouchListener {
 			{
 				loadUserInfo(); //加载用户信息
 				menuitems.clear();
+				menuitems.add("公司新闻");
 				menuitems.add("个人中心");
 				showMenuItems=(ListView)findViewById(R.id.showMenuItems_listview);
 				showMenuItems.setAdapter(new MenuListViewAdapter(MainActivity.this, menuitems));
@@ -330,6 +332,11 @@ public class MainActivity extends Activity implements OnTouchListener {
 							long id) {
 						switch (position) {
 						case 0:
+							Intent intent0 = new Intent(MainActivity.this, ShowAllPublishNewsToUser.class);
+							startActivity(intent0);
+							
+							break;
+						case 1:
 							Intent intent1 = new Intent(MainActivity.this, SettingCenter.class);
 							startActivity(intent1);
 							break;

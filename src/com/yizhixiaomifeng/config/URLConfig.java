@@ -2,7 +2,7 @@ package com.yizhixiaomifeng.config;
 
 public class URLConfig {
 	//public static String IP="http://172.16.102.50"+"/";
-	public static String IP="http://172.16.107.57:8080"+"/hl-framework-all/";
+	public static String IP="http://172.16.44.38:8080"+"/hl-framework-all/";
 	public static String checkUser=IP+"knotAppController.do?login";
 	public static String checkAdmin=IP+"knotAppController.do?login";
 	public static String getAllUser=IP+"workerController.do?listAllWorkerMessage";

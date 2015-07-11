@@ -14,11 +14,11 @@
 	        android:layout_alignParentLeft="true"
 	        android:layout_width="45px"
 	        android:layout_height="45px"
-	        android:id="@+id/back"
+	        android:id="@+id/set_head_back"
 	        android:src="@drawable/left_icon_small"/>
        <TextView
 	        android:layout_centerInParent="true"
-	        android:layout_toRightOf="@id/back"
+	        android:layout_toRightOf="@id/set_head_back"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:textSize="20sp"

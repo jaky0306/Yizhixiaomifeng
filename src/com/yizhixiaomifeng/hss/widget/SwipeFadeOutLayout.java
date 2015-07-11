@@ -1,7 +1,5 @@
 package com.yizhixiaomifeng.hss.widget;
 
-import com.avos.avoscloud.LogUtil.log;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -173,7 +171,6 @@ public class SwipeFadeOutLayout extends FrameLayout{
 		
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			
 			super.onTouchEvent(event);
 			break;
 			
