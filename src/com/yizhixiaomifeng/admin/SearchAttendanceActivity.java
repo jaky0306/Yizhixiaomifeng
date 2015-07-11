@@ -18,6 +18,7 @@ import com.yizhixiaomifeng.tools.ConnectWeb;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Message;
@@ -28,6 +29,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -94,6 +96,17 @@ public class SearchAttendanceActivity extends Activity{
                 dialog.show();
             }
         });
+		
+		ImageView search_attendance_back = (ImageView)findViewById(R.id.search_attendance_back);
+		search_attendance_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(SearchAttendanceActivity.this,ManageAttendanceActivity.class);
+				startActivity(intent);
+				SearchAttendanceActivity.this.finish();
+			}
+		});
 	}
 	class GetAttendanceData extends AsyncTask<String,Integer,String>{
 

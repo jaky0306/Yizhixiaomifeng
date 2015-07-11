@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.baidu.location.f;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
@@ -20,11 +21,13 @@ import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.baidu.platform.comapi.map.e;
 import com.yizhixiaomifeng.R;
 import com.yizhixiaomifeng.admin.bean.Client;
+import com.yizhixiaomifeng.tools.ActivityCloser;
 import com.yizhixiaomifeng.tools.ClientInfoSaver;
 
 import android.R.fraction;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -32,6 +35,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class AddClientActivity extends Activity implements OnGetGeoCoderResultListener{
@@ -50,7 +54,7 @@ public class AddClientActivity extends Activity implements OnGetGeoCoderResultLi
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_client);
-		
+		ActivityCloser.activities.add(this);
 		//地图初始化
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		mBaiduMap = mMapView.getMap();
@@ -139,7 +143,22 @@ public class AddClientActivity extends Activity implements OnGetGeoCoderResultLi
 				client.setLatitude(latitude);
 				//保存客户信息到数据库
 				new ClientInfoSaver(AddClientActivity.this, commit_add_client, "save").execute(client);
+				/**
+				 * 新增完客户后跳转到管理客户界面
+				 */
+				Intent intent =new Intent(AddClientActivity.this,ManageClientActivity.class);
+				startActivity(intent);
 				AddClientActivity.this.finish();
+			}
+		});
+		
+		ImageView add_client_back = (ImageView)findViewById(R.id.add_client_back);
+		add_client_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent =new Intent(AddClientActivity.this,ManageClientActivity.class);
+				startActivity(intent);
 			}
 		});
 		

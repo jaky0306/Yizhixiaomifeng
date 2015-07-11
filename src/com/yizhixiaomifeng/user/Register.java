@@ -125,6 +125,16 @@ public class Register extends Activity
                 
             }
         });
+        ImageView register_back= (ImageView)findViewById(R.id.register_back);
+        register_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(Register.this,Login.class);
+				startActivity(intent);
+				Register.this.finish();
+			}
+		});
     }
     
     class GetAllUnRegisterUser extends AsyncTask<String, Integer, String>{

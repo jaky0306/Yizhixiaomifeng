@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.avos.avoscloud.LogUtil.log;
+import com.baidu.location.f;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
@@ -23,6 +24,7 @@ import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.yizhixiaomifeng.R;
 import com.yizhixiaomifeng.admin.bean.Client;
 import com.yizhixiaomifeng.domain.WorkerEntity;
+import com.yizhixiaomifeng.tools.ActivityCloser;
 import com.yizhixiaomifeng.tools.ClientInfoLoader;
 import com.yizhixiaomifeng.tools.ClientInfoSaver;
 import com.yizhixiaomifeng.tools.ConnectWeb;
@@ -48,6 +50,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -84,6 +87,7 @@ public class ArrangeStaffForClientActivity extends Activity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.arrange_client);
+		ActivityCloser.activities.add(this);
 		client= (Client) getIntent().getSerializableExtra("client");
 		commit_arrange_button=(Button)findViewById(R.id.commit_arrange_button);
 		select_staff_for_client_button=(Button)findViewById(R.id.select_staff_for_client_button);
@@ -178,7 +182,16 @@ public class ArrangeStaffForClientActivity extends Activity{
 			}
 		});
 		
-		
+		ImageView arrange_client_back=(ImageView)findViewById(R.id.arrange_client_back);
+		arrange_client_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent =new Intent(ArrangeStaffForClientActivity.this,ManageClientActivity.class);
+				startActivity(intent);
+				ArrangeStaffForClientActivity.this.finish();
+			}
+		});
 		
 	}
 
@@ -211,6 +224,10 @@ public class ArrangeStaffForClientActivity extends Activity{
     	protected void onPostExecute(String result){
     		if(result.equals("ok")){
     			Toast.makeText(ArrangeStaffForClientActivity.this, "安排成功...", Toast.LENGTH_LONG).show();
+    			
+    			Intent intent =new Intent(ArrangeStaffForClientActivity.this,ManageClientActivity.class);
+				startActivity(intent);
+				ArrangeStaffForClientActivity.this.finish();
     		}else
     		{
     			Toast.makeText(ArrangeStaffForClientActivity.this, "安排失败...", Toast.LENGTH_LONG).show();

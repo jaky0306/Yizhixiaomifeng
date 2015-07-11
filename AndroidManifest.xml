@@ -112,7 +112,9 @@
     	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
     	<activity android:name="com.yizhixiaomifeng.admin.ShowFailAttendanceInfoActivity"
     	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
-    	<activity android:name="com.yizhixiaomifeng.admin.ShowSearchAttendanceResultActivity"
+    	<activity android:name="com.yizhixiaomifeng.admin.ShowAllPublishNewsToUser"
+    	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
+    	<activity android:name="com.yizhixiaomifeng.admin.ShowNewsActivity"
     	    android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
     </application>
 

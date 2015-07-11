@@ -15,14 +15,14 @@
 	        android:layout_alignParentLeft="true"
 	        android:layout_width="30dip"
 	        android:layout_height="30dip"
-	        android:id="@+id/back"
+	        android:id="@+id/check_out_back"
 	        android:src="@drawable/left_icon_small"/>
 
        <TextView
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_centerVertical="true"
-           android:layout_toRightOf="@+id/back"
+           android:layout_toRightOf="@+id/check_out_back"
            android:textColor="@color/white"
            android:text="签退"
            android:textSize="20sp" />

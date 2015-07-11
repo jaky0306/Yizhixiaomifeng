@@ -8,6 +8,7 @@ import com.yizhixiaomifeng.tools.NewsManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class EditNewsActivity extends Activity{
@@ -67,8 +69,6 @@ public class EditNewsActivity extends Activity{
 				}else{
 					new NewsManager(EditNewsActivity.this, "update").execute(news);
 				}
-				
-				EditNewsActivity.this.finish();
 			}
 		});
 		publish_edit_news_button.setOnClickListener(new OnClickListener() {
@@ -106,6 +106,17 @@ public class EditNewsActivity extends Activity{
 					
 				});
 				alert.show();
+			}
+		});
+		
+		ImageView edit_news_back = (ImageView)findViewById(R.id.edit_news_back);
+		edit_news_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent =new Intent(EditNewsActivity.this,ManageNewsActivity.class);
+				startActivity(intent);
+				EditNewsActivity.this.finish();
 			}
 		});
 	}

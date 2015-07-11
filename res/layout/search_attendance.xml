@@ -22,7 +22,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_centerVertical="true"
 	        android:textSize="20sp"
-	        android:text="管理消息"/>
+	        android:text="考勤信息检索"/>
 
 	</RelativeLayout>
     
